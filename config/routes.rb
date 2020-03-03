@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     # todo: add controllers
+    get 'ping', action: :ping, controller: 'healths'
     resource :auth, only: [:register, :authenticate] do
       post :register
       post :authenticate
