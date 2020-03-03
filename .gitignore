@@ -52,6 +52,8 @@ bower.json
 # Ignore node_modules
 node_modules/
 
+# Ignore public directory
+public
 # Ignore precompiled javascript packs
 /public/packs
 /public/packs-test
@@ -65,3 +67,6 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+
+cheatsheat.md
+TODO.diff

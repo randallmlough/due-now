@@ -1,5 +1,13 @@
 {
   "name": "invoiced",
   "private": true,
-  "dependencies": {}
+  "engines": {
+    "node": "13.6.0",
+    "yarn": "1.22.0"
+  },
+  "scripts": {
+    "build": "yarn --cwd frontend install && yarn --cwd frontend build",
+    "deploy": "cp -a frontend/build/. public/",
+    "heroku-postbuild": "yarn build && yarn deploy"
+  }
 }

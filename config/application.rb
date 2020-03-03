@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require_relative '../lib/auth_middleware'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
