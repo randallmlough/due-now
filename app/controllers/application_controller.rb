@@ -6,10 +6,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_csrf_cookie, :read_auth_cookie
 
-  
-
-  protect_from_forgery unless: -> { request.format.json? }
-  # protect_from_forgery with: :exception
+  # protect_from_forgery unless: -> { request.format.json? }
+  # protect_from_forgery
 
 
   def read_auth_cookie
