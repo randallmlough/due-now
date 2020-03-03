@@ -23,10 +23,6 @@ class ApplicationController < ActionController::Base
     JWT.decode token, hmac_secret, true, { algorithm: 'HS256' }
   end
 
-  def require_user!
-    redirect_to "/login" unless authenticated?
-  end
-
   def authenticated?
     !user_session.nil?
   end
