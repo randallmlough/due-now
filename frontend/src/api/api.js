@@ -6,8 +6,8 @@ class API {
     if (baseRoute) this.baseURL += baseRoute
   }
 
-  getAccessToken() {
-    localStorage.getItem('session_token')
+  ping() {
+    this.get('/api')
   }
 
   async get(url) {
