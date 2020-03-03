@@ -2,7 +2,7 @@ require 'jwt'
 
 class ApplicationController < ActionController::Base
 
-  attr_reader :current_user
+  attr_reader :user_session
 
   before_action :set_csrf_cookie, :read_auth_cookie
 
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   def read_auth_cookie
     auth_token = cookies.signed[:server_session]
     if auth_token
-      @current_user = UserSession.new_from_jwt(auth_token)
+      @user_session = UserSession.new_from_jwt(auth_token)
     end
   end
 
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticated?
-    !current_user.nil?
+    !user_session.nil?
   end
 
   def react_index
