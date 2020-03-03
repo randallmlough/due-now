@@ -2,19 +2,20 @@ require 'jwt'
 
 class ApplicationController < ActionController::Base
 
+  attr_reader :current_user
+
+  before_action :set_csrf_cookie, :read_auth_cookie
+
+  
+
   protect_from_forgery unless: -> { request.format.json? }
+  # protect_from_forgery with: :exception
 
-  before_action :read_session_cookies
 
-  def read_session_cookies
-    session[:current_user] = nil
-
-    @auth_token = cookies.signed[:server_session]
-    @client_token = cookies[:client_session] 
-    if @auth_token && @client_token
-      token_parts = @auth_token.split('.')
-
-      session[:current_user] = decode_token(@auth_token)[0] if token_parts[1] == @client_token 
+  def read_auth_cookie
+    auth_token = cookies.signed[:server_session]
+    if auth_token
+      @current_user = UserSession.new_from_jwt(auth_token)
     end
   end
 
@@ -29,12 +30,15 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticated?
-    !session[:current_user].nil?
+    !current_user.nil?
   end
-
 
   def react_index
     render :file => 'public/index.html'
   end
 
+  private
+  def set_csrf_cookie
+    cookies["CSRF-TOKEN"] = form_authenticity_token
+  end
 end

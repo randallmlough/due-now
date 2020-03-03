@@ -1,6 +1,7 @@
 require 'bcrypt'
 require 'digest'
 class User < ApplicationRecord
+    include Jwt
 
     def self.find_by_credentials(email,password)
         u = User.find_by(email: email)
@@ -23,6 +24,10 @@ class User < ApplicationRecord
         self.session_token = new_session_token
         self.save!
         self.session_token
+    end
+
+    def generate_jwt
+        Jwt.generate_jwt(self)
     end
 
     private

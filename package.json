@@ -9,5 +9,11 @@
     "build": "yarn --cwd frontend install && yarn --cwd frontend build",
     "deploy": "cp -a frontend/build/. public/",
     "heroku-postbuild": "yarn build && yarn deploy"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
   }
 }

@@ -1,15 +1,16 @@
-import React from "react";
+import React from 'react'
+import { useSession } from './Session'
+
 export default props => {
-  const { user } = props.location.state;
+  const [session] = useSession()
   return (
     <div>
-      <h1>{user.first_name}'s Dashboard</h1>
+      <h1>{session.first_name}'s Dashboard</h1>
       <ul>
-        <li>id: {user.id}</li>
-        <li>first_name: {user.first_name}</li>
-        <li>last_name: {user.last_name}</li>
-        <li>created_at: {user.created_at}</li>
+        <li>id: {session.sub}</li>
+        <li>first_name: {session.first_name}</li>
+        <li>last_name: {session.last_name}</li>
       </ul>
     </div>
-  );
-};
+  )
+}
