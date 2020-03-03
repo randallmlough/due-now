@@ -53,7 +53,7 @@ bower.json
 node_modules/
 
 # Ignore public directory
-public
+/public
 # Ignore precompiled javascript packs
 /public/packs
 /public/packs-test
