@@ -19,8 +19,7 @@ export const useSession = () => {
     const key = generateRandomKey()
     session.subscribeSessionUpdates(key, forceRender)
     return () => session.unsubscribeSessionUpdates(key)
-  }, [forceRender])
-  // debugger
+  }, [forceRender, session]) // session may need to be removed as a dependency. Leaving comment here in case issues arise later on
   const setSession = useMemo(() => session.setSession.bind(session), [session])
   const removeSession = useMemo(() => session.removeSession.bind(session), [
     session,
