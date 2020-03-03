@@ -23,7 +23,7 @@ class Api::AuthsController < Api::APIController
             add_auth_cookie()
             render :authenticated
         else
-            render :json => {}, :status => 401
+            head 401, content_type: "application/json"
         end
     end
 
