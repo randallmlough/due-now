@@ -9,7 +9,7 @@ export default function UserMenu() {
     <Dropdown
       buttonText={
         session.first_name
-          ? `${session.first_name} ${session.first_name}`
+          ? `${session.first_name} ${session.last_name}`
           : 'Account'
       }
     >
