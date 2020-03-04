@@ -13,7 +13,13 @@ class Api::AuthsController < Api::APIController
             render :registered
             
         else
-            render json: { error: "failed to create user"}
+            errors = @user.errors.messages
+            if errors[:email]
+                errors[:email].include?("has already been taken")
+                render json: { error: "email already in use or invalid"}, status: 409
+            else
+                render json: { error: "bad request"}, status: 400
+            end
         end
     end
 
