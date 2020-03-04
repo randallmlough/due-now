@@ -2,18 +2,16 @@ require 'jwt'
 
 class ApplicationController < ActionController::Base
 
-  attr_reader :user_session
+  attr_reader :user_session, :jwt_token
 
   before_action :set_csrf_cookie, :read_auth_cookie
 
-  # protect_from_forgery unless: -> { request.format.json? }
-  # protect_from_forgery
-
 
   def read_auth_cookie
-    auth_token = cookies.signed[:server_session]
-    if auth_token
-      @user_session = UserSession.new_from_jwt(auth_token)
+    token = cookies.signed[:server_session]
+    if token
+      @jwt_token = token
+      @user_session = UserSession.new_from_jwt(@jwt_token)
     end
   end
 

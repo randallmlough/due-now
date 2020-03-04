@@ -1,7 +1,7 @@
 require "jwt"
 require "base64"
 class Api::AuthsController < Api::APIController
-    skip_before_action :require_session!, only: [:register,:authenticate]
+    skip_before_action :require_session!, only: [:register,:authenticate, :check]
     def register
 
         @user = User.new(auth_params)
@@ -24,7 +24,23 @@ class Api::AuthsController < Api::APIController
             add_auth_cookie()
             render :authenticated
         else
+            delete_auth_cookie()
             head 401, content_type: "application/json"
+        end
+    end
+
+    def logout
+        delete_auth_cookie()
+        head 200, content_type: "application/json"
+    end
+
+    def check
+        if !jwt_token.nil?
+            @jwt = jwt_token
+            render :json => {:token => @jwt }.to_json
+        else
+            delete_auth_cookie()
+            head 204, content_type: "application/json"
         end
     end
 

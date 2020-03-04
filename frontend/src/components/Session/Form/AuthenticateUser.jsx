@@ -57,7 +57,7 @@ AuthenticateUser.propTypes = {
 export default AuthenticateUser
 
 const mapDispatchToProps = dispatch => ({
-  submit: user => dispatch(authenticateUserAction(user)),
+  submit: async user => await dispatch(authenticateUserAction(user)),
 })
 
 export const AuthenticateUserContainer = connect(

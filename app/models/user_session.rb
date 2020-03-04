@@ -12,7 +12,7 @@ class UserSession
         nil
     end
 
-    attr_accessor :sub, :first_name, :last_name, :iat
+    attr_accessor :sub, :first_name, :last_name, :iat, :avatar
     validates :sub, presence: true
    
     def user

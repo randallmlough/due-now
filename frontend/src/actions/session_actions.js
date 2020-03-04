@@ -1,7 +1,7 @@
 import actions from './index'
 import { receiveUser } from './user_actions'
 
-import { createUser, authenticateUser, formatError } from '../api'
+import { createUser, authenticateUser, logoutUser, formatError } from '../api'
 
 export const receiveUserSession = currentUser => ({
   type: actions.RECEIVE_USER_SESSION,
@@ -33,8 +33,10 @@ export const authenticateUserAction = ({
     .catch(error => Promise.reject(formatError(error)))
 }
 
-export const logoutUserAction = () => dispatch => {
-  dispatch(receiveRemoveSession())
+export const logoutUserAction = () => async dispatch => {
+  return await logoutUser()
+    .then(() => dispatch(receiveRemoveSession()))
+    .catch(error => Promise.reject(formatError(error)))
 }
 
 export const storeSessionAction = userSession => dispatch =>

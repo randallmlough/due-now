@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-class API {
+export default class API {
   constructor(baseRoute) {
     this.baseURL = '/api'
     if (baseRoute) this.baseURL += baseRoute
@@ -42,14 +42,19 @@ class API {
   }
 }
 
-export default API
+export const errorType = {
+  REQUEST_ERROR: 'REQUEST_ERROR',
+  RESPONSE_ERROR: 'RESPONSE_ERROR',
+  SERVER_ERROR: 'SERVER_ERROR',
+  UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+}
 
 export const formatError = error => {
   const err = {}
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
-    err.type = 'request error'
+    err.type = errorType.RESPONSE_ERROR
     err.status = error.response.status
     err.message = error.response.data.error
     err.errors = error.response.data.errors
@@ -57,10 +62,11 @@ export const formatError = error => {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
-    err.type = 'server error'
+    err.type = errorType.SERVER_ERROR
     err.status = 500
     err.message = 'something went wrong'
   } else {
+    err.type = errorType.REQUEST_ERROR
     // Something happened in setting up the request that triggered an Error
     console.log('Error', error.message)
   }

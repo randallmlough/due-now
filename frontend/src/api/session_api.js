@@ -10,8 +10,12 @@ export const authenticateUser = async userCredentials => {
   return await sessionAPI.post('/authenticate', userCredentials)
 }
 
-export const logoutUser = async sessionToken => {
-  return await sessionAPI.post('/logout', sessionToken)
+export const logoutUser = async () => {
+  return await sessionAPI.delete('/logout')
+}
+
+export const checkAuth = async () => {
+  return await sessionAPI.get('/check')
 }
 
 export const resetPassword = async email => {

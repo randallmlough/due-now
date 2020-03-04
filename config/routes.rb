@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     # todo: add controllers
     get 'ping', action: :ping, controller: 'healths'
-    resource :auth, only: [:register, :authenticate] do
+    resource :auth, only: [:register, :authenticate, :logout, :check] do
       post :register
       post :authenticate
+      delete :logout
+      get :check
     end
 
     resources :users, only: [:index]

@@ -1,7 +1,8 @@
 import {
   receiveUserSession,
-  receiveRemoveSession,
+  logoutUserAction,
 } from '../../actions/session_actions'
+import { checkAuth, formatError, errorType } from '../../api'
 import * as jwt_decode from 'jwt-decode'
 const initialState = null
 
@@ -12,36 +13,39 @@ export default class Session {
     this.subscribers = {}
   }
 
-  loadSession() {
-    const session = this.getSessionFromLocalStorage()
-    if (session) {
-      this.session = session
-      this.dispatch(receiveUserSession(session))
-      this._updateSubscribers()
-    }
+  initialize() {
+    checkAuth()
+      .then(resp => {
+        if (resp.data && resp.data.token) {
+          const session = this._decodeJwtToken(resp.data.token)
+          if (session) {
+            this.session = session
+            this._updateSubscribers()
+            this.dispatch(receiveUserSession(session))
+          }
+        }
+      })
+      .catch(error => console.log(error))
   }
-
   getSession() {
     return this.session
   }
 
   setSession(sessionToken) {
-    const session = this.decodeJwtToken(sessionToken)
+    const session = this._decodeJwtToken(sessionToken)
     if (session) {
       if (shouldUpdate(this.session, session)) {
-        this.addSessionLocalStorage(sessionToken)
         this.session = session
-        this.dispatch(receiveUserSession(session))
         this._updateSubscribers()
+        this.dispatch(receiveUserSession(session))
       }
     }
   }
 
   removeSession() {
-    this.removeFromLocalStorage()
-    this.dispatch(receiveRemoveSession())
     this.session = initialState
     this._updateSubscribers()
+    this.dispatch(logoutUserAction())
   }
 
   subscribeSessionUpdates(key, onSetSessionCallback) {
@@ -58,20 +62,7 @@ export default class Session {
     }
   }
 
-  addSessionLocalStorage(sessionToken) {
-    localStorage.setItem('session', sessionToken)
-  }
-
-  getSessionFromLocalStorage() {
-    const session = localStorage.getItem('session')
-    return session ? this.decodeJwtToken(session) : null
-  }
-
-  removeFromLocalStorage() {
-    localStorage.removeItem('session')
-  }
-
-  decodeJwtToken(jwtToken) {
+  _decodeJwtToken(jwtToken) {
     return jwt_decode(jwtToken)
   }
 }

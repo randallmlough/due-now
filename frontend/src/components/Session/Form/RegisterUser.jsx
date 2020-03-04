@@ -86,7 +86,7 @@ const mapStateToProps = (state = {}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  submit: user => dispatch(registerUserAction(user)),
+  submit: async user => await dispatch(registerUserAction(user)),
 })
 
 export const RegisterUserContainer = connect(
