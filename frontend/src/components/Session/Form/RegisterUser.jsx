@@ -7,6 +7,7 @@ import { Button } from '../../UI'
 import Input from '../../UI/Form/Input'
 import PropTypes from 'prop-types'
 import { useSession } from '../../Session'
+import { useFlash } from '../../Flash'
 
 const RegisterUser = ({ submit }) => {
   const initialState = {
@@ -18,16 +19,33 @@ const RegisterUser = ({ submit }) => {
   const [, setSession] = useSession()
   const [user, setUser] = useState(initialState)
   const history = useHistory()
+  const flash = useFlash()
 
   const handleSubmit = async data => {
     await submit(data)
       .then(resp => {
         setSession(resp.session_token)
-        setUser(initialState)
+        flash.add({
+          type: 'success',
+          title: 'Welcome!',
+          body: 'Your invoiced account has been created',
+        })
         history.push('/')
       })
       .catch(e => {
-        console.log(e)
+        if (e.status < 500) {
+          if (e.status === 409)
+            flash.add({
+              type: 'error',
+              title: 'Sorry!',
+              body: 'That email is already in use or invalid',
+            })
+          else
+            flash.add({
+              type: 'error',
+              body: e.message,
+            })
+        }
       })
   }
   return (

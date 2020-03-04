@@ -7,10 +7,12 @@ import { Button } from '../../UI'
 import Input from '../../UI/Form/Input'
 import PropTypes from 'prop-types'
 import { useSession } from '../../Session'
+import { useFlash } from '../../Flash'
 
 const AuthenticateUser = ({ submit }) => {
   const history = useHistory()
   const [, setSession] = useSession()
+  const flash = useFlash()
 
   const handleSubmit = async data => {
     await submit(data)
@@ -19,7 +21,20 @@ const AuthenticateUser = ({ submit }) => {
         history.push('/')
       })
       .catch(e => {
-        console.log(e)
+        if (e.status < 500) {
+          if (e.status === 401) {
+            flash.add({
+              type: 'error',
+              title: 'Whoops',
+              body: 'Either the email or the password you entered is incorrect',
+            })
+          } else {
+            flash.add({
+              type: 'error',
+              body: e.message,
+            })
+          }
+        }
       })
   }
   return (
