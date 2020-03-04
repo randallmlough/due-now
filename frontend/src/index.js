@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import configureStore from './store'
 import { SessionProvider } from './components/Session'
 import { BrowserRouter } from 'react-router-dom'
-import './index.css'
+import './tailwind.css'
 
 const initialState = {
   entities: {},

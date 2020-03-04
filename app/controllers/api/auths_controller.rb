@@ -1,4 +1,5 @@
 require "jwt"
+require "base64"
 class Api::AuthsController < Api::APIController
     skip_before_action :require_session!, only: [:register,:authenticate]
     def register
@@ -6,7 +7,8 @@ class Api::AuthsController < Api::APIController
         @user = User.new(auth_params)
         if @user.save
             @jwt = @user.generate_jwt
-            @session_token = @jwt.split('.')[1]
+            
+            # @session_token = Base64.urlsafe_encode64(@jwt.split('.')[1])
             add_auth_cookie()
             render :registered
             
@@ -19,7 +21,6 @@ class Api::AuthsController < Api::APIController
         @user = User.find_by_credentials(params[:email], params[:password])
         if @user
             @jwt = @user.generate_jwt
-            @session_token = @jwt.split('.')[1]
             add_auth_cookie()
             render :authenticated
         else

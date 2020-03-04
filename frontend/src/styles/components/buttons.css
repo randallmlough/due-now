@@ -1,0 +1,71 @@
+.btn {
+    @apply text-primary-500 bg-white leading-none py-2 px-4 border border-transparent rounded transform duration-200 shadow;
+
+    &:hover {
+        @apply text-primary-700 -translate-y-px shadow-md;
+    } 
+
+    &.primary{
+        @apply bg-primary text-white;
+
+        &:hover {
+            @apply bg-primary-dark;
+        } 
+    }
+    &.success{
+        @apply bg-green-500 text-white;
+
+        &:hover {
+            @apply bg-green-400;
+        } 
+    }
+}
+
+.btn-outline{
+    @apply leading-none border rounded text-white border-white rounded transform duration-200;
+
+    &:hover{
+        @apply text-primary-500 bg-white text-white border-transparent -translate-y-px
+    }
+
+    &.small{
+        @apply text-sm
+    }
+
+    &.primary{
+        @apply border-primary text-primary-400;
+
+        &:hover {
+            @apply bg-primary text-white border-transparent;
+        }
+    }
+}
+
+.btn-pill {
+    @apply bg-gray text-white font-bold py-2 px-4 rounded-full;
+
+    &.primary{
+        @apply bg-primary;
+
+        &:hover{
+            @apply bg-primary-dark;
+        }
+    }
+    
+}
+
+.btn-link{
+    @apply bg-transparent text-gray-500 font-semibold border border-transparent;
+
+    &:hover{
+        @apply text-gray-700;
+    }
+
+    &.primary{
+        @apply text-primary-400;
+
+        &:hover {
+            @apply text-primary-700;
+        }
+    }
+}

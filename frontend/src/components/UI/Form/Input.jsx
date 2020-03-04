@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { validateInput } from './validation'
+import { classList } from '../.'
 import PropTypes from 'prop-types'
 
 const Input = ({
@@ -21,13 +22,14 @@ const Input = ({
     setValue(value)
   }
   return (
-    <div>
+    <div className="form-control">
       {children && <label htmlFor={'input' + name}>{children}</label>}
 
       <input
         id={'input' + name}
-        value={valueState}
         name={name}
+        value={valueState}
+        className={classList('form-input', err && err.length > 0 && 'error')}
         onChange={handleInputChange}
         {...props}
       />
@@ -39,7 +41,7 @@ const Input = ({
 export default Input
 
 const InputError = ({ children }) => {
-  return <span>{children}</span>
+  return <span className="text-sm text-red-400">{children}</span>
 }
 
 InputError.propTypes = {

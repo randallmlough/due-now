@@ -42,7 +42,9 @@ const AuthenticateUser = ({ submit }) => {
         >
           Password
         </Input>
-        <Button>Sign In</Button>
+        <Button primary full>
+          Sign In
+        </Button>
       </Form>
     </>
   )

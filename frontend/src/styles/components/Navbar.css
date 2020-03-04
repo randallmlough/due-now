@@ -1,0 +1,41 @@
+
+.menu-btn {
+    @apply ;
+    span {
+        @apply bg-white w-6 rounded-full relative z-50 transition-all duration-500 transform;
+        height: 3px;
+        transform-origin: 1px;
+
+        &:first-child {
+            @apply rotate-0
+        }
+        &:nth-child(2) {
+            @apply opacity-100 rotate-0
+        }
+        &:nth-child(3) {
+            @apply rotate-0
+        }
+    }
+    
+    
+    &.open{
+        span {
+            @apply bg-white;
+
+            &:first-child { 
+                @apply rotate-45
+            }
+            &:nth-child(2) {
+                @apply opacity-0 translate-x-8
+            }
+            &:nth-child(3) {
+                @apply -rotate-45
+            }
+        } 
+    }
+}
+.mobile-menu{
+    &.open {
+        @apply fixed translate-x-0
+    }
+}

@@ -1,0 +1,8 @@
+:root {
+  --color-primary-light: theme('colors.primary.light');
+  --color-primary: theme('colors.primary.default');
+  --color-primary-dark: theme('colors.primary.dark');
+  --color-secondary: heme('colors.secondary.default');
+  --color-gray-light: theme('colors.gray.300');
+  --color-gray-dark: theme('colors.gray.700');
+}

@@ -3,6 +3,8 @@ import Views from './views'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import API from './api'
+import './app.css'
+import { Footer } from './components/Footer/Footer'
 function App() {
   useEffect(() => {
     new API().ping()
@@ -12,6 +14,7 @@ function App() {
       <div className="App">
         <Navbar />
         <Views />
+        <Footer />
       </div>
     </Router>
   )

@@ -65,7 +65,9 @@ const RegisterUser = ({ submit }) => {
       >
         Password
       </Input>
-      <Button>Sign Up</Button>
+      <Button primary full>
+        Sign Up
+      </Button>
     </Form>
   )
 }

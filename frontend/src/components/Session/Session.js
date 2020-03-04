@@ -2,7 +2,7 @@ import {
   receiveUserSession,
   receiveRemoveSession,
 } from '../../actions/session_actions'
-
+import * as jwt_decode from 'jwt-decode'
 const initialState = null
 
 export default class Session {
@@ -26,12 +26,14 @@ export default class Session {
   }
 
   setSession(sessionToken) {
-    const session = JSON.parse(atob(sessionToken))
-    if (shouldUpdate(this.session, session)) {
-      this.addSessionLocalStorage(sessionToken)
-      this.session = session
-      this.dispatch(receiveUserSession(session))
-      this._updateSubscribers()
+    const session = this.decodeJwtToken(sessionToken)
+    if (session) {
+      if (shouldUpdate(this.session, session)) {
+        this.addSessionLocalStorage(sessionToken)
+        this.session = session
+        this.dispatch(receiveUserSession(session))
+        this._updateSubscribers()
+      }
     }
   }
 
@@ -62,11 +64,15 @@ export default class Session {
 
   getSessionFromLocalStorage() {
     const session = localStorage.getItem('session')
-    return session ? JSON.parse(atob(session)) : null
+    return session ? this.decodeJwtToken(session) : null
   }
 
   removeFromLocalStorage() {
     localStorage.removeItem('session')
+  }
+
+  decodeJwtToken(jwtToken) {
+    return jwt_decode(jwtToken)
   }
 }
 

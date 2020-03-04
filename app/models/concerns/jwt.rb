@@ -12,9 +12,11 @@ module Jwt
             sub: user.id,
             iat: Time.now.to_i,
             first_name: user.first_name,
-            last_name: user.last_name
+            last_name: user.last_name,
+            avatar: user.avatar.to_s
         }
 
-        JWT.encode payload, @HMAC_SECRET, "HS256"
+        token = JWT.encode payload, @HMAC_SECRET, "HS256"
+        return token
     end
 end
