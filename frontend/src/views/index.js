@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { RegisterUserView, AuthenticateUserView } from './auth'
 import Dashboard from '../components/dashboard'
+import NotFound from './404'
 import { useSession } from '../components/Session'
 export default () => {
   return (
@@ -9,6 +10,7 @@ export default () => {
       <Route exact path="/register" component={RegisterUserView} />
       <Route exact path="/login" component={AuthenticateUserView} />
       <PrivateRoute exact path="/" component={Dashboard} />
+      <Route path="*" component={NotFound} />
     </Switch>
   )
 }
