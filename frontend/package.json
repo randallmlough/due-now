@@ -8,9 +8,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "autoprefixer": "^9.7.4",
     "axios": "^0.19.2",
     "jwt-decode": "^2.2.0",
     "postcss-cli": "^7.1.0",
+    "postcss-import": "^12.0.1",
+    "postcss-nested": "^4.2.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
@@ -18,12 +21,15 @@
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "tailwindcss": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:css": "postcss src/index.css -o src/index.css --env production",
+    "build:css:dev": "postcss src/styles/main.css -o src/index.css",
+    "build:css": "postcss src/styles/main.css -o src/index.css --env production",
+    "watch:css": "postcss src/styles/main.css -o src/index.css -w",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -43,12 +49,8 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^9.7.4",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.5.0",
-    "postcss-import": "^12.0.1",
-    "postcss-nested": "^4.2.1",
-    "tailwindcss": "^1.2.0"
+    "eslint-plugin-react-hooks": "^2.5.0"
   }
 }
