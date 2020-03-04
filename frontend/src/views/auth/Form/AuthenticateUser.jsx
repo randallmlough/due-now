@@ -1,15 +1,13 @@
 import React from 'react'
-import Form from '../../UI/Form/Form'
+import Form from '../../../components/UI/Form/Form'
 import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { authenticateUserAction } from '../../../actions'
-import { Button } from '../../UI'
-import Input from '../../UI/Form/Input'
+import { Button } from '../../../components/UI'
+import Input from '../../../components/UI/Form/Input'
 import PropTypes from 'prop-types'
-import { useSession } from '../../Session'
-import { useFlash } from '../../Flash'
+import { useSession } from '../../../components/Session'
+import { useFlash } from '../../../components/Flash'
 
-const AuthenticateUser = ({ submit }) => {
+export default function AuthenticateUserForm({ submit }) {
   const history = useHistory()
   const [, setSession] = useSession()
   const flash = useFlash()
@@ -58,24 +56,12 @@ const AuthenticateUser = ({ submit }) => {
           Password
         </Input>
         <Button primary full>
-          Sign In
+          Log In
         </Button>
       </Form>
     </>
   )
 }
-
-AuthenticateUser.propTypes = {
+AuthenticateUserForm.propTypes = {
   submit: PropTypes.func.isRequired,
 }
-
-export default AuthenticateUser
-
-const mapDispatchToProps = dispatch => ({
-  submit: async user => await dispatch(authenticateUserAction(user)),
-})
-
-export const AuthenticateUserContainer = connect(
-  null,
-  mapDispatchToProps
-)(AuthenticateUser)

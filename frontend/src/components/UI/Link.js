@@ -25,6 +25,7 @@ export default function Link({ children, ...props }) {
     button,
     outline,
     // sizing
+    inline,
     small,
     large,
     textSmall,
@@ -78,7 +79,9 @@ export default function Link({ children, ...props }) {
           : large || textLarge
           ? 'text-base'
           : 'text-sm', // regular size
-        small || paddingSmall
+        inline
+          ? ''
+          : small || paddingSmall
           ? 'px-4 py-2'
           : large || paddingLarge
           ? 'px-8 py-3'
@@ -115,7 +118,7 @@ export const linkStyles = (
     case 'black':
       return 'text-black'
     case 'default':
-      return `text-gray-${defaultShade} hover:text-gray-${hoverShade} focus:text-gray-${focusShade}`
+      return `text-blue-${defaultShade} hover:text-blue-${hoverShade} focus:text-blue-${focusShade}`
     default:
       return `text-${variant}-${defaultShade} hover:text-${variant}-${hoverShade} focus:text-${variant}-${focusShade}`
   }

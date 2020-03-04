@@ -3,7 +3,7 @@ import { classList } from '../UI/helpers'
 import PropTypes from 'prop-types'
 
 export const DefaultMenu = ({ open, mobile, setOpen, children }) => {
-  return mobile ? (
+  return (
     <div
       className={classList(
         'w-64 absolute flex-col bg-gray-900 shadow-2xl pl-6 bottom-0 left-0 top-0',
@@ -21,10 +21,6 @@ export const DefaultMenu = ({ open, mobile, setOpen, children }) => {
       </button>
       <nav>{children}</nav>
     </div>
-  ) : (
-    <nav className="relative flex flex-grow items-center w-auto">
-      {children}
-    </nav>
   )
 }
 

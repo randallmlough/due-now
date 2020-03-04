@@ -7,7 +7,7 @@ export default function MenuBtn({ open, setOpen }) {
     <button
       type="button"
       className={classList(
-        'flex flex-col justify-around h-6 z-50 mr-3 lg:hidden focus:outline-none',
+        'flex flex-col justify-around h-6 z-50 mr-3 focus:outline-none',
         'menu-btn',
         open && 'open'
       )}

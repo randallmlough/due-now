@@ -3,6 +3,6 @@
   --color-primary: theme('colors.primary.default');
   --color-primary-dark: theme('colors.primary.dark');
   --color-secondary: heme('colors.secondary.default');
-  --color-gray-light: theme('colors.gray.300');
-  --color-gray-dark: theme('colors.gray.700');
+  --color-gray-light: theme('colors.neutral.300');
+  --color-gray-dark: theme('colors.neutral.700');
 }

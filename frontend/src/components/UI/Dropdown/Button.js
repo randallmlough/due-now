@@ -9,7 +9,7 @@ export const DropdownButton = ({ menuRef, buttonText }) => {
   return (
     <button
       key="dropdown-button"
-      className="px-2 block py-1 text-gray-100 whitespace-no-wrap self-center md:block md:flex md:items-center focus:outline-none"
+      className="px-2 block py-1 text-white whitespace-no-wrap self-center md:block md:flex md:items-center focus:outline-none"
       id="navbarDropdown"
       aria-haspopup="true"
       aria-expanded="false"

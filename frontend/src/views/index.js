@@ -1,17 +1,23 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
-import { RegisterUserView, AuthenticateUserView } from './auth'
-import Dashboard from '../components/dashboard'
-import NotFound from './404'
+import { Route, Redirect } from 'react-router-dom'
 import { useSession } from '../components/Session'
-export default () => {
+import Navbar from '../components/Navbar'
+
+export const StaticView = ({ component: Component, showNav, ...rest }) => {
   return (
-    <Switch>
-      <Route exact path="/register" component={RegisterUserView} />
-      <Route exact path="/login" component={AuthenticateUserView} />
-      <PrivateRoute exact path="/" component={Dashboard} />
-      <Route path="*" component={NotFound} />
-    </Switch>
+    <>
+      {showNav && <Navbar />}
+      <Route {...rest} render={props => <Component {...props} />} />
+    </>
+  )
+}
+
+export const AppView = props => {
+  return (
+    <>
+      <Navbar />
+      <PrivateRoute {...props} />
+    </>
   )
 }
 

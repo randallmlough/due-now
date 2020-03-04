@@ -1,11 +1,27 @@
 import React from 'react'
-import { AuthenticateUser } from '../../components/Session/Form'
+import { connect } from 'react-redux'
+import { AuthenticateUserForm } from './Form'
 import { Redirect } from 'react-router-dom'
 import { useSession } from '../../components/Session'
 import { Link } from '../../components/UI'
-
-export default props => {
-  const [session] = useSession()
+import { Button } from '../../components/UI'
+import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { authenticateUserAction } from '../../actions'
+export default function AuthenticateView({ submit }) {
+  const [session, setSession] = useSession()
+  const history = useHistory()
+  const demoAccount = {
+    email: 'demo@example.com',
+    password: '1234567',
+  }
+  const handleDemo = e => {
+    e.preventDefault()
+    submit(demoAccount).then(resp => {
+      setSession(resp.session_token)
+      history.push('/')
+    })
+  }
 
   return (
     <>
@@ -13,40 +29,36 @@ export default props => {
         <Redirect to="/" />
       ) : (
         <div className="container mx-auto px-4 py-32 h-screen">
-          <div className="w-100 md:w-2/3 lg:w-1/2 xl:w-2/5 mx-auto mb-8">
-            <div className="bg-primary-100 bg-teal-100 border-primary-500 border-t-4 px-4 py-3 rounded-b shadow text-teal-900">
-              <div className="flex">
-                <div className="px-6">
-                  <p className="font-bold mb-3">Demo login</p>
-                  <ul className="mb-3">
-                    <li>
-                      <strong>Email:</strong> demo@example.com
-                    </li>
-                    <li>
-                      <strong>Password:</strong> 1234567
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="w-100 md:w-2/3 lg:w-1/2 xl:w-2/5 mx-auto">
-            <div className="bg-gray-100 px-10 pt-8 shadow-md w-full rounded-t">
+            <div className="bg-neutral-100 px-10 pt-8 shadow-md w-full rounded-t">
               <div className="mb-6">
                 <h3 className="text-gray-600">Sign in</h3>
               </div>
-              <AuthenticateUser />
+              <AuthenticateUserForm submit={submit} />
+              <div className="my-6"></div>
+              <Button white full onClick={handleDemo}>
+                Demo
+              </Button>
             </div>
-            <div className="bg-gray-100 p-10 shadow-md rounded w-full mb-5">
-              <hr className="mt-10 mb-3 border-t" />
+            <div className="bg-neutral-100 p-10 shadow-md rounded-b w-full mb-5">
+              <hr className="mt-10 mb-3 border-t border-neutral-300" />
               <div className="flex flex-col items-center">
-                <Link to="/register" className="mb-3">
-                  Sign Up
-                </Link>
-                <Link to="/forgot-password" className="mb-3">
-                  Forgot Password?
-                </Link>
+                <div className="mb-2">
+                  <span className="text-gray-dark text-sm mr-1">
+                    Don't have an account?
+                  </span>
+                  <Link to="/register" inline>
+                    Sign Up
+                  </Link>
+                </div>
+                <div>
+                  <span className="text-gray-dark text-sm mr-1">
+                    Forgot your password?
+                  </span>
+                  <Link to="/forgot-password" inline>
+                    Reset password
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -55,3 +67,16 @@ export default props => {
     </>
   )
 }
+
+AuthenticateView.propTypes = {
+  submit: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = dispatch => ({
+  submit: async user => await dispatch(authenticateUserAction(user)),
+})
+
+export const AuthenticateUserViewContainer = connect(
+  null,
+  mapDispatchToProps
+)(AuthenticateView)

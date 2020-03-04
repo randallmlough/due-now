@@ -31,7 +31,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="bg-primary-900">
+      <header className="bg-gray-500">
         <div className="container mx-auto ">
           <div
             className="navbar flex items-center flex-wrap px-6 py-4"
@@ -48,16 +48,16 @@ export default function Navbar() {
             </div>
             {session ? (
               <DefaultMenu open={open} setOpen={setOpen} mobile={mobile}>
-                <div className="text-2xl lg:text-sm w-full lg:flex-grow">
+                <div className="text-2xl w-full lg:flex-grow">
                   <NavLink
                     to="/"
-                    className="block mt-4 lg:inline-block lg:mt-0 text-primary-200 hover:text-white mr-4"
+                    className="block mt-4 lg:mt-0 text-white hover:text-white mr-4"
                   >
                     Dashboard
                   </NavLink>
                   <NavLink
                     to="/users"
-                    className="block mt-4 lg:inline-block lg:mt-0 text-primary-200 hover:text-white mr-4"
+                    className="block mt-4 lg:mt-0 text-white hover:text-white mr-4"
                   >
                     Users
                   </NavLink>
@@ -68,31 +68,39 @@ export default function Navbar() {
                 <div className="text-2xl lg:text-sm w-full lg:flex-grow">
                   <NavLink
                     to="/"
-                    className="block mt-4 lg:inline-block lg:mt-0 text-primary-200 hover:text-white mr-4"
+                    className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                   >
                     Logged out
                   </NavLink>
                 </div>
               </DefaultMenu>
             )}
-            {session ? (
-              <UserMenu />
-            ) : (
-              <div className="ml-auto">
-                <Link to="/login" white outline small className="ml-3 lg:mt-0">
-                  Sign in
-                </Link>
-                <Link
-                  to="/register"
-                  button
-                  small
-                  success
-                  className="ml-3 lg:mt-0"
-                >
-                  Sign up
-                </Link>
-              </div>
-            )}
+            <div className="ml-auto">
+              {session ? (
+                <UserMenu />
+              ) : (
+                <div>
+                  <Link
+                    to="/login"
+                    white
+                    outline
+                    small
+                    className="ml-3 lg:mt-0"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    to="/register"
+                    button
+                    small
+                    success
+                    className="ml-3 lg:mt-0"
+                  >
+                    Sign up
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>

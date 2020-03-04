@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import Form from '../../UI/Form/Form'
+import Form from '../../../components/UI/Form/Form'
 import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { registerUserAction } from '../../../actions'
-import { Button } from '../../UI'
-import Input from '../../UI/Form/Input'
+import { Button } from '../../../components/UI'
+import Input from '../../../components/UI/Form/Input'
 import PropTypes from 'prop-types'
-import { useSession } from '../../Session'
-import { useFlash } from '../../Flash'
+import { useSession } from '../../../components/Session'
+import { useFlash } from '../../../components/Flash'
 
-const RegisterUser = ({ submit }) => {
+export default function RegisterUser({ submit }) {
   const initialState = {
     first_name: '',
     last_name: '',
@@ -92,22 +90,4 @@ const RegisterUser = ({ submit }) => {
 
 RegisterUser.propTypes = {
   submit: PropTypes.func.isRequired,
-  history: PropTypes.object,
 }
-
-export default RegisterUser
-
-const mapStateToProps = (state = {}) => {
-  return {
-    user: state.session.currentUser,
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  submit: async user => await dispatch(registerUserAction(user)),
-})
-
-export const RegisterUserContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegisterUser)
