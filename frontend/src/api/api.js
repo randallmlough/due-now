@@ -7,7 +7,7 @@ export default class API {
   }
 
   ping() {
-    this.get('/api')
+    return this.get('/api')
   }
 
   async get(url) {

@@ -9,7 +9,9 @@ import { Footer } from './components/Footer/Footer'
 
 function App() {
   useEffect(() => {
-    new API().ping()
+    new API().ping().catch(e => {
+      console.log(e)
+    })
   }, [])
   return (
     <div className="App">

@@ -8,7 +8,6 @@ const Input = ({
   value: initialValue = '',
   children,
   onSuccess,
-  type,
   ...props
 }) => {
   const [valueState, setValue] = useState(initialValue)
