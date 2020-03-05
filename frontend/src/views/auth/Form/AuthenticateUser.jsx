@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from '../../../components/UI/Form/Form'
 import { useHistory } from 'react-router-dom'
 import { Button } from '../../../components/UI'
@@ -11,11 +11,18 @@ export default function AuthenticateUserForm({ submit }) {
   const history = useHistory()
   const [, setSession] = useSession()
   const flash = useFlash()
+  const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async data => {
+    setSubmitting(true)
     await submit(data)
       .then(resp => {
         setSession(resp.session_token)
+        flash.add({
+          type: 'success',
+          title: 'Welcome back!',
+          body: "Here's some things you may have missed",
+        })
         history.push('/')
       })
       .catch(e => {
@@ -33,8 +40,10 @@ export default function AuthenticateUserForm({ submit }) {
             })
           }
         }
+        setSubmitting(false)
       })
   }
+
   return (
     <>
       <Form submit={handleSubmit}>
@@ -55,8 +64,8 @@ export default function AuthenticateUserForm({ submit }) {
         >
           Password
         </Input>
-        <Button primary full>
-          Log In
+        <Button primary full disabled={submitting} spinner={submitting}>
+          {submitting ? '' : 'Log In'}
         </Button>
       </Form>
     </>

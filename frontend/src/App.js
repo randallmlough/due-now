@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import Routes from './routes'
 import { BrowserRouter as Router } from 'react-router-dom'
 import API from './api'
-import './app.css'
+import { LastLocationProvider } from 'react-router-last-location'
 import { withFlashProvider } from './components/Flash'
+import 'animate.css'
+import './app.css'
 
 function App() {
   useEffect(() => {
@@ -14,7 +16,9 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Routes />
+        <LastLocationProvider>
+          <Routes />
+        </LastLocationProvider>
       </Router>
     </div>
   )

@@ -16,13 +16,13 @@ const Flash = ({ id, type, title, body, time = 3000, remove }) => {
     <div
       id={id}
       className={classList(
-        'flash flex items-center mb-2 offscreen-right slide-in-left',
+        'flash flex items-center mb-2 animated fadeInDown', //offscreen-right slide-in-left
         type,
-        !show && 'slide-out-right'
+        !show && 'fadeOutUp'
       )}
       role="alert"
       onAnimationEnd={e => {
-        if (e.target.classList.contains('slide-out-right')) removeRef.current()
+        if (e.target.classList.contains('fadeOutUp')) removeRef.current()
       }}
       onClick={() => setShowState(false)}
     >

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { AuthenticateUserForm } from './Form'
 import { Redirect } from 'react-router-dom'
@@ -8,6 +8,9 @@ import { Button } from '../../components/UI'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { authenticateUserAction } from '../../actions'
+import { useLastLocation } from 'react-router-last-location'
+import { routes } from '../../routes'
+
 export default function AuthenticateView({ submit }) {
   const [session, setSession] = useSession()
   const history = useHistory()
@@ -15,13 +18,22 @@ export default function AuthenticateView({ submit }) {
     email: 'demo@example.com',
     password: '1234567',
   }
+
+  const [submitting, setSubmitting] = useState(false)
   const handleDemo = e => {
     e.preventDefault()
-    submit(demoAccount).then(resp => {
-      setSession(resp.session_token)
-      history.push('/')
-    })
+    setSubmitting(true)
+    submit(demoAccount)
+      .then(resp => {
+        setSession(resp.session_token)
+        history.push('/')
+      })
+      .catch(e => {
+        setSubmitting(false)
+      })
   }
+  const location = useLastLocation()
+  const slideIn = location && location.pathname === routes.REGISTER
 
   return (
     <>
@@ -29,15 +41,26 @@ export default function AuthenticateView({ submit }) {
         <Redirect to="/" />
       ) : (
         <div className="container mx-auto px-4 py-32 h-screen">
-          <div className="w-100 md:w-2/3 lg:w-1/2 xl:w-2/5 mx-auto">
+          <div
+            className={
+              'w-100 md:w-2/3 lg:w-1/2 xl:w-2/5 mx-auto animated ' +
+              (slideIn ? 'fadeInRight' : 'fadeIn')
+            }
+          >
             <div className="bg-neutral-100 px-10 pt-8 shadow-md w-full rounded-t">
               <div className="mb-6">
                 <h3 className="text-gray-600">Sign in</h3>
               </div>
               <AuthenticateUserForm submit={submit} />
               <div className="my-6"></div>
-              <Button white full onClick={handleDemo}>
-                Demo
+              <Button
+                white
+                full
+                onClick={handleDemo}
+                disabled={submitting}
+                spinner={submitting}
+              >
+                {submitting ? '' : 'Demo'}
               </Button>
             </div>
             <div className="bg-neutral-100 p-10 shadow-md rounded-b w-full mb-5">

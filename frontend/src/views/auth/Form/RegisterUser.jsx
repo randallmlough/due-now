@@ -15,11 +15,13 @@ export default function RegisterUser({ submit }) {
     password: '',
   }
   const [, setSession] = useSession()
-  const [user, setUser] = useState(initialState)
+  const [user] = useState(initialState)
   const history = useHistory()
   const flash = useFlash()
+  const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async data => {
+    setSubmitting(true)
     await submit(data)
       .then(resp => {
         setSession(resp.session_token)
@@ -44,6 +46,7 @@ export default function RegisterUser({ submit }) {
               body: e.message,
             })
         }
+        setSubmitting(false)
       })
   }
   return (
@@ -81,8 +84,8 @@ export default function RegisterUser({ submit }) {
       >
         Password
       </Input>
-      <Button primary full>
-        Sign Up
+      <Button primary full disabled={submitting} spinner={submitting}>
+        {submitting ? '' : 'Log In'}
       </Button>
     </Form>
   )

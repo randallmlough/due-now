@@ -1,5 +1,7 @@
 .flashs-wrapper {
-    @apply absolute top-0 right-0 mr-3 mt-3
+    @apply absolute top-0 right-0 mr-3 mt-3;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .flash {

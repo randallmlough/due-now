@@ -9,11 +9,21 @@ export default () => {
   return (
     <>
       <Switch>
-        <StaticView exact path="/register" component={RegisterUserView} />
-        <StaticView exact path="/login" component={AuthenticateUserView} />
-        <AppView exact path="/" component={Dashboard} />
+        <StaticView exact path={routes.REGISTER} component={RegisterUserView} />
+        <StaticView
+          exact
+          path={routes.LOGIN}
+          component={AuthenticateUserView}
+        />
+        <AppView exact path={routes.DASHBOARD} component={Dashboard} />
         <StaticView path="*" component={NotFound} />
       </Switch>
     </>
   )
+}
+
+export const routes = {
+  REGISTER: '/register',
+  LOGIN: '/login',
+  DASHBOARD: '/',
 }

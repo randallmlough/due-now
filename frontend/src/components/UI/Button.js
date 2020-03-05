@@ -25,7 +25,7 @@ export default function Button({ children, ...props }) {
     link,
     flat,
     rounded,
-
+    disabled,
     //  sizing
     small,
     large,
@@ -38,7 +38,8 @@ export default function Button({ children, ...props }) {
     uppercase,
     titlecase,
     lowercase,
-
+    //misc
+    spinner,
     // additional classes to be added
     className,
     // all other props
@@ -95,13 +96,16 @@ export default function Button({ children, ...props }) {
           : '',
         rounded ? 'rounded-full' : 'rounded',
         // color variants
-        link
+        disabled
+          ? buttonStylesDisabledSolid(variant)
+          : link
           ? linkStyles(variant, shading)
           : outline
           ? buttonStylesOutline(variant, shading)
           : buttonStylesSolid(variant, shading),
-        flat ? '' : 'transform hover:-translate-y-px',
+        flat || disabled ? '' : 'transform hover:-translate-y-px',
         full ? 'w-full' : '',
+        spinner && 'spinner',
         className
       )}
       {...rest}
@@ -109,6 +113,23 @@ export default function Button({ children, ...props }) {
       {children}
     </button>
   )
+}
+
+export const buttonStylesDisabledSolid = (
+  variant = 'default',
+  { defaultShade = 300 } = {}
+) => {
+  const base = 'shadow border border-transparent cursor-not-allowed '
+  switch (variant) {
+    case 'white':
+      return base + `text-primary-${defaultShade} bg-white`
+    case 'black':
+      return base + `text-primary-300 bg-black`
+    case 'default':
+      return base + `text-white bg-gray-${defaultShade}`
+    default:
+      return base + `text-white bg-${variant}-${defaultShade}`
+  }
 }
 
 export const buttonStylesSolid = (
