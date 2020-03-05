@@ -20,7 +20,6 @@ const FlashProvider = props => {
     return () => flashController.unsubscribe()
   }, [forceRender, flashController])
 
-  console.log('flash count', flashController.flashes.length)
   return (
     <Provider value={flashController}>
       {children}

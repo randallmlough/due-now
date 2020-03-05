@@ -1,28 +1,23 @@
-export default class FlashController {
+export default class NotificationController {
   constructor() {
-    this.flashes = []
+    this.notifications = []
     this.subscribers = []
   }
 
   // add a flash
-  addFlash({
-    type = 'danger',
-    title = 'Uh oh!',
-    body = 'An error occurred',
-    time = 4000,
-  } = {}) {
+  addNotification({ type = 'default', icon, title, body, time = 5000 } = {}) {
     // debugger
-    const id = this._generateFlashID()
-    this.flashes.push({ id, type, time, title, body })
+    const id = this._generateNotificationID()
+    this.notifications.push({ id, type, time, icon, title, body })
     this._updateSubscribers()
   }
 
-  flashes() {
-    return this.flashes
+  notifications() {
+    return this.notifications
   }
   // remove a flash
-  removeFlash(id) {
-    this.flashes = this.flashes.filter(flash => flash.id !== id)
+  removeNotification(id) {
+    this.notifications = this.notifications.filter(flash => flash.id !== id)
     this._updateSubscribers()
   }
 
@@ -38,7 +33,7 @@ export default class FlashController {
     this.subscribers.forEach(callback => callback())
   }
 
-  _generateFlashID() {
+  _generateNotificationID() {
     let first = (Math.random() * 46656) | 0
     let second = (Math.random() * 46656) | 0
     first = ('000' + first.toString(36)).slice(-3)

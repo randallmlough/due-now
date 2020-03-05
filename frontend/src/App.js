@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import API from './api'
 import { LastLocationProvider } from 'react-router-last-location'
 import FlashProvider from './components/Flash'
+import NotificationProvider from './components/Notification'
 import 'animate.css'
 import './app.css'
 
@@ -16,11 +17,13 @@ function App() {
   return (
     <div className="App">
       <FlashProvider>
-        <Router>
-          <LastLocationProvider>
-            <Routes />
-          </LastLocationProvider>
-        </Router>
+        <NotificationProvider>
+          <Router>
+            <LastLocationProvider>
+              <Routes />
+            </LastLocationProvider>
+          </Router>
+        </NotificationProvider>
       </FlashProvider>
     </div>
   )

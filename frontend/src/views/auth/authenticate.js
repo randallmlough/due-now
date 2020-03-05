@@ -11,6 +11,8 @@ import { authenticateUserAction } from '../../actions'
 import { useLastLocation } from 'react-router-last-location'
 import { routes } from '../../routes'
 import { useFlash } from '../../components/Flash'
+import { useNotification } from '../../components/Notification'
+
 export default function AuthenticateView({ submit }) {
   const [session, setSession] = useSession()
   const history = useHistory()
@@ -18,16 +20,17 @@ export default function AuthenticateView({ submit }) {
     email: 'demo@example.com',
     password: '1234567',
   }
-  const flash = useFlash()
   const [submitting, setSubmitting] = useState(false)
+  const flash = useFlash()
+  const notification = useNotification()
+
   const handleDemo = e => {
     e.preventDefault()
     setSubmitting(true)
     submit(demoAccount)
       .then(resp => {
         setSession(resp.session_token)
-        flash.add({
-          type: 'success',
+        notification.add({
           title: 'Welcome to Invoiced!',
           body: 'Take a look around and see all the fun stuff you can do.',
         })

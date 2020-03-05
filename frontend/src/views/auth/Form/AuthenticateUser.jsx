@@ -10,8 +10,8 @@ import { useFlash } from '../../../components/Flash'
 export default function AuthenticateUserForm({ submit }) {
   const history = useHistory()
   const [, setSession] = useSession()
-  const flash = useFlash()
   const [submitting, setSubmitting] = useState(false)
+  const flash = useFlash()
 
   const handleSubmit = async data => {
     setSubmitting(true)
