@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch } from 'react-router-dom'
 import { RegisterUserView, AuthenticateUserView } from './views/auth'
-import Dashboard from './components/dashboard'
+import { DashboardView } from './views/users'
 import NotFound from './views/404'
 import { StaticView, AppView } from './views'
 
@@ -15,7 +15,7 @@ export default () => {
           path={routes.LOGIN}
           component={AuthenticateUserView}
         />
-        <AppView exact path={routes.DASHBOARD} component={Dashboard} />
+        <AppView exact path={routes.DASHBOARD} component={DashboardView} />
         <StaticView path="*" component={NotFound} />
       </Switch>
     </>
