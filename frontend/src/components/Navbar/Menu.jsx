@@ -1,63 +1,46 @@
-import React from 'react'
-import { classList } from '../UI/helpers'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 export const DefaultMenu = ({ open, mobile, setOpen, children }) => {
+  const drawer = useRef(null)
+  useEffect(() => {
+    if (open && drawer) {
+      drawer.current.classList.remove('hidden', 'slideOutLeft')
+      drawer.current.classList.add('slideInLeft')
+    } else if (!open && drawer) {
+      drawer.current.classList.remove('slideInLeft')
+      drawer.current.classList.add('slideOutLeft')
+    }
+  }, [open, drawer])
+
+  useEffect(() => {
+    if (drawer) {
+      function drawerAnimationListener() {
+        if (drawer.current.classList.contains('slideOutLeft')) {
+          drawer.current.classList.remove('slideOutLeft')
+          drawer.current.classList.add('hidden')
+        }
+      }
+      drawer.current.addEventListener('animationend', drawerAnimationListener)
+      return () => {
+        drawer.current.removeEventListener(
+          'animationend',
+          drawerAnimationListener
+        )
+      }
+    }
+  }, [drawer])
   return (
     <div
-      className={classList(
-        'w-64 absolute flex-col bg-gray-900 shadow-2xl pl-6 bottom-0 left-0 top-0',
-        'transform -translate-x-full transition-transform duration-300 z-40',
-        'mobile-menu',
-        open && 'open'
-      )}
+      className="w-64 xl:w-1/5 fixed bottom-0 left-0 top-0 flex flex-col bg-gray-900 shadow-2xl pl-6 py-20 z-40 animated faster hidden slideInLeft"
+      ref={drawer}
     >
-      <button
-        type="button"
-        className="py-5 text-2xl text-white font-bold leading-none ml-6 md:ml-0 focus:outline-none"
-        onClick={() => setOpen(!open)}
-      >
-        Close
-      </button>
       <nav>{children}</nav>
     </div>
   )
 }
 
 DefaultMenu.propTypes = {
-  open: PropTypes.bool,
-  mobile: PropTypes.bool,
-  setOpen: PropTypes.func,
-  children: PropTypes.object,
-}
-
-export const AuthenticatedMenu = ({ open, mobile, setOpen, children }) => {
-  return mobile ? (
-    <div
-      className={classList(
-        'w-64 absolute flex-col bg-gray-900 shadow-2xl pl-6 bottom-0 left-0 top-0',
-        'transform -translate-x-full transition-transform duration-300 z-40',
-        'mobile-menu',
-        open && 'open'
-      )}
-    >
-      <button
-        type="button"
-        className="py-5 text-2xl text-white font-bold leading-none ml-6 md:ml-0 focus:outline-none"
-        onClick={() => setOpen(!open)}
-      >
-        Close
-      </button>
-      <nav>{children}</nav>
-    </div>
-  ) : (
-    <nav className="relative flex flex-grow items-center w-auto">
-      {children}
-    </nav>
-  )
-}
-
-AuthenticatedMenu.propTypes = {
   open: PropTypes.bool,
   mobile: PropTypes.bool,
   setOpen: PropTypes.func,

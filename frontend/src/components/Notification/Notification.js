@@ -36,9 +36,15 @@ export default function Notification({
         removeRef.current()
       }
     }
-    document.addEventListener('animationend', animationEndListener)
+    notificationWrapper.current.addEventListener(
+      'animationend',
+      animationEndListener
+    )
     return () => {
-      document.removeEventListener('animationend', animationEndListener)
+      notificationWrapper.current.removeEventListener(
+        'animationend',
+        animationEndListener
+      )
     }
   }, [notificationWrapper])
 
@@ -59,7 +65,11 @@ export default function Notification({
       ref={notificationWrapper}
     >
       <div className="flex">
-        <div className="text-3xl mr-3">👋</div>
+        <div className="text-3xl mr-3">
+          <span role="img" aria-label="hand wave emoji">
+            👋
+          </span>
+        </div>
 
         <div className="pr-10">
           {title && <div className="text-primary font-bold mr-1">{title}</div>}

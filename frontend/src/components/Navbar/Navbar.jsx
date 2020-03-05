@@ -51,13 +51,13 @@ export default function Navbar() {
                 <div className="text-2xl w-full lg:flex-grow">
                   <NavLink
                     to="/"
-                    className="block mt-4 lg:mt-0 text-white hover:text-white mr-4"
+                    className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
                     Dashboard
                   </NavLink>
                   <NavLink
                     to="/users"
-                    className="block mt-4 lg:mt-0 text-white hover:text-white mr-4"
+                    className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
                     Users
                   </NavLink>
@@ -107,8 +107,8 @@ export default function Navbar() {
       {open && (
         <div
           className={classList(
-            'bg-black absolute top-0 right-0 left-0 bottom-0 z-30',
-            open ? 'block fade-in' : 'hidden opacity-0'
+            'bg-black absolute top-0 right-0 left-0 bottom-0 z-30 animated',
+            open ? 'block fadeIn-50 ' : 'hidden opacity-0'
           )}
           onClick={() => setOpen(!open)}
         ></div>

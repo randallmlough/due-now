@@ -43,7 +43,7 @@ export default function RegisterView({ submit, demo }) {
           <div
             className={
               'w-100 md:w-2/3 lg:w-1/2 xl:w-2/5 mx-auto animated ' +
-              (slideIn ? 'fadeInLeft' : 'fadeIn')
+              (slideIn ? 'fadeInLeft-25' : 'fadeIn')
             }
           >
             <div className="bg-neutral-100 px-10 pt-8 shadow-md w-full rounded-t">

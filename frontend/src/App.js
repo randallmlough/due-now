@@ -5,7 +5,6 @@ import API from './api'
 import { LastLocationProvider } from 'react-router-last-location'
 import FlashProvider from './components/Flash'
 import NotificationProvider from './components/Notification'
-import 'animate.css'
 import './app.css'
 
 function App() {

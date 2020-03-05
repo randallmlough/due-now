@@ -35,9 +35,12 @@ export default function Flash({
         removeRef.current()
       }
     }
-    document.addEventListener('animationend', animationEndListener)
+    flashWrapper.current.addEventListener('animationend', animationEndListener)
     return () => {
-      document.removeEventListener('animationend', animationEndListener)
+      flashWrapper.current.removeEventListener(
+        'animationend',
+        animationEndListener
+      )
     }
   }, [flashWrapper])
 
