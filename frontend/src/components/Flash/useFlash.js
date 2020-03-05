@@ -1,10 +1,10 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import FlashContext from './context'
 
 const useFlash = () => {
   const context = useContext(FlashContext)
-
-  return { add: context.add, remove: context.remove }
+  const add = useMemo(() => context.addFlash.bind(context), [context])
+  return { add }
 }
 
 export default useFlash

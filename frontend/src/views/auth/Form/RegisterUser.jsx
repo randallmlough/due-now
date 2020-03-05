@@ -36,13 +36,13 @@ export default function RegisterUser({ submit }) {
         if (e.status < 500) {
           if (e.status === 409)
             flash.add({
-              type: 'error',
-              title: 'Sorry!',
+              type: 'danger',
+              title: 'Uh oh!',
               body: 'That email is already in use or invalid',
             })
           else
             flash.add({
-              type: 'error',
+              type: 'danger',
               body: e.message,
             })
         }
@@ -85,7 +85,7 @@ export default function RegisterUser({ submit }) {
         Password
       </Input>
       <Button primary full disabled={submitting} spinner={submitting}>
-        {submitting ? '' : 'Log In'}
+        {submitting ? '' : 'Register'}
       </Button>
     </Form>
   )

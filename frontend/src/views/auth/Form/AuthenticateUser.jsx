@@ -29,13 +29,15 @@ export default function AuthenticateUserForm({ submit }) {
         if (e.status < 500) {
           if (e.status === 401) {
             flash.add({
-              type: 'error',
-              title: 'Whoops',
+              type: 'danger',
+              title: 'Whoops!',
+              time: null,
               body: 'Either the email or the password you entered is incorrect',
             })
           } else {
             flash.add({
-              type: 'error',
+              type: 'danger',
+              time: null,
               body: e.message,
             })
           }

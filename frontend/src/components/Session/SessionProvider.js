@@ -8,7 +8,6 @@ const SessionProvider = props => {
   const { dispatch, children } = props
   const session = new Session(dispatch)
   useEffect(() => {
-    // session.loadSession()
     session.initialize()
   }, [session])
 

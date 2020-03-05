@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { authenticateUserAction } from '../../actions'
 import { useLastLocation } from 'react-router-last-location'
 import { routes } from '../../routes'
-
+import { useFlash } from '../../components/Flash'
 export default function AuthenticateView({ submit }) {
   const [session, setSession] = useSession()
   const history = useHistory()
@@ -18,7 +18,7 @@ export default function AuthenticateView({ submit }) {
     email: 'demo@example.com',
     password: '1234567',
   }
-
+  const flash = useFlash()
   const [submitting, setSubmitting] = useState(false)
   const handleDemo = e => {
     e.preventDefault()
@@ -26,10 +26,20 @@ export default function AuthenticateView({ submit }) {
     submit(demoAccount)
       .then(resp => {
         setSession(resp.session_token)
+        flash.add({
+          type: 'success',
+          title: 'Welcome to Invoiced!',
+          body: 'Take a look around and see all the fun stuff you can do.',
+        })
         history.push('/')
       })
       .catch(e => {
         setSubmitting(false)
+        flash.add({
+          type: 'danger',
+          title: 'Sorry!',
+          body: 'Something unexpected happened. Please try again.',
+        })
       })
   }
   const location = useLastLocation()

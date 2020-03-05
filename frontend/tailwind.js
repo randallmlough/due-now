@@ -31,6 +31,12 @@ module.exports = {
           default: colors.red[500],
           dark: colors.red[700],
         },
+        info: {
+          ...colors.blue,
+          light: colors.blue[300],
+          default: colors.blue[500],
+          dark: colors.blue[700],
+        },
         neutral: {
           ...colors.gray,
           light: colors.gray[300],

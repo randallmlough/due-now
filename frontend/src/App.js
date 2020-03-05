@@ -3,7 +3,7 @@ import Routes from './routes'
 import { BrowserRouter as Router } from 'react-router-dom'
 import API from './api'
 import { LastLocationProvider } from 'react-router-last-location'
-import { withFlashProvider } from './components/Flash'
+import FlashProvider from './components/Flash'
 import 'animate.css'
 import './app.css'
 
@@ -15,13 +15,15 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <Router>
-        <LastLocationProvider>
-          <Routes />
-        </LastLocationProvider>
-      </Router>
+      <FlashProvider>
+        <Router>
+          <LastLocationProvider>
+            <Routes />
+          </LastLocationProvider>
+        </Router>
+      </FlashProvider>
     </div>
   )
 }
 
-export default withFlashProvider(App)
+export default App

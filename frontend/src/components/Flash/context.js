@@ -1,5 +1,6 @@
 import React from 'react'
+import FlashController from './FlashController'
+const FlashContext = React.createContext(new FlashController())
 
-const FlashContext = React.createContext(null)
-
+export const { Provider, Consumer } = FlashContext
 export default FlashContext

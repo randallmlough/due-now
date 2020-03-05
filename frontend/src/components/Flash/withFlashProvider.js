@@ -19,7 +19,7 @@ function withFlashProvider(Component) {
 
     // add a flash
     const add = ({
-      type = 'error',
+      type = 'danger',
       title = 'Uh oh!',
       body = 'An error occurred',
       time = 4000,
@@ -41,7 +41,7 @@ function withFlashProvider(Component) {
         <Component {...props} />
 
         {createPortal(
-          <div className="flashs-wrapper">
+          <div className="flash-wrapper">
             {flashs.map(flash => (
               <Flash
                 key={flash.id}

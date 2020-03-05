@@ -2,7 +2,7 @@ import {
   receiveUserSession,
   logoutUserAction,
 } from '../../actions/session_actions'
-import { checkAuth, formatError, errorType } from '../../api'
+import { checkAuth } from '../../api'
 import * as jwt_decode from 'jwt-decode'
 const initialState = null
 
