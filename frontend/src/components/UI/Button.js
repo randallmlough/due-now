@@ -1,6 +1,5 @@
 import React from 'react'
 import { classList } from './helpers'
-import { linkStyles } from './Link'
 export default function Button({ children, ...props }) {
   const {
     // color variants
@@ -99,7 +98,7 @@ export default function Button({ children, ...props }) {
         disabled
           ? buttonStylesDisabledSolid(variant)
           : link
-          ? linkStyles(variant, shading)
+          ? buttonStylesLink(variant, shading)
           : outline
           ? buttonStylesOutline(variant, shading)
           : buttonStylesSolid(variant, shading),
@@ -182,17 +181,17 @@ export const buttonStylesOutline = (
   }
 }
 
-// function buttonStylesLink(
-//   variant = 'default',
-//   { defaultShade = 500, hoverShade = 400, focusShade = 800 } = {}
-// ) {
-//   switch (variant) {
-//     case 'white':
-//       return `text-white text-primary-${hoverShade}`
-//     case 'black':
-//     case 'default':
-//       return `text-gray-${defaultShade} hover:text-gray-${hoverShade} focus:text-gray-${focusShade}`
-//     default:
-//       return `text-${variant}-${defaultShade} hover:text-${variant}-${hoverShade} focus:text-${variant}-${focusShade}`
-//   }
-// }
+function buttonStylesLink(
+  variant = 'default',
+  { defaultShade = 500, hoverShade = 400, focusShade = 800 } = {}
+) {
+  switch (variant) {
+    case 'white':
+      return `text-white text-primary-${hoverShade}`
+    case 'black':
+    case 'default':
+      return `text-gray-300 hover:text-primary-${hoverShade} focus:text-primary-${focusShade}`
+    default:
+      return `text-${variant}-${defaultShade} hover:text-${variant}-${hoverShade} focus:text-${variant}-${focusShade}`
+  }
+}

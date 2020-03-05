@@ -3,7 +3,11 @@ import Button from './Button'
 import DropdownMenu from './Menu'
 import './dropdown.css'
 
-export default function Dropdown({ buttonText = 'Click me', children }) {
+export default function Dropdown({
+  buttonText = 'Click me',
+  children,
+  menuClass,
+}) {
   const dropdownMenu = useRef(null)
   const wrapperRef = useRef(null)
 
@@ -23,7 +27,9 @@ export default function Dropdown({ buttonText = 'Click me', children }) {
   return (
     <div className="relative" ref={wrapperRef}>
       <Button menuRef={dropdownMenu} buttonText={buttonText} />
-      <DropdownMenu ref={dropdownMenu}>{children}</DropdownMenu>
+      <DropdownMenu ref={dropdownMenu} addClass={menuClass}>
+        {children}
+      </DropdownMenu>
     </div>
   )
 }

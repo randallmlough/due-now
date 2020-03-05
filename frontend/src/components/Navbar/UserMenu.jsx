@@ -12,6 +12,7 @@ export default function UserMenu() {
           ? `${session.first_name} ${session.last_name}`
           : 'Account'
       }
+      menuClass={'mt-6'}
     >
       <Button onClick={removeSession} link flat full className="text-left">
         Log out
