@@ -1,7 +1,5 @@
 import React, { useEffect, useReducer, useContext } from 'react'
 import NotificationContext, { Provider } from './context'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { createPortal } from 'react-dom'
 import Notification from './Notification'
 
@@ -10,7 +8,7 @@ const useForceRender = () => {
   return forceRender
 }
 
-const NotificationProvider = props => {
+export default function NotificationProvider(props) {
   const { children } = props
   const notificationController = useContext(NotificationContext)
   const forceRender = useForceRender()
@@ -46,11 +44,3 @@ const NotificationProvider = props => {
     </Provider>
   )
 }
-
-NotificationProvider.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  children: PropTypes.object,
-}
-
-const mapDispatchToProps = dispatch => ({ dispatch })
-export default connect(null, mapDispatchToProps)(NotificationProvider)
