@@ -1,7 +1,5 @@
 import React, { useEffect, useReducer, useContext } from 'react'
 import FlashContext, { Provider } from './context'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { createPortal } from 'react-dom'
 import Flash from './Flash'
 
@@ -10,7 +8,7 @@ const useForceRender = () => {
   return forceRender
 }
 
-const FlashProvider = props => {
+export default function FlashProvider(props) {
   const { children } = props
   const flashController = useContext(FlashContext)
   const forceRender = useForceRender()
@@ -44,11 +42,3 @@ const FlashProvider = props => {
     </Provider>
   )
 }
-
-FlashProvider.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  children: PropTypes.object,
-}
-
-const mapDispatchToProps = dispatch => ({ dispatch })
-export default connect(null, mapDispatchToProps)(FlashProvider)

@@ -111,3 +111,8 @@ const iconVariantStyling = (variant = 'default', { textShade = 700 } = {}) => {
       return `text-${variant}-${textShade}`
   }
 }
+
+export const logoutFlash = {
+  type: 'success',
+  body: 'You have been successfully logged out',
+}

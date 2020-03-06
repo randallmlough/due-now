@@ -7,8 +7,8 @@ export default class FlashController {
   // add a flash
   addFlash({
     type = 'danger',
-    title = 'Uh oh!',
-    body = 'An error occurred',
+    title,
+    body = 'An error occurred. Please try again.',
     time = 4000,
   } = {}) {
     // debugger
