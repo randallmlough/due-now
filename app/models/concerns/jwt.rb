@@ -16,6 +16,10 @@ module Jwt
             avatar: user.avatar.to_s
         }
 
+        # TODO
+        # add permissions for associated organization
+
+        
         token = JWT.encode payload, @HMAC_SECRET, "HS256"
         return token
     end

@@ -4,7 +4,6 @@ class Api::APIController < ApplicationController
     def require_session!
       unless authenticated?
         delete_auth_cookie()
-        # render :nothing => true, :status => 401
         head 401, content_type: "application/json"
       end
     end

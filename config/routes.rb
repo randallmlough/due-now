@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: [:index]
+    resources :invoices, only: [:create, :index, :show, :update, :destroy]
   end
 
   get '*path', to: "application#react_index", constraints: ->(request) do

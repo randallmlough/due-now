@@ -1,5 +1,6 @@
 Rails.application.configure do
   # custom
+  config.action_controller.allow_forgery_protection = false
   config.action_controller.forgery_protection_origin_check = false
 
   # Settings specified here will take precedence over those in config/application.rb.

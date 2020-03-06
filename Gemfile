@@ -26,6 +26,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'jwt'
+gem 'store_model'
+gem "pundit"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  first_name      :string
+#  last_name       :string
+#  email           :string
+#  avatar          :string
+#  password_digest :string           not null
+#  session_token   :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 require 'bcrypt'
 require 'digest'
 class User < ApplicationRecord
@@ -7,6 +21,8 @@ class User < ApplicationRecord
         u = User.find_by(email: email)
         u && BCrypt::Password.new(u.password_digest).is_password?(password) ? u : nil
     end
+
+    has_many :invoices, as: :invoiceable
 
     validates :first_name, :last_name, :avatar, :email, :password_digest, :session_token, presence: true
     validates :email, :session_token, uniqueness: true
@@ -28,6 +44,10 @@ class User < ApplicationRecord
 
     def generate_jwt
         Jwt.generate_jwt(self)
+    end
+
+    def admin?
+        false
     end
 
     private

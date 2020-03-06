@@ -1,6 +1,7 @@
 require 'jwt'
 
 class ApplicationController < ActionController::Base
+  include Pundit
 
   attr_reader :user_session, :jwt_token
 
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
   def authenticated?
     !user_session.nil?
   end
+
+  def current_user 
+    user_session.user
+  end 
 
   def react_index
     render :file => 'public/index.html'
