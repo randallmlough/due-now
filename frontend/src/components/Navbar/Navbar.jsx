@@ -31,7 +31,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="bg-gray-500">
+      <header className="bg-dark-500">
         <div className="container mx-auto ">
           <div
             className="navbar flex items-center flex-wrap px-6 py-4"
@@ -56,10 +56,10 @@ export default function Navbar() {
                     Dashboard
                   </NavLink>
                   <NavLink
-                    to="/users"
+                    to="/invoices"
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
-                    Users
+                    Invoices
                   </NavLink>
                 </div>
               </DefaultMenu>

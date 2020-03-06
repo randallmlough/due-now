@@ -18,7 +18,6 @@ import {
 
 export default function AuthenticateView({ submit }) {
   const [session, setSession] = useSession()
-  const history = useHistory()
   const demoAccount = {
     email: 'demo@example.com',
     password: '1234567',
@@ -27,6 +26,7 @@ export default function AuthenticateView({ submit }) {
   const flash = useFlash()
   const notification = useNotification()
 
+  const history = useHistory()
   const handleDemo = e => {
     e.preventDefault()
     setSubmitting(true)
@@ -45,13 +45,17 @@ export default function AuthenticateView({ submit }) {
         })
       })
   }
-  const location = useLastLocation()
-  const slideIn = location && location.pathname === routes.REGISTER
+  const lastLocation = useLastLocation()
+  const slideIn = lastLocation && lastLocation.pathname === routes.REGISTER
 
   return (
     <>
       {session ? (
-        <Redirect to="/" />
+        lastLocation ? (
+          <Redirect to={lastLocation.pathname} />
+        ) : (
+          <Redirect to="/" />
+        )
       ) : (
         <div className="container mx-auto px-4 py-32 h-screen">
           <div
@@ -60,9 +64,9 @@ export default function AuthenticateView({ submit }) {
               (slideIn ? 'fadeInRight-25' : 'fadeIn')
             }
           >
-            <div className="bg-neutral-100 px-10 pt-8 shadow-md w-full rounded-t">
+            <div className="bg-gray-100 px-10 pt-8 shadow-md w-full rounded-t">
               <div className="mb-6">
-                <h3 className="text-gray-600">Sign in</h3>
+                <h3 className="text-dark-600">Sign in</h3>
               </div>
               <AuthenticateUserForm submit={submit} />
               <div className="my-6"></div>
@@ -76,11 +80,11 @@ export default function AuthenticateView({ submit }) {
                 {submitting ? '' : 'Demo'}
               </Button>
             </div>
-            <div className="bg-neutral-100 p-10 shadow-md rounded-b w-full mb-5">
-              <hr className="mt-10 mb-3 border-t border-neutral-300" />
+            <div className="bg-gray-100 p-10 shadow-md rounded-b w-full mb-5">
+              <hr className="mt-10 mb-3 border-t border-gray-300" />
               <div className="flex flex-col items-center">
                 <div className="mb-2">
-                  <span className="text-gray-dark text-sm mr-1">
+                  <span className="text-dark-700 text-sm mr-1">
                     Don't have an account?
                   </span>
                   <Link to="/register" inline>
@@ -88,7 +92,7 @@ export default function AuthenticateView({ submit }) {
                   </Link>
                 </div>
                 <div>
-                  <span className="text-gray-dark text-sm mr-1">
+                  <span className="text-dark-700 text-sm mr-1">
                     Forgot your password?
                   </span>
                   <Link to="/forgot-password" inline>

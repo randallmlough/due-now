@@ -1,11 +1,9 @@
-import actions from '../actions'
-
-export const entitiesReducer = (state = {}, action) => {
-  Object.freeze(state)
-  switch (action.type) {
-    case actions.RECEIVE_USER:
-      return Object.assign({}, state, { [action.user.id]: action.user })
-    default:
-      return state
-  }
-}
+import { combineReducers } from 'redux'
+import usersReducer from './users_reducer'
+import invoicesReducer from './invoices_reducer'
+import { invoicesVisibilityReducer } from './invoices'
+export default combineReducers({
+  users: usersReducer,
+  invoices: invoicesReducer,
+  visibilityFilter: invoicesVisibilityReducer,
+})

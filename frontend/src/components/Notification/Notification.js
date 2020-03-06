@@ -77,7 +77,7 @@ export default function Notification({
         </div>
       </div>
       <button
-        className="bg-neutral-100 border-l border-neutral-200 duration-150 hover:bg-neutral-200 hover:text-neutral-500 px-4 text-neutral-400 transition-colors focus:outline-none"
+        className="bg-gray-100 border-l border-gray-200 duration-150 hover:bg-gray-200 hover:text-gray-500 px-4 text-gray-400 transition-colors focus:outline-none"
         onClick={addClosingAnimationClass}
       >
         Close
@@ -100,12 +100,12 @@ const bodyVariantStyling = (
 ) => {
   switch (variant) {
     case 'default':
-      return `bg-white text-gray-400`
+      return `bg-white text-dark-400`
     default:
       return `bg-${variant}-${bgShade} text-${variant}-${textShade}`
   }
 }
-const iconVariantStyling = (variant = 'gray', { textShade = 700 } = {}) => {
+const iconVariantStyling = (variant = 'dark', { textShade = 700 } = {}) => {
   switch (variant) {
     default:
       return `text-${variant}-${textShade}`

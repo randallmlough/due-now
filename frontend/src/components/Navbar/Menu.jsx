@@ -32,7 +32,7 @@ export const DefaultMenu = ({ open, mobile, setOpen, children }) => {
   }, [drawer])
   return (
     <div
-      className="w-64 xl:w-1/5 fixed bottom-0 left-0 top-0 flex flex-col bg-gray-900 shadow-2xl pl-6 py-20 z-40 animated faster hidden slideInLeft"
+      className="w-64 xl:w-1/5 fixed bottom-0 left-0 top-0 flex flex-col bg-dark-900 shadow-2xl pl-6 py-20 z-40 animated faster hidden slideInLeft"
       ref={drawer}
     >
       <nav>{children}</nav>

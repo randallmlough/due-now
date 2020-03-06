@@ -22,6 +22,14 @@ demo = User.create!(first_name: 'demo', last_name: 'account', email: 'demo@examp
   rand(1..4).times do 
     item = InvoiceItem.new(name: Faker::Beer.name, rate: Faker::Commerce.price, qty: Faker::Number.between(from: 1, to: 6))
     item.invoice = i
+
+    if [true, false].sample
+      item.description = "#{Faker::Beer.style} 
+      #{Faker::Beer.malts}
+      #{Faker::Beer.ibu}
+      #{Faker::Beer.alcohol}"
+    end
+
     item.save
   end
 end
@@ -37,6 +45,14 @@ end
     rand(1..4).times do 
       item = InvoiceItem.new(name: Faker::Beer.name, rate: Faker::Commerce.price, qty: Faker::Number.between(from: 1, to: 6))
       item.invoice = i
+
+      if [true, false].sample
+        item.description = "#{Faker::Beer.style} 
+        #{Faker::Beer.malts}
+        #{Faker::Beer.ibu}
+        #{Faker::Beer.alcohol}"
+      end
+      
       item.save
     end
     

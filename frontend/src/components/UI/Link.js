@@ -7,16 +7,17 @@ export default function Link({ children, ...props }) {
     // color variants
     white,
     black,
+    dark,
+    gray,
     primary,
     secondary,
-    neutral,
     success,
     danger,
     warning,
 
     // shades
-    light,
-    dark,
+    lighter,
+    darker,
     dShade: defaultShade,
     hShade: hoverShade,
     fShade: focusShade,
@@ -25,7 +26,7 @@ export default function Link({ children, ...props }) {
     button,
     outline,
     // sizing
-    inline,
+    block,
     small,
     large,
     textSmall,
@@ -47,9 +48,10 @@ export default function Link({ children, ...props }) {
   let variants = {
     white,
     black,
+    dark,
+    gray,
     primary,
     secondary,
-    neutral,
     success,
     danger,
     warning,
@@ -63,9 +65,9 @@ export default function Link({ children, ...props }) {
   }
   const lightShade = { defaultShade: 400, hoverShade: 300, focusShade: 500 }
   const darkShade = { defaultShade: 600, hoverShade: 500, focusShade: 800 }
-  const shading = light
+  const shading = lighter
     ? lightShade
-    : dark
+    : darker
     ? darkShade
     : { defaultShade, hoverShade, focusShade }
 
@@ -79,13 +81,13 @@ export default function Link({ children, ...props }) {
           : large || textLarge
           ? 'text-base'
           : 'text-sm', // regular size
-        inline
-          ? ''
-          : small || paddingSmall
-          ? 'px-4 py-2'
-          : large || paddingLarge
-          ? 'px-8 py-3'
-          : 'px-6 py-3',
+        block || button || outline
+          ? small || paddingSmall
+            ? 'px-4 py-2'
+            : large || paddingLarge
+            ? 'px-8 py-3'
+            : 'px-6 py-3'
+          : '',
         uppercase
           ? 'uppercase'
           : titlecase

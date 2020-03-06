@@ -37,13 +37,7 @@ module.exports = {
           default: colors.blue[500],
           dark: colors.blue[700],
         },
-        neutral: {
-          ...colors.gray,
-          light: colors.gray[300],
-          default: colors.gray[500],
-          dark: colors.gray[700],
-        },
-        gray: {
+        dark: {
           100: '#828283',
           200: '#6d6d6f',
           300: '#59595a',
@@ -53,9 +47,6 @@ module.exports = {
           700: '#262627',
           800: '#212122',
           900: '#1c1c1d',
-          light: '#59595a',
-          default: '#2f2f31',
-          dark: '#262627',
         },
       },
     },

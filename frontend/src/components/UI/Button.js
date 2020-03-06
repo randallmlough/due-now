@@ -5,16 +5,17 @@ export default function Button({ children, ...props }) {
     // color variants
     white,
     black,
+    dark,
+    gray,
     primary,
     secondary,
-    neutral,
     success,
     danger,
     warning,
 
     // shading
-    light,
-    dark,
+    lighter,
+    darker,
     dShade: defaultShade,
     hShade: hoverShade,
     fShade: focusShade,
@@ -48,9 +49,10 @@ export default function Button({ children, ...props }) {
   let variants = {
     white,
     black,
+    dark,
+    gray,
     primary,
     secondary,
-    neutral,
     success,
     danger,
     warning,
@@ -65,9 +67,9 @@ export default function Button({ children, ...props }) {
 
   const lightShade = { defaultShade: 400, hoverShade: 300, focusShade: 500 }
   const darkShade = { defaultShade: 600, hoverShade: 500, focusShade: 800 }
-  const shading = light
+  const shading = lighter
     ? lightShade
-    : dark
+    : darker
     ? darkShade
     : { defaultShade, hoverShade, focusShade }
 
@@ -125,7 +127,7 @@ export const buttonStylesDisabledSolid = (
     case 'black':
       return base + `text-primary-300 bg-black`
     case 'default':
-      return base + `text-white bg-gray-${defaultShade}`
+      return base + `text-white bg-dark-${defaultShade}`
     default:
       return base + `text-white bg-${variant}-${defaultShade}`
   }
@@ -147,7 +149,7 @@ export const buttonStylesSolid = (
     case 'default':
       return (
         base +
-        `text-white bg-gray-${defaultShade} hover:bg-gray-${hoverShade} focus:bg-gray-${focusShade}`
+        `text-white bg-dark-${defaultShade} hover:bg-dark-${hoverShade} focus:bg-dark-${focusShade}`
       )
     default:
       return (
@@ -171,7 +173,7 @@ export const buttonStylesOutline = (
     case 'default':
       return (
         base +
-        `text-gray-${defaultShade} border-gray-${defaultShade} hover:bg-gray-${hoverShade} hover:text-white`
+        `text-dark-${defaultShade} border-dark-${defaultShade} hover:bg-dark-${hoverShade} hover:text-white`
       )
     default:
       return (
@@ -190,7 +192,7 @@ function buttonStylesLink(
       return `text-white text-primary-${hoverShade}`
     case 'black':
     case 'default':
-      return `text-gray-300 hover:text-primary-${hoverShade} focus:text-primary-${focusShade}`
+      return `text-dark-300 hover:text-primary-${hoverShade} focus:text-primary-${focusShade}`
     default:
       return `text-${variant}-${defaultShade} hover:text-${variant}-${hoverShade} focus:text-${variant}-${focusShade}`
   }

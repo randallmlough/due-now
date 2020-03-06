@@ -37,13 +37,17 @@ export default function RegisterView({ submit, demo }) {
         setSubmitting(false)
       })
   }
-  const location = useLastLocation()
+  const lastLocation = useLastLocation()
 
-  const slideIn = location && location.pathname === routes.LOGIN
+  const slideIn = lastLocation && lastLocation.pathname === routes.LOGIN
   return (
     <>
       {session ? (
-        <Redirect to="/" />
+        lastLocation ? (
+          <Redirect to={lastLocation.pathname} />
+        ) : (
+          <Redirect to="/" />
+        )
       ) : (
         <div className="container mx-auto px-4 py-32 h-screen">
           <div
@@ -52,9 +56,9 @@ export default function RegisterView({ submit, demo }) {
               (slideIn ? 'fadeInLeft-25' : 'fadeIn')
             }
           >
-            <div className="bg-neutral-100 px-10 pt-8 shadow-md w-full rounded-t">
+            <div className="bg-gray-100 px-10 pt-8 shadow-md w-full rounded-t">
               <div className="mb-6">
-                <h3 className="text-gray-600">Register</h3>
+                <h3 className="text-dark-600">Register</h3>
               </div>
               <RegisterUserForm submit={submit} />
               <div className="my-6"></div>
@@ -68,11 +72,11 @@ export default function RegisterView({ submit, demo }) {
                 {submitting ? '' : 'Demo'}
               </Button>
             </div>
-            <div className="bg-neutral-100 p-10 shadow-md rounded-b w-full mb-5">
-              <hr className="mt-10 mb-3 border-t border-neutral-300" />
+            <div className="bg-gray-100 p-10 shadow-md rounded-b w-full mb-5">
+              <hr className="mt-10 mb-3 border-t border-gray-300" />
               <div className="flex flex-col items-center">
                 <div className="mb-2">
-                  <span className="text-gray-dark text-sm mr-1">
+                  <span className="text-dark-700 text-sm mr-1">
                     Have an account?
                   </span>
                   <Link to="/login" inline>
@@ -80,7 +84,7 @@ export default function RegisterView({ submit, demo }) {
                   </Link>
                 </div>
                 <div>
-                  <span className="text-gray-dark text-sm mr-1">
+                  <span className="text-dark-700 text-sm mr-1">
                     Forgot your password?
                   </span>
                   <Link to="/forgot-password" inline>

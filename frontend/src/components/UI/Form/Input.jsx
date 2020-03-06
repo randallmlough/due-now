@@ -25,7 +25,7 @@ const Input = ({
       {children && (
         <label
           htmlFor={'input' + name}
-          className="block text-neutral-700 text-sm font-bold"
+          className="block text-gray-700 text-sm font-bold"
         >
           {children}
         </label>
@@ -36,7 +36,7 @@ const Input = ({
         name={name}
         value={valueState}
         className={classList(
-          'shadow-sm appearance-none border border-neutral-200 rounded w-full py-2 px-3 text-neutral-dark leading-tight text-base focus:outline-none focus:border-primary-light focus:shadow',
+          'shadow-sm appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-dark leading-tight text-base focus:outline-none focus:border-primary-light focus:shadow',
           err && err.length > 0 && 'border-red-400'
         )}
         onChange={handleInputChange}

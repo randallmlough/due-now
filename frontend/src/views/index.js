@@ -22,13 +22,14 @@ export const AppView = props => {
 }
 
 const PrivateRoute = props => {
-  const [session] = useSession()
+  const [hasSession] = useSession()
+
   const { component: Component, ...rest } = props
   return (
     <Route
       {...rest}
       render={props =>
-        session ? <Component {...props} /> : <Redirect to="/login" />
+        hasSession ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   )

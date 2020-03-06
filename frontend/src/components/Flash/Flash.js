@@ -98,7 +98,7 @@ const bodyVariantStyling = (
 ) => {
   switch (variant) {
     case 'default':
-      return `bg-white text-gray-${textShade}`
+      return `bg-white text-dark-${textShade}`
     default:
       return `bg-${variant}-${bgShade} text-${variant}-${textShade}`
   }
