@@ -6,24 +6,25 @@ import Input from '../../../components/UI/Form/Input'
 import PropTypes from 'prop-types'
 import { useSession } from '../../../components/Session'
 import { useFlash } from '../../../components/Flash'
+import { routes } from '../../../routes'
+import {
+  useNotification,
+  authenticatedNotification,
+} from '../../../components/Notification'
 
 export default function AuthenticateUserForm({ submit }) {
   const history = useHistory()
   const [, setSession] = useSession()
   const [submitting, setSubmitting] = useState(false)
   const flash = useFlash()
-
+  const notification = useNotification()
   const handleSubmit = async data => {
     setSubmitting(true)
     await submit(data)
       .then(resp => {
         setSession(resp.session_token)
-        flash.add({
-          type: 'success',
-          title: 'Welcome back!',
-          body: "Here's some things you may have missed",
-        })
-        history.push('/')
+        notification.add(authenticatedNotification)
+        history.push(routes.DASHBOARD)
       })
       .catch(e => {
         if (e.status < 500) {

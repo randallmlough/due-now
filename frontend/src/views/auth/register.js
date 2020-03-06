@@ -10,10 +10,15 @@ import { registerUserAction, authenticateUserAction } from '../../actions'
 import { Button } from '../../components/UI'
 import { useLastLocation } from 'react-router-last-location'
 import { routes } from '../../routes'
+import {
+  useNotification,
+  welcomeNotification,
+} from '../../components/Notification'
 
 export default function RegisterView({ submit, demo }) {
   const [session, setSession] = useSession()
   const history = useHistory()
+  const notification = useNotification()
   const demoAccount = {
     email: 'demo@example.com',
     password: '1234567',
@@ -25,7 +30,8 @@ export default function RegisterView({ submit, demo }) {
     demo(demoAccount)
       .then(resp => {
         setSession(resp.session_token)
-        history.push('/')
+        notification.add(welcomeNotification)
+        history.push(routes.DASHBOARD)
       })
       .catch(e => {
         setSubmitting(false)

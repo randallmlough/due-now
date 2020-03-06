@@ -6,6 +6,11 @@ import Input from '../../../components/UI/Form/Input'
 import PropTypes from 'prop-types'
 import { useSession } from '../../../components/Session'
 import { useFlash } from '../../../components/Flash'
+import { routes } from '../../../routes'
+import {
+  useNotification,
+  welcomeNotification,
+} from '../../../components/Notification'
 
 export default function RegisterUser({ submit }) {
   const initialState = {
@@ -17,6 +22,7 @@ export default function RegisterUser({ submit }) {
   const [, setSession] = useSession()
   const [user] = useState(initialState)
   const history = useHistory()
+  const notification = useNotification()
   const flash = useFlash()
   const [submitting, setSubmitting] = useState(false)
 
@@ -25,12 +31,8 @@ export default function RegisterUser({ submit }) {
     await submit(data)
       .then(resp => {
         setSession(resp.session_token)
-        flash.add({
-          type: 'success',
-          title: 'Welcome!',
-          body: 'Your invoiced account has been created',
-        })
-        history.push('/')
+        notification.add(welcomeNotification)
+        history.push(routes.DASHBOARD)
       })
       .catch(e => {
         if (e.status < 500) {

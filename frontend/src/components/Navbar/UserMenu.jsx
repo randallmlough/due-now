@@ -1,10 +1,16 @@
 import React from 'react'
 import { useSession } from '../Session'
 
-import { Dropdown, Button as DropdownButton, Menu, Item } from '../UI/Dropdown'
+import { Dropdown } from '../UI/Dropdown'
 import { Button } from '../UI'
+import { useFlash, logoutFlash } from '../Flash'
 export default function UserMenu() {
   const [session, , removeSession] = useSession()
+  const flash = useFlash()
+  const handleRemoveSession = () => {
+    flash.add(logoutFlash)
+    removeSession()
+  }
   return (
     <Dropdown
       buttonText={
@@ -14,7 +20,13 @@ export default function UserMenu() {
       }
       menuClass={'mt-6'}
     >
-      <Button onClick={removeSession} link flat full className="text-left">
+      <Button
+        onClick={handleRemoveSession}
+        link
+        flat
+        full
+        className="text-left"
+      >
         Log out
       </Button>
       {/* <DropdownItem>Action</DropdownItem>
