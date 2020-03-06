@@ -15,15 +15,13 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <FlashProvider>
-        <NotificationProvider>
-          <Router>
-            <LastLocationProvider>
-              <Routes />
-            </LastLocationProvider>
-          </Router>
-        </NotificationProvider>
-      </FlashProvider>
+      <Router>
+        <LastLocationProvider>
+          <Routes />
+        </LastLocationProvider>
+      </Router>
+      <FlashProvider />
+      <NotificationProvider />
     </div>
   )
 }
