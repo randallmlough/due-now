@@ -3,7 +3,7 @@ import { Loader } from '../../components/UI/loaders'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getInvoicesAction } from '../../actions'
-import { InvoicesTable, Row, Col, Header } from './Table'
+import { InvoicesTable, Row, Col, Header } from '../../components/UI/Table'
 import { Pill, Link } from '../../components/UI'
 import { routes } from '../../routes'
 import { VisibilityFilters } from '../../actions/invoice_actions'
@@ -42,7 +42,7 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
             <div>
               <h2 className="text-2xl font-semibold leading-tight">Invoices</h2>
             </div>
-            <div className="my-2 flex sm:flex-row flex-col">
+            <div className="my-2 flex sm:flex-row flex-col justify-between items-center">
               <div className="flex flex-row mb-1 sm:mb-0">
                 <div className="relative">
                   <select
@@ -64,6 +64,11 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
                   </div>
                 </div>
               </div>
+              <div>
+                <Link to={routes.INVOICES_NEW} button primary small>
+                  Create invoice
+                </Link>
+              </div>
             </div>
             <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
               <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -72,43 +77,65 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
                   <Header>Created At</Header>
                   <Header>Private</Header>
                   <Header>Status</Header>
-                  {invoices.map(invoice => (
-                    <Row key={invoice.id}>
-                      <Col>
-                        <Link to={`${routes.INVOICES}/${invoice.id}`}>
-                          {invoice.invoice_number}
-                        </Link>
-                      </Col>
-                      <Col>
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {invoice.created_at}
-                        </p>
-                      </Col>
-                      <Col>
-                        <p className="text-gray-900 whitespace-no-wrap">
-                          {invoice.private.toString()}
-                        </p>
-                      </Col>
-                      <Col>
-                        {invoice.paid ? (
-                          <Pill success>Paid</Pill>
-                        ) : (
-                          <Pill danger>Unpaid</Pill>
-                        )}
+                  {invoices.length ? (
+                    invoices.map(invoice => (
+                      <Row key={invoice.id}>
+                        <Col>
+                          <Link to={`${routes.INVOICES}/${invoice.id}`}>
+                            {invoice.invoice_number}
+                          </Link>
+                        </Col>
+                        <Col>
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {invoice.created_at}
+                          </p>
+                        </Col>
+                        <Col>
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {invoice.private.toString()}
+                          </p>
+                        </Col>
+                        <Col>
+                          {invoice.paid ? (
+                            <Pill success>Paid</Pill>
+                          ) : (
+                            <Pill danger>Unpaid</Pill>
+                          )}
+                        </Col>
+                      </Row>
+                    ))
+                  ) : (
+                    <Row>
+                      <Col colSpan={4}>
+                        <div className="px-5 py-20 text-center">
+                          <p className="text-gray-700 mb-5">
+                            You don't have any invoices yet. Create one!
+                          </p>
+                          <Link
+                            to={routes.INVOICES_NEW}
+                            primary
+                            button
+                            className="inline-block font-bold"
+                          >
+                            Create invoice
+                          </Link>
+                        </div>
                       </Col>
                     </Row>
-                  ))}
+                  )}
                 </InvoicesTable>
-                <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-                  <div className="inline-flex mt-2 xs:mt-0">
-                    <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                      Prev
-                    </button>
-                    <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                      Next
-                    </button>
+                {invoices.length > 0 && (
+                  <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+                    <div className="inline-flex mt-2 xs:mt-0">
+                      <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                        Prev
+                      </button>
+                      <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        Next
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -135,7 +162,7 @@ const getVisibleInvoices = (invoices, filter = VisibilityFilters.SHOW_ALL) => {
   }
 }
 
-const mapStateToProps = (state = {}) => ({
+const mapStateToProps = (state = []) => ({
   invoices: getVisibleInvoices(
     Object.values(state.entities.invoices),
     state.entities.visibilityFilter
