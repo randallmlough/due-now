@@ -12,13 +12,14 @@ import { setVisibilityFilter } from '../../actions'
 function InvoicesView({ invoices, getInvoices, setFilter }) {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
-    getInvoices()
+    if (!invoices.length) {
+      getInvoices()
+    }
     setLoading(false)
-  }, [loading])
+  }, [])
 
   const handleFilterOption = e => {
     e.preventDefault()
-    // debugger
     switch (e.target.value) {
       case 'ALL':
         setFilter(VisibilityFilters.SHOW_ALL)
@@ -27,7 +28,6 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
         setFilter(VisibilityFilters.SHOW_PAID)
         break
       case 'UNPAID':
-      case 'PAID':
         setFilter(VisibilityFilters.SHOW_UNPAID)
         break
     }

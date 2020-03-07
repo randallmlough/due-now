@@ -25,8 +25,9 @@ const receiveInvoice = invoice => ({
   invoice,
 })
 
-const removeInvoice = () => ({
+const removeInvoice = invoiceId => ({
   type: actions.REMOVE_INVOICE,
+  invoiceId,
 })
 
 export const createInvoiceAction = invoice => async dispatch => {

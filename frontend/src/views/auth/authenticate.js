@@ -87,17 +87,13 @@ export default function AuthenticateView({ submit }) {
                   <span className="text-dark-700 text-sm mr-1">
                     Don't have an account?
                   </span>
-                  <Link to="/register" inline>
-                    Sign Up
-                  </Link>
+                  <Link to="/register">Sign Up</Link>
                 </div>
                 <div>
                   <span className="text-dark-700 text-sm mr-1">
                     Forgot your password?
                   </span>
-                  <Link to="/forgot-password" inline>
-                    Reset password
-                  </Link>
+                  <Link to="/forgot-password">Reset password</Link>
                 </div>
               </div>
             </div>

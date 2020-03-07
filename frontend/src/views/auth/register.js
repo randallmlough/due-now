@@ -79,17 +79,13 @@ export default function RegisterView({ submit, demo }) {
                   <span className="text-dark-700 text-sm mr-1">
                     Have an account?
                   </span>
-                  <Link to="/login" inline>
-                    Sign In
-                  </Link>
+                  <Link to="/login">Sign In</Link>
                 </div>
                 <div>
                   <span className="text-dark-700 text-sm mr-1">
                     Forgot your password?
                   </span>
-                  <Link to="/forgot-password" inline>
-                    Reset password
-                  </Link>
+                  <Link to="/forgot-password">Reset password</Link>
                 </div>
               </div>
             </div>
