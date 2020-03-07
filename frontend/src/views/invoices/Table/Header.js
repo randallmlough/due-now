@@ -7,3 +7,4 @@ export default function Header({ children }) {
     </th>
   )
 }
+Header.displayName = 'Header'

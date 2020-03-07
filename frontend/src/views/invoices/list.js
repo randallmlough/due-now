@@ -122,7 +122,7 @@ InvoicesView.propTypes = {
   submit: PropTypes.func.isRequired,
 }
 
-const getVisibleInvoices = (invoices, filter) => {
+const getVisibleInvoices = (invoices, filter = VisibilityFilters.SHOW_ALL) => {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
       return invoices

@@ -4,11 +4,11 @@ import { routes } from '../../../routes'
 
 export default function InvoicesTable({ children }) {
   const headers = React.Children.map(children, (child, i) => {
-    if (child.type.name === 'Header') return child
+    if (child.type.displayName === 'Header') return child
   })
 
   const rows = React.Children.map(children, (child, i) => {
-    if (child.type.name === 'Row') return child
+    if (child.type.displayName === 'Row') return child
   })
 
   return (

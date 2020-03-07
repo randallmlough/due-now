@@ -10,3 +10,4 @@ export default function Col({ children, ...props }) {
     </td>
   )
 }
+Col.displayName = 'Col'
