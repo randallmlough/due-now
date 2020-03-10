@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from 'react'
-import * as immutable from 'object-path-immutable'
+import { set } from 'object-path-immutable'
 import { getInvoice } from '../../api'
 
 const invoiceFetchReducer = (state, action) => {
@@ -28,11 +28,7 @@ const invoiceFetchReducer = (state, action) => {
         ...state,
         loading: false,
         isError: false,
-        data: immutable.set(
-          state.data,
-          action.payload.key,
-          action.payload.value
-        ),
+        data: set(state.data, action.payload.key, action.payload.value),
       }
     default:
       throw new Error()
