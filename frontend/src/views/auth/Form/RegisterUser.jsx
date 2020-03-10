@@ -30,9 +30,10 @@ export default function RegisterUser({ submit }) {
     setSubmitting(true)
     await submit(data)
       .then(resp => {
-        setSession(resp.sessionToken)
-        notification.add(welcomeNotification)
-        history.push(routes.DASHBOARD)
+        setSession(resp.sessionToken).then(() => {
+          notification.add(welcomeNotification)
+          history.push(routes.DASHBOARD)
+        })
       })
       .catch(e => {
         if (e.status < 500) {

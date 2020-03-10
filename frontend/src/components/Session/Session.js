@@ -32,14 +32,19 @@ export default class Session {
   }
 
   setSession(sessionToken) {
-    const session = this._decodeJwtToken(sessionToken)
-    if (session) {
-      if (shouldUpdate(this.session, session)) {
-        this.session = session
-        this._updateSubscribers()
-        this.dispatch(receiveUserSession(session))
+    return new Promise((resolve, reject) => {
+      const session = this._decodeJwtToken(sessionToken)
+      if (session) {
+        if (shouldUpdate(this.session, session)) {
+          this.session = session
+          this.dispatch(receiveUserSession(session))
+          this._updateSubscribers()
+        }
+        resolve(session)
+      } else {
+        reject(Error('no session to update'))
       }
-    }
+    })
   }
 
   removeSession() {
