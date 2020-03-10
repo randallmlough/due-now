@@ -22,7 +22,7 @@ export default function AuthenticateUserForm({ submit }) {
     setSubmitting(true)
     await submit(data)
       .then(resp => {
-        setSession(resp.session_token)
+        setSession(resp.sessionToken)
         notification.add(authenticatedNotification)
         history.push(routes.DASHBOARD)
       })

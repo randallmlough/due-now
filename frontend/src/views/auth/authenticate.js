@@ -32,11 +32,12 @@ export default function AuthenticateView({ submit }) {
     setSubmitting(true)
     submit(demoAccount)
       .then(resp => {
-        setSession(resp.session_token)
+        setSession(resp.sessionToken)
         notification.add(welcomeNotification)
         history.push(routes.DASHBOARD)
       })
       .catch(e => {
+        console.log(e)
         setSubmitting(false)
         flash.add({
           type: 'danger',

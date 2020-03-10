@@ -30,7 +30,7 @@ export default function RegisterUser({ submit }) {
     setSubmitting(true)
     await submit(data)
       .then(resp => {
-        setSession(resp.session_token)
+        setSession(resp.sessionToken)
         notification.add(welcomeNotification)
         history.push(routes.DASHBOARD)
       })

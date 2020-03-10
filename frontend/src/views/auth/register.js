@@ -29,7 +29,7 @@ export default function RegisterView({ submit, demo }) {
     setSubmitting(true)
     demo(demoAccount)
       .then(resp => {
-        setSession(resp.session_token)
+        setSession(resp.sessionToken)
         notification.add(welcomeNotification)
         history.push(routes.DASHBOARD)
       })
