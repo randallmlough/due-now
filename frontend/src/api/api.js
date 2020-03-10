@@ -69,7 +69,7 @@ export const formatError = error => {
     err.type = errorType.RESPONSE_ERROR
     err.status = error.response.status
     err.message = error.response.data.error
-    err.errors = error.response.data.errors
+    err.errors = error.response.data
   } else if (error.request) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

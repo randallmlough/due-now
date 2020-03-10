@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/UI'
 import Select from 'react-select'
 import {
@@ -8,6 +8,7 @@ import {
 } from '../../components/Flash'
 import { useHistory } from 'react-router-dom'
 import { routes } from '../../routes'
+import { get } from 'object-path-immutable'
 
 const options = [
   { value: 'paid', label: 'Paid' },
@@ -16,21 +17,53 @@ const options = [
   { value: 'hold', label: 'Hold' },
 ]
 
+const validateForm = invoice => {
+  let errors
+  if (get(invoice, 'invoiceNumber') === '') {
+    errors = { ...errors, invoiceNumber: 'invoice number is required' }
+  }
+  if (get(invoice, 'recipient.name') === '') {
+    errors = { ...errors, recipientName: 'recipient name is required' }
+  }
+  return errors
+}
 const Sidebar = ({ editing, invoice, setInvoice, submit }) => {
+  const [isDisabled, setIsDisabled] = useState(false)
+
   const handleChange = selectedOption => {
     setInvoice('lvl.status', selectedOption.value)
   }
 
+  const errors = validateForm(invoice)
+  useEffect(() => {
+    setIsDisabled(Boolean(errors))
+  }, [Boolean(errors)])
+
+  const [showErrors, setShowErrors] = useState(false)
   const history = useHistory()
   const flash = useFlash()
   const handleSubmit = e => {
     e.preventDefault()
-    submit(invoice).then(() => {
-      flash.add(editing ? invoiceUpdatedFlash : invoiceCreatedFlash)
-      if (!editing) {
-        history.push(routes.INVOICES)
-      }
-    })
+    if (isDisabled) {
+      setShowErrors(true)
+      return
+    }
+    submit(invoice)
+      .then(() => {
+        flash.add(editing ? invoiceUpdatedFlash : invoiceCreatedFlash)
+        if (!editing) {
+          history.push(routes.INVOICES)
+        }
+      })
+      .catch(resp => {
+        Object.values(resp.errors).forEach(error => {
+          flash.add({
+            type: 'danger',
+            title: 'Uh oh!',
+            body: error,
+          })
+        })
+      })
   }
   return (
     <>
@@ -62,6 +95,16 @@ const Sidebar = ({ editing, invoice, setInvoice, submit }) => {
       <Button primary full type="submit" onClick={handleSubmit}>
         {editing ? 'Save Invoice' : 'Create Invoice'}
       </Button>
+      {showErrors && (
+        <ul className="mt-5">
+          {errors &&
+            Object.values(errors).map((error, i) => (
+              <li key={i} className="mb-2 text-danger font-semibold">
+                {error}
+              </li>
+            ))}
+        </ul>
+      )}
     </>
   )
 }

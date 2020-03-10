@@ -7,7 +7,7 @@ import { InvoicesTable, Row, Col, Header } from '../../components/UI/Table'
 import { Pill, Link } from '../../components/UI'
 import { routes } from '../../routes'
 import { VisibilityFilters } from '../../actions/invoice_actions'
-import { formatDistance } from 'date-fns'
+import { formatRelative } from 'date-fns'
 import { useFlash } from '../../components/Flash'
 
 const filters = {
@@ -15,6 +15,7 @@ const filters = {
   SHOW_PAID: 'SHOW_PAID',
   SHOW_UNPAID: 'SHOW_UNPAID',
 }
+
 function InvoicesView({ invoices, getInvoices, updateInvoice }) {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -133,39 +134,19 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
                             </Col>
                             <Col>
                               <p className="text-gray-900 whitespace-no-wrap">
-                                {formatDistance(
+                                {formatRelative(
                                   new Date(invoice.createdAt),
                                   new Date()
                                 )}
-                                {/* {dayjs(invoice.createdAt)
-                                  .calendar(null, {
-                                    sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
-                                    nextDay: '[Tomorrow] h:mm A', // The next day ( Tomorrow at 2:30 AM )
-                                    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
-                                    lastDay: '[Yesterday]', // The day before ( Yesterday at 2:30 AM )
-                                    lastWeek: '[Last] dddd [at] h:mm A', // Last week ( Last Monday at 2:30 AM )
-                                    sameElse: 'MM/DD/YYYY [at] h:mm A', // Everything else ( 7/10/2011 )
-                                  })
-                                  .toString()} */}
                               </p>
                             </Col>
                             <Col>
                               <p className="text-gray-900 whitespace-no-wrap">
                                 {invoice.dueDate &&
-                                  formatDistance(
+                                  formatRelative(
                                     new Date(invoice.dueDate),
                                     new Date()
                                   )}
-                                {/* {dayjs(invoice.dueDate)
-                                  .calendar(null, {
-                                    sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
-                                    nextDay: '[Tomorrow] h:mm A', // The next day ( Tomorrow at 2:30 AM )
-                                    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
-                                    lastDay: '[Yesterday]', // The day before ( Yesterday at 2:30 AM )
-                                    lastWeek: '[Last] dddd [at] h:mm A', // Last week ( Last Monday at 2:30 AM )
-                                    sameElse: 'MM/DD/YYYY [at] h:mm A', // Everything else ( 7/10/2011 )
-                                  })
-                                  .toString()} */}
                               </p>
                             </Col>
                             <Col>
