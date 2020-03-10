@@ -1,9 +1,18 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import InvoiceItems from './invoice_items'
+import DatePicker from 'react-datepicker'
+
+import 'react-datepicker/dist/react-datepicker.css'
+
 export default function InvoiceForm({ invoice, setInvoice }) {
   const handleChange = key => {
     return e => setInvoice(key, e.target.value)
+  }
+  const handleDateChange = key => {
+    return date => {
+      setInvoice(key, date)
+    }
   }
   return (
     <div className="p-10">
@@ -47,14 +56,19 @@ export default function InvoiceForm({ invoice, setInvoice }) {
                 </label>
               </div>
               <div className="md:w-4/12">
-                <input
+                <DatePicker
+                  selected={new Date(invoice.invoiceDate)}
+                  onChange={handleDateChange('invoiceDate')}
+                />
+                {/* <input
                   className="appearance-none border-b-2 border-transparent hover:border-primary-200 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-primary-300 text-right"
                   type="text"
+                  
                   value={dayjs()
                     .format('MM/DD/YYYY')
                     .toString()}
                   onChange={handleChange('invoiceDate')}
-                />
+                /> */}
               </div>
             </div>
             <div className="md:flex md:items-center">
@@ -64,13 +78,17 @@ export default function InvoiceForm({ invoice, setInvoice }) {
                 </label>
               </div>
               <div className="md:w-4/12">
-                <input
+                <DatePicker
+                  selected={new Date(invoice.dueDate)}
+                  onChange={handleDateChange('dueDate')}
+                />
+                {/* <input
                   className="appearance-none border-b-2 border-transparent hover:border-primary-200 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-primary-300 text-right"
                   type="text"
                   value={dayjs()
                     .format('MM/DD/YYYY')
                     .toString()}
-                />
+                /> */}
               </div>
             </div>
           </div>

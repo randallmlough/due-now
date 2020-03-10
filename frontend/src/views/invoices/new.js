@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Loader } from '../../components/UI/loaders'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'

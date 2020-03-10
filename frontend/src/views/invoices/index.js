@@ -5,8 +5,8 @@ export { default as EditInvoiceView } from './edit'
 
 export const initialState = {
   id: undefined,
-  dueDate: undefined,
-  invoiceDate: undefined,
+  dueDate: new Date(),
+  invoiceDate: new Date(),
   invoiceNumber: '',
   status: '',
   paymentTerms: '',
