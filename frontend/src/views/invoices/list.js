@@ -197,7 +197,7 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
                       })
                   ) : (
                     <Row>
-                      <Col colSpan={4}>
+                      <Col colSpan={5}>
                         <div className="px-5 py-20 text-center">
                           <p className="text-gray-700 mb-5">
                             You don't have any invoices yet. Create one!
