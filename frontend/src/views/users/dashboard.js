@@ -10,7 +10,7 @@ export default function Dashboard(props) {
   useEffect(() => {
     const timeoutInstance = setTimeout(() => setLoading(false), 1000)
     return () => clearTimeout(timeoutInstance)
-  })
+  }, [])
 
   return (
     <>

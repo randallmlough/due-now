@@ -1,5 +1,4 @@
 import React from 'react'
-import dayjs from 'dayjs'
 import InvoiceItems from './invoice_items'
 import DatePicker from 'react-datepicker'
 
@@ -60,15 +59,6 @@ export default function InvoiceForm({ invoice, setInvoice }) {
                   selected={new Date(invoice.invoiceDate)}
                   onChange={handleDateChange('invoiceDate')}
                 />
-                {/* <input
-                  className="appearance-none border-b-2 border-transparent hover:border-primary-200 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-primary-300 text-right"
-                  type="text"
-                  
-                  value={dayjs()
-                    .format('MM/DD/YYYY')
-                    .toString()}
-                  onChange={handleChange('invoiceDate')}
-                /> */}
               </div>
             </div>
             <div className="md:flex md:items-center">
@@ -82,13 +72,6 @@ export default function InvoiceForm({ invoice, setInvoice }) {
                   selected={new Date(invoice.dueDate)}
                   onChange={handleDateChange('dueDate')}
                 />
-                {/* <input
-                  className="appearance-none border-b-2 border-transparent hover:border-primary-200 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-primary-300 text-right"
-                  type="text"
-                  value={dayjs()
-                    .format('MM/DD/YYYY')
-                    .toString()}
-                /> */}
               </div>
             </div>
           </div>
