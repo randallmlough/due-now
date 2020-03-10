@@ -5,106 +5,107 @@ import { connect } from 'react-redux'
 import { updateInvoiceAction, getInvoiceAction } from '../../actions'
 import { InvoiceForm } from './Form'
 import Sidebar from './sidebar'
-import { getInvoice } from '../../api'
-import * as immutable from 'object-path-immutable'
 
-const initialState = {
-  id: undefined,
-  dueDate: undefined,
-  invoiceDate: undefined,
-  invoiceNumber: '',
-  status: '',
-  paymentTerms: '',
-  private: false,
-  from: { name: '', emailAddress: '', mailingAddress: '', phoneNumber: '' },
-  recipient: {
-    name: '',
-    emailAddress: '',
-    mailingAddress: '',
-    phoneNumber: '',
-  },
-  notes: '',
-  invoiceItems: [
-    {
-      id: '',
-      description: 'Item description',
-      qty: 1,
-      rate: 0,
-      total: 0,
-    },
-  ],
-  tax: 0,
-  total: 0,
-}
+import { useInvoice } from './useInvoice'
+import { initialState } from '.'
 
-const invoiceFetchReducer = (state, action) => {
-  switch (action.type) {
-    case 'FETCH_INIT':
-      return {
-        ...state,
-        loading: true,
-        isError: false,
-      }
-    case 'FETCH_SUCCESS':
-      return {
-        ...state,
-        loading: false,
-        isError: false,
-        data: action.payload,
-      }
-    case 'FETCH_FAILURE':
-      return {
-        ...state,
-        loading: false,
-        isError: true,
-      }
-    case 'UPDATE_STATE':
-      return {
-        ...state,
-        loading: false,
-        isError: false,
-        data: immutable.set(
-          state.data,
-          action.payload.key,
-          action.payload.value
-        ),
-      }
-    default:
-      throw new Error()
-  }
-}
+// const initialState = {
+//   id: undefined,
+//   dueDate: undefined,
+//   invoiceDate: undefined,
+//   invoiceNumber: '',
+//   status: '',
+//   paymentTerms: '',
+//   private: false,
+//   from: { name: '', emailAddress: '', mailingAddress: '', phoneNumber: '' },
+//   recipient: {
+//     name: '',
+//     emailAddress: '',
+//     mailingAddress: '',
+//     phoneNumber: '',
+//   },
+//   notes: '',
+//   invoiceItems: [
+//     {
+//       id: '',
+//       description: 'Item description',
+//       qty: 1,
+//       rate: 0,
+//       total: 0,
+//     },
+//   ],
+//   tax: 0,
+//   total: 0,
+// }
 
-const useInvoice = (invoiceId, initialData) => {
-  const [state, dispatch] = useReducer(invoiceFetchReducer, {
-    loading: false,
-    isError: false,
-    data: initialData,
-  })
-  useEffect(() => {
-    let didCancel = false
-    const fetchData = async () => {
-      dispatch({ type: 'FETCH_INIT' })
-      try {
-        const result = await getInvoice(invoiceId)
-        if (!didCancel) {
-          dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
-        }
-      } catch (error) {
-        if (!didCancel) {
-          dispatch({ type: 'FETCH_FAILURE' })
-        }
-      }
-    }
-    fetchData()
-    return () => {
-      didCancel = true
-    }
-  }, [])
+// const invoiceFetchReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'FETCH_INIT':
+//       return {
+//         ...state,
+//         loading: true,
+//         isError: false,
+//       }
+//     case 'FETCH_SUCCESS':
+//       return {
+//         ...state,
+//         loading: false,
+//         isError: false,
+//         data: action.payload,
+//       }
+//     case 'FETCH_FAILURE':
+//       return {
+//         ...state,
+//         loading: false,
+//         isError: true,
+//       }
+//     case 'UPDATE_STATE':
+//       return {
+//         ...state,
+//         loading: false,
+//         isError: false,
+//         data: immutable.set(
+//           state.data,
+//           action.payload.key,
+//           action.payload.value
+//         ),
+//       }
+//     default:
+//       throw new Error()
+//   }
+// }
 
-  const updateState = (key, value) =>
-    dispatch({ type: 'UPDATE_STATE', payload: { key, value } })
-  return [state, updateState]
-}
+// const useInvoice = (invoiceId, initialData) => {
+//   const [state, dispatch] = useReducer(invoiceFetchReducer, {
+//     loading: false,
+//     isError: false,
+//     data: initialData,
+//   })
+//   useEffect(() => {
+//     let didCancel = false
+//     const fetchData = async () => {
+//       dispatch({ type: 'FETCH_INIT' })
+//       try {
+//         const result = await getInvoice(invoiceId)
+//         if (!didCancel) {
+//           dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
+//         }
+//       } catch (error) {
+//         if (!didCancel) {
+//           dispatch({ type: 'FETCH_FAILURE' })
+//         }
+//       }
+//     }
+//     fetchData()
+//     return () => {
+//       didCancel = true
+//     }
+//   }, [])
+
+//   const updateState = (key, value) =>
+//     dispatch({ type: 'UPDATE_STATE', payload: { key, value } })
+//   return [state, updateState]
+// }
 
 const EditInvoiceView = props => {
   const { submit } = props
@@ -112,6 +113,7 @@ const EditInvoiceView = props => {
     props.match.params.id,
     initialState
   )
+
   return (
     <>
       {loading ? (

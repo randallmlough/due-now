@@ -5,41 +5,14 @@ import { connect } from 'react-redux'
 import { createInvoiceAction } from '../../actions'
 import { InvoiceForm } from './Form'
 import Sidebar from './sidebar'
+import { useInvoice } from './useInvoice'
+import { initialState } from '.'
 
-const initialState = {
-  dueDate: undefined,
-  invoiceDate: undefined,
-  invoiceNumber: '',
-  status: '',
-  paymentTerms: '',
-  private: false,
-  from: { name: '', emailAddress: '', mailingAddress: '', phoneNumber: '' },
-  recipient: {
-    name: '',
-    emailAddress: '',
-    mailingAddress: '',
-    phoneNumber: '',
-  },
-  notes: '',
-  invoiceItems: [
-    {
-      id: '',
-      description: 'Item description',
-      qty: 1,
-      rate: 0,
-      total: 0,
-    },
-  ],
-  tax: 0,
-  total: 0,
-}
 const NewInvoiceView = ({ submit }) => {
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    setLoading(false)
-  }, [loading])
-
-  const [invoice, setInvoice] = useState(initialState)
+  const [{ data: invoice, loading, isError }, setInvoice] = useInvoice(
+    null,
+    initialState
+  )
 
   return (
     <>
