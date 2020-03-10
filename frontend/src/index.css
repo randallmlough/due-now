@@ -605,6 +605,105 @@ h4 {
   font-size: 1.125rem;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+.col {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Making the label break the flow */
+
+.floating-group{
+  position: relative;
+}
+
+.floating-group input {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding-bottom: 0.25rem;
+    padding-top: 1.5rem;
+    color: #a0aec0;
+    line-height: 1;
+    z-index: 50;
+    background-color: transparent;
+    border-bottom-width: 2px;
+    border-color: transparent;
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 200ms;
+  }
+
+.floating-group input::placeholder{
+      color: transparent
+    }
+
+.floating-group input:hover{
+      border-color: #4dcd8c
+    }
+
+.floating-group input:focus{
+      outline: 0;
+      box-shadow: none;
+      border-color: #33c67c;
+    }
+
+/* &:not(:placeholder-shown){
+            @apply border-primary-500 ;
+        } */
+
+.floating-group input:focus + label,
+        .floating-group input:not(:placeholder-shown) + label {
+      --transform-translate-y: -0.75rem;
+      --transform-scale-x: .75;
+      --transform-scale-y: .75;
+      opacity: 0.5;
+    }
+
+.floating-group input:valid:not(:placeholder-shown){
+      color: #718096
+    }
+
+.floating-group input:invalid{
+      border-color: #fc8181
+    }
+
+.floating-group input:not(textarea){
+      /* @apply h-16; */
+    }
+
+.floating-group label{
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: #a0aec0;
+    font-weight: 700;
+    top: 0;
+    left: 0;
+    padding-top: 1.5rem;
+    -webkit-user-select: none;
+            user-select: none;
+    line-height: 1;
+    z-index: 40;
+    transition-duration: 200ms;
+    --transform-translate-x: 0;
+    --transform-translate-y: 0;
+    --transform-rotate: 0;
+    --transform-skew-x: 0;
+    --transform-skew-y: 0;
+    --transform-scale-x: 1;
+    --transform-scale-y: 1;
+    transform: translateX(var(--transform-translate-x)) translateY(var(--transform-translate-y)) rotate(var(--transform-rotate)) skewX(var(--transform-skew-x)) skewY(var(--transform-skew-y)) scaleX(var(--transform-scale-x)) scaleY(var(--transform-scale-y));
+    transform-origin: top left;
+    transition-property: all;
+  }
+
 .container {
   width: 100%;
 }

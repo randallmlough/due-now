@@ -16,7 +16,7 @@ export const getInvoice = async invoiceID => {
 }
 
 export const updateInvoice = async invoice => {
-  return await invoiceAPI.put(path.resolve(invoice.id), invoice)
+  return await invoiceAPI.patch(path.resolve(invoice.id.toString()), invoice)
 }
 
 export const deleteInvoice = async invoiceID => {

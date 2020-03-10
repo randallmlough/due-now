@@ -15,5 +15,5 @@
 class InvoiceItem < ApplicationRecord
     belongs_to :invoice
 
-    validates :invoice_id, :name, :rate, :qty, presence: true
+    validates :description, :qty, :rate, :total, presence: true
 end

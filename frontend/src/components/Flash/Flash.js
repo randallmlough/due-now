@@ -116,3 +116,13 @@ export const logoutFlash = {
   type: 'success',
   body: 'You have been successfully logged out',
 }
+
+export const invoiceCreatedFlash = {
+  type: 'success',
+  body: 'Invoice created',
+}
+
+export const invoiceUpdatedFlash = {
+  type: 'success',
+  body: 'Invoice updated',
+}

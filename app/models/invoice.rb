@@ -30,7 +30,7 @@ class Recipient
     attribute :phone_number, :string
   
     validates :name, presence: {message: "recipient name can not be empty"}
-    validates :email_address, presence: {message: "recipient email can not be empty"}
+    # validates :email_address, presence: {message: "recipient email can not be empty"}
 end
 
 class Invoice < ApplicationRecord
@@ -38,10 +38,12 @@ class Invoice < ApplicationRecord
     belongs_to :invoiceable, polymorphic: true
     
     attribute :recipient, Recipient.to_type, default: {}
+    attribute :from, Recipient.to_type, default: {}
 
     validates :uuid, :invoice_number, :created_by, :invoiceable_type, :invoiceable_id, presence: true
     validates :uuid, uniqueness: true
     validates :recipient, store_model: { merge_errors: true }
+    validates :from, store_model: { merge_errors: true }
     
 
     after_initialize :new_uuid, :ensure_invoice_number

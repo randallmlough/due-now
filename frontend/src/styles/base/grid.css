@@ -1,0 +1,7 @@
+.row {
+    @apply flex flex-wrap -mx-4;
+}
+
+.col {
+    @apply w-full px-4;
+}

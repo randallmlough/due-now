@@ -2,14 +2,25 @@ import React, { useState, useEffect } from 'react'
 import { Loader } from '../../components/UI/loaders'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getInvoicesAction } from '../../actions'
+import { getInvoicesAction, updateInvoiceAction } from '../../actions'
 import { InvoicesTable, Row, Col, Header } from '../../components/UI/Table'
 import { Pill, Link } from '../../components/UI'
 import { routes } from '../../routes'
 import { VisibilityFilters } from '../../actions/invoice_actions'
 import { setVisibilityFilter } from '../../actions'
+import * as dayjs from 'dayjs'
+import * as calendar from 'dayjs/plugin/calendar'
+import { useFlash } from '../../components/Flash'
 
-function InvoicesView({ invoices, getInvoices, setFilter }) {
+window.dayjs = dayjs.extend(calendar)
+window.calendar = calendar
+
+const filters = {
+  SHOW_ALL: 'SHOW_ALL',
+  SHOW_PAID: 'SHOW_PAID',
+  SHOW_UNPAID: 'SHOW_UNPAID',
+}
+function InvoicesView({ invoices, getInvoices, updateInvoice }) {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     if (!invoices.length) {
@@ -18,20 +29,45 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
     setLoading(false)
   }, [])
 
+  const [filter, setFilter] = useState(null)
+
   const handleFilterOption = e => {
     e.preventDefault()
     switch (e.target.value) {
       case 'ALL':
-        setFilter(VisibilityFilters.SHOW_ALL)
-        break
+        return setFilter(null)
       case 'PAID':
-        setFilter(VisibilityFilters.SHOW_PAID)
-        break
+        return setFilter(filters.SHOW_PAID)
       case 'UNPAID':
-        setFilter(VisibilityFilters.SHOW_UNPAID)
-        break
+        return setFilter(filters.SHOW_UNPAID)
     }
   }
+
+  const flash = useFlash()
+
+  const handlePrivateStatus = invoice => {
+    return e => {
+      e.preventDefault()
+      updateInvoice({
+        id: invoice.id,
+        private: e.target.value === 'true' ? true : false,
+      })
+        .then(() => {
+          flash.add({
+            type: 'success',
+            body: 'Invoice has been updated',
+          })
+        })
+        .catch(() => {
+          flash.add({
+            type: 'danger',
+            title: 'Uh oh!',
+            body: "Something went wrong and we couldn't update",
+          })
+        })
+    }
+  }
+
   return (
     <>
       {loading ? (
@@ -47,6 +83,7 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
                 <div className="relative">
                   <select
                     className="appearance-none h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    defaultValue="ALL"
                     onChange={handleFilterOption}
                   >
                     <option value="ALL">All</option>
@@ -75,35 +112,89 @@ function InvoicesView({ invoices, getInvoices, setFilter }) {
                 <InvoicesTable>
                   <Header>Invoice #</Header>
                   <Header>Created At</Header>
+                  <Header>Due At</Header>
                   <Header>Private</Header>
                   <Header>Status</Header>
                   {invoices.length ? (
-                    invoices.map(invoice => (
-                      <Row key={invoice.id}>
-                        <Col>
-                          <Link to={`${routes.INVOICES}/${invoice.id}`}>
-                            {invoice.invoice_number}
-                          </Link>
-                        </Col>
-                        <Col>
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {invoice.created_at}
-                          </p>
-                        </Col>
-                        <Col>
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {invoice.private.toString()}
-                          </p>
-                        </Col>
-                        <Col>
-                          {invoice.paid ? (
-                            <Pill success>Paid</Pill>
-                          ) : (
-                            <Pill danger>Unpaid</Pill>
-                          )}
-                        </Col>
-                      </Row>
-                    ))
+                    invoices
+                      .filter(invoice => {
+                        switch (filter) {
+                          case filters.SHOW_PAID:
+                            return invoice.paid
+                          case filters.SHOW_UNPAID:
+                            return !invoice.paid
+                          default:
+                            return invoice
+                        }
+                      })
+                      .map(invoice => {
+                        // debugger
+                        return (
+                          <Row key={invoice.id}>
+                            <Col>
+                              <Link to={`${routes.INVOICES}/${invoice.id}`}>
+                                {invoice.invoiceNumber}
+                              </Link>
+                            </Col>
+                            <Col>
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                {dayjs(invoice.createdAt)
+                                  .calendar(null, {
+                                    sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
+                                    nextDay: '[Tomorrow] h:mm A', // The next day ( Tomorrow at 2:30 AM )
+                                    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
+                                    lastDay: '[Yesterday]', // The day before ( Yesterday at 2:30 AM )
+                                    lastWeek: '[Last] dddd [at] h:mm A', // Last week ( Last Monday at 2:30 AM )
+                                    sameElse: 'MM/DD/YYYY [at] h:mm A', // Everything else ( 7/10/2011 )
+                                  })
+                                  .toString()}
+                              </p>
+                            </Col>
+                            <Col>
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                {dayjs(invoice.dueDate)
+                                  .calendar(null, {
+                                    sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
+                                    nextDay: '[Tomorrow] h:mm A', // The next day ( Tomorrow at 2:30 AM )
+                                    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
+                                    lastDay: '[Yesterday]', // The day before ( Yesterday at 2:30 AM )
+                                    lastWeek: '[Last] dddd [at] h:mm A', // Last week ( Last Monday at 2:30 AM )
+                                    sameElse: 'MM/DD/YYYY [at] h:mm A', // Everything else ( 7/10/2011 )
+                                  })
+                                  .toString()}
+                              </p>
+                            </Col>
+                            <Col>
+                              <div className="relative">
+                                <select
+                                  className="appearance-none bg-white cursor-pointer focus:outline-none h-full w-full leading-tight pr-8 py-2 text-gray-700"
+                                  value={invoice.private.toString()}
+                                  onChange={handlePrivateStatus(invoice)}
+                                >
+                                  <option value="true">True</option>
+                                  <option value="false">False</option>
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                  <svg
+                                    className="fill-current h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                  </svg>
+                                </div>
+                              </div>
+                            </Col>
+                            <Col>
+                              {invoice.paid ? (
+                                <Pill success>Paid</Pill>
+                              ) : (
+                                <Pill danger>Unpaid</Pill>
+                              )}
+                            </Col>
+                          </Row>
+                        )
+                      })
                   ) : (
                     <Row>
                       <Col colSpan={4}>
@@ -170,7 +261,8 @@ const mapStateToProps = (state = []) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setFilter: filter => dispatch(setVisibilityFilter(filter)),
+  // setFilter: filter => dispatch(setVisibilityFilter(filter)),
+  updateInvoice: invoice => dispatch(updateInvoiceAction(invoice)),
   getInvoices: async () => await dispatch(getInvoicesAction()),
 })
 

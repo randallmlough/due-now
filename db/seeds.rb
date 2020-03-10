@@ -18,18 +18,20 @@ demo = User.create!(first_name: 'demo', last_name: 'account', email: 'demo@examp
   t = Faker::Date.in_date_period
   i = Invoice.new(created_by: demo.id, invoice_date: t,due_date: Faker::Date.between(from: t.days_ago(60), to: t), private: [true, false].sample, paid: [true,false].sample, payment_terms: ['net 30', 'net 15', 'net 21'].sample,recipient: {name: Faker::Name.name , email_address: Faker::Internet.email, mailing_address: Faker::Address.full_address, phone:Faker::PhoneNumber.phone_number})
   i.invoiceable = demo
+
+  if [true, false].sample
+    i.notes = "#{Faker::Beer.style} 
+    #{Faker::Beer.malts}
+    #{Faker::Beer.ibu}
+    #{Faker::Beer.alcohol}"
+  end
+
   i.save
-  rand(1..4).times do 
-    item = InvoiceItem.new(name: Faker::Beer.name, rate: Faker::Commerce.price, qty: Faker::Number.between(from: 1, to: 6))
+  rand(1..4).times do
+    rate =  Faker::Commerce.price
+    qty = Faker::Number.between(from: 1, to: 6)
+    item = InvoiceItem.new(description: Faker::Beer.name, rate: rate, qty: qty, total: rate * qty)
     item.invoice = i
-
-    if [true, false].sample
-      item.description = "#{Faker::Beer.style} 
-      #{Faker::Beer.malts}
-      #{Faker::Beer.ibu}
-      #{Faker::Beer.alcohol}"
-    end
-
     item.save
   end
 end
@@ -41,18 +43,20 @@ end
     t = Faker::Date.in_date_period
     i = Invoice.new(created_by: u.id, invoice_date: t,due_date: Faker::Date.between(from: t.days_ago(60), to: t), private: [true, false].sample, paid: [true,false].sample, payment_terms: ['net 30', 'net 15', 'net 21'].sample,recipient: {name: Faker::Name.name , email_address: Faker::Internet.email, mailing_address: Faker::Address.full_address, phone:Faker::PhoneNumber.phone_number})
     i.invoiceable = u
+
+    if [true, false].sample
+      i.notes = "#{Faker::Beer.style} 
+      #{Faker::Beer.malts}
+      #{Faker::Beer.ibu}
+      #{Faker::Beer.alcohol}"
+    end
+
     i.save
     rand(1..4).times do 
-      item = InvoiceItem.new(name: Faker::Beer.name, rate: Faker::Commerce.price, qty: Faker::Number.between(from: 1, to: 6))
+      rate =  Faker::Commerce.price
+      qty = Faker::Number.between(from: 1, to: 6)
+      item = InvoiceItem.new(description: Faker::Beer.name, rate: rate, qty: qty, total: rate * qty)
       item.invoice = i
-
-      if [true, false].sample
-        item.description = "#{Faker::Beer.style} 
-        #{Faker::Beer.malts}
-        #{Faker::Beer.ibu}
-        #{Faker::Beer.alcohol}"
-      end
-      
       item.save
     end
     

@@ -9,10 +9,19 @@ class Api::InvoicesController < Api::APIController
     
     def create
         @invoice = Invoice.new(invoice_params.merge({:created_by => user_session.id}))
-        if params[:invoice_type] == 'individual'
+        @invoice.invoice_items = params[:invoice_items].map do |item|
+            item_hash = {}
+            item_hash[:description] = item[:description]
+            item_hash[:qty] = item[:qty]
+            item_hash[:rate] = item[:rate]
+            item_hash[:total] = item[:total]
+            InvoiceItem.new(item_hash)
+        end
+
+        if params[:invoice_type] == 'organization'
+            
+        else
             @invoice.invoiceable = user_session.user
-        elsif params[:invoice_type] == 'organization'
-            # TODO 
         end
         authorize @invoice
         if @invoice.save
@@ -29,16 +38,11 @@ class Api::InvoicesController < Api::APIController
     end
 
     def update
-        @invoice ||= find_invoice(params[:id],invoiceable_type)
-        if @invoice.created_by == user_session.id
-            if @invoice.update(invoice_params)
-                render :show, status: 200
-            else
-                render json: @invoice.errors.to_json, status: 400
-            end 
+        if @invoice.update(invoice_params)
+            render :show, status: 200
         else
-            head 403, content_type: "application/json"
-        end
+            render json: @invoice.errors.to_json, status: 400
+        end 
     end
  
     def destroy
@@ -56,7 +60,7 @@ class Api::InvoicesController < Api::APIController
 
     private
     def invoice_params
-        params.require(:invoice).permit(:invoice_number, :invoice_date, :payment_terms, :due_date, :private, :recipient => [:name, :email_address])
+        params.require(:invoice).permit(:invoice_number, :invoice_date, :payment_terms, :due_date, :private, :tax, :total, :notes, :invoice_items => [:description, :qty, :rate, :total], :from => [:name, :email_address, :phone_number, :mailing_address], :recipient => [:name, :email_address, :phone_number, :mailing_address])
     end
 
     def has_access?

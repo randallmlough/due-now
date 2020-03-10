@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import humps from 'humps'
 export default class API {
   constructor(baseRoute) {
     this.baseURL = '/api'
@@ -22,6 +22,10 @@ export default class API {
     return await this.request('put', url, data)
   }
 
+  async patch(url, data) {
+    return await this.request('patch', url, data)
+  }
+
   async delete(url) {
     return await this.request('delete', url)
   }
@@ -32,6 +36,14 @@ export default class API {
       xsrfCookieName: 'CSRF-TOKEN',
       xsrfHeaderName: 'X-CSRF-Token',
       withCredentials: true,
+      transformResponse: [
+        ...axios.defaults.transformResponse,
+        data => humps.camelizeKeys(data),
+      ],
+      transformRequest: [
+        data => humps.decamelizeKeys(data),
+        ...axios.defaults.transformRequest,
+      ],
       method: method,
       url: url,
       data: data,

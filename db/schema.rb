@@ -17,10 +17,9 @@ ActiveRecord::Schema.define(version: 2020_03_06_051826) do
 
   create_table "invoice_items", force: :cascade do |t|
     t.bigint "invoice_id"
-    t.string "name", null: false
-    t.float "rate", null: false
-    t.string "per", default: "per item", null: false
-    t.integer "qty", null: false
+    t.integer "qty", default: 0, null: false
+    t.float "rate", default: 0.0, null: false
+    t.float "total", default: 0.0, null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,14 +38,14 @@ ActiveRecord::Schema.define(version: 2020_03_06_051826) do
     t.integer "invoiceable_id", null: false
     t.integer "created_by", null: false
     t.boolean "private", default: false
+    t.jsonb "from", default: {}, null: false
     t.jsonb "recipient", default: {}, null: false
     t.string "notes"
-    t.integer "tax"
-    t.integer "discount"
-    t.integer "deposit"
+    t.float "tax", default: 0.0
+    t.float "discount", default: 0.0
+    t.float "deposit", default: 0.0
+    t.float "total", default: 0.0
     t.boolean "paid", default: false
-    t.index "((recipient ->> 'email_address'::text))", name: "recipient_email_address_index"
-    t.index "((recipient ->> 'name'::text))", name: "recipient_name_index"
     t.index ["created_by"], name: "index_invoices_on_created_by"
     t.index ["invoice_number"], name: "index_invoices_on_invoice_number"
     t.index ["invoiceable_type", "invoiceable_id"], name: "index_invoices_on_invoiceable_type_and_invoiceable_id"

@@ -8,7 +8,10 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 
 const initialState = {
-  entities: {},
+  entities: {
+    users: {},
+    invoices: {},
+  },
   session: {},
 }
 

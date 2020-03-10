@@ -11,20 +11,22 @@ class CreateInvoices < ActiveRecord::Migration[5.2]
       t.integer :invoiceable_id, null: false
       t.integer :created_by, null: false, index: true
       t.boolean :private, default: false
+      t.jsonb :from, null: false, default: {}
       t.jsonb :recipient, null: false, default: {}
       t.string :notes
-      t.integer :tax
-      t.integer :discount
-      t.integer :deposit
+      t.float :tax, default: 0
+      t.float :discount, default: 0
+      t.float :deposit, default: 0
+      t.float :total, default: 0
       t.boolean :paid, default: false
     end
 
     add_index :invoices, [:invoiceable_type, :invoiceable_id]
 
-    execute <<-SQL
-      CREATE INDEX recipient_name_index ON invoices ((recipient->>'name'));  
-      CREATE INDEX recipient_email_address_index ON invoices ((recipient->>'email_address'));
-    SQL
+    # execute <<-SQL
+    #   CREATE INDEX recipient_name_index ON invoices ((recipient->>'name'));  
+    #   CREATE INDEX recipient_email_address_index ON invoices ((recipient->>'email_address'));
+    # SQL
   end
 end
  

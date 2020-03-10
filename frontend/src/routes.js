@@ -4,7 +4,7 @@ import { RegisterUserView, AuthenticateUserView } from './views/auth'
 import { DashboardView } from './views/users'
 import NotFound from './views/404'
 import { StaticView, AppView } from './views'
-import { InvoicesView, NewInvoiceView } from './views/invoices'
+import { InvoicesView, NewInvoiceView, EditInvoiceView } from './views/invoices'
 
 export default () => {
   return (
@@ -14,6 +14,7 @@ export default () => {
       <AppView exact path={routes.DASHBOARD} component={DashboardView} />
       <AppView exact path={routes.INVOICES} component={InvoicesView} />
       <AppView exact path={routes.INVOICES_NEW} component={NewInvoiceView} />
+      <AppView exact path={routes.INVOICE} component={EditInvoiceView} />
       <StaticView path="*" component={NotFound} />
     </Switch>
   )

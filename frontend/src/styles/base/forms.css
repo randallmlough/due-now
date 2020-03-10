@@ -1,0 +1,39 @@
+
+/* Making the label break the flow */
+.floating-group{
+    @apply relative;
+    input {
+        @apply relative block w-full pb-1 pt-6 text-gray-500 leading-none z-50;
+        @apply bg-transparent border-b-2 border-transparent transition-colors duration-200;
+        &::placeholder{
+            @apply text-transparent
+        }
+        &:hover{
+            @apply border-primary-200
+        }
+        &:focus{
+            @apply outline-none shadow-none border-primary-300 ;
+        }
+        /* &:not(:placeholder-shown){
+            @apply border-primary-500 ;
+        } */
+        &:focus + label,
+        &:not(:placeholder-shown) + label {
+             @apply -translate-y-3 scale-75 opacity-50;
+        }
+        &:valid:not(:placeholder-shown){
+            @apply text-gray-600
+        }
+        &:invalid{
+            @apply border-danger-400
+        }
+        &:not(textarea){
+            /* @apply h-16; */
+        }
+    }
+    
+    label{
+        @apply absolute block w-full text-gray-500 font-bold top-0 left-0 pt-6 select-none leading-none z-40;
+        @apply duration-200 transform origin-top-left transition-all;
+    }
+}
