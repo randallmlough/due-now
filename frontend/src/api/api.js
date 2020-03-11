@@ -1,9 +1,9 @@
 import axios from 'axios'
 import humps from 'humps'
 export default class API {
-  constructor(baseRoute) {
+  constructor(baseResource) {
     this.baseURL = '/api'
-    if (baseRoute) this.baseURL += baseRoute
+    this.baseResource = baseResource
   }
 
   ping() {
@@ -45,7 +45,7 @@ export default class API {
         ...axios.defaults.transformRequest,
       ],
       method: method,
-      url: url,
+      url: this.baseResource + url,
       data: data,
       headers: {
         'content-type': 'application/json',

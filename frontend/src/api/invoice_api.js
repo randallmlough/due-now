@@ -7,8 +7,8 @@ export const createInvoice = async invoice => {
   return await invoiceAPI.post('', invoice)
 }
 
-export const getInvoices = async () => {
-  return await invoiceAPI.get('')
+export const getInvoices = async query => {
+  return await invoiceAPI.get(query ? query : '')
 }
 
 export const getInvoice = async invoiceID => {
