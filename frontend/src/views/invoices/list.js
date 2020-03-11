@@ -9,6 +9,7 @@ import { routes } from '../../routes'
 import { VisibilityFilters } from '../../actions/invoice_actions'
 import { formatRelative } from 'date-fns'
 import { useFlash } from '../../components/Flash'
+import Pagination from '../../components/Pagination'
 
 const filters = {
   SHOW_ALL: 'SHOW_ALL',
@@ -16,7 +17,7 @@ const filters = {
   SHOW_UNPAID: 'SHOW_UNPAID',
 }
 
-function InvoicesView({ invoices, getInvoices, updateInvoice }) {
+function InvoicesView({ invoices, updateInvoice, getInvoices }) {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     if (!invoices.length) {
@@ -25,8 +26,8 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
     setLoading(false)
   }, [])
 
+  // currently pagination doesn't reflect change
   const [filter, setFilter] = useState(null)
-
   const handleFilterOption = e => {
     e.preventDefault()
     switch (e.target.value) {
@@ -39,8 +40,21 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
     }
   }
 
-  const flash = useFlash()
+  // currently pagination pages doesn't change
+  const [recordsPerPage, setRecordsPerPage] = useState(5)
+  const handleRecordsPerPageOption = e => {
+    e.preventDefault()
+    switch (e.target.value) {
+      case '5':
+        return setRecordsPerPage(5)
+      case '10':
+        return setRecordsPerPage(10)
+      case '20':
+        return setRecordsPerPage(20)
+    }
+  }
 
+  const flash = useFlash()
   const handlePrivateStatus = invoice => {
     return e => {
       e.preventDefault()
@@ -63,6 +77,32 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
         })
     }
   }
+
+  const [allInvoices, setAllInvoices] = useState([])
+  useEffect(() => {
+    setAllInvoices(invoices)
+  }, [invoices.length])
+
+  const [currentInvoices, setCurrentInvoices] = useState([])
+
+  const onPageChanged = data => {
+    const { currentPage, totalPages, pageLimit } = data
+    const offset = (currentPage - 1) * pageLimit
+    const filteredInvoices = allInvoices.filter(invoice => {
+      switch (filter) {
+        case filters.SHOW_PAID:
+          return invoice.paid
+        case filters.SHOW_UNPAID:
+          return !invoice.paid
+        default:
+          return invoice
+      }
+    })
+    setCurrentInvoices(filteredInvoices.slice(offset, offset + pageLimit))
+  }
+
+  const totalInvoices = allInvoices.length
+  if (totalInvoices === 0) return null
 
   return (
     <>
@@ -96,6 +136,26 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
                     </svg>
                   </div>
                 </div>
+                <div className="relative">
+                  <select
+                    className="appearance-none h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    defaultValue="ALL"
+                    onChange={handleRecordsPerPageOption}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div>
                 <Link to={routes.INVOICES_NEW} button primary small>
@@ -111,75 +171,64 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
                   <Header>Due At</Header>
                   <Header>Private</Header>
                   <Header>Status</Header>
-                  {invoices.length ? (
-                    invoices
-                      .filter(invoice => {
-                        switch (filter) {
-                          case filters.SHOW_PAID:
-                            return invoice.paid
-                          case filters.SHOW_UNPAID:
-                            return !invoice.paid
-                          default:
-                            return invoice
-                        }
-                      })
-                      .map(invoice => {
-                        // debugger
-                        return (
-                          <Row key={invoice.id}>
-                            <Col>
-                              <Link to={`${routes.INVOICES}/${invoice.id}`}>
-                                {invoice.invoiceNumber}
-                              </Link>
-                            </Col>
-                            <Col>
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                {formatRelative(
-                                  new Date(invoice.createdAt),
+                  {currentInvoices.length ? (
+                    currentInvoices.map(invoice => {
+                      // debugger
+                      return (
+                        <Row key={invoice.id}>
+                          <Col>
+                            <Link to={`${routes.INVOICES}/${invoice.id}`}>
+                              {invoice.invoiceNumber}
+                            </Link>
+                          </Col>
+                          <Col>
+                            <p className="text-gray-900 whitespace-no-wrap">
+                              {formatRelative(
+                                new Date(invoice.createdAt),
+                                new Date()
+                              )}
+                            </p>
+                          </Col>
+                          <Col>
+                            <p className="text-gray-900 whitespace-no-wrap">
+                              {invoice.dueDate &&
+                                formatRelative(
+                                  new Date(invoice.dueDate),
                                   new Date()
                                 )}
-                              </p>
-                            </Col>
-                            <Col>
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                {invoice.dueDate &&
-                                  formatRelative(
-                                    new Date(invoice.dueDate),
-                                    new Date()
-                                  )}
-                              </p>
-                            </Col>
-                            <Col>
-                              <div className="relative">
-                                <select
-                                  className="appearance-none bg-white cursor-pointer focus:outline-none h-full w-full leading-tight pr-8 py-2 text-gray-700"
-                                  value={invoice.private.toString()}
-                                  onChange={handlePrivateStatus(invoice)}
+                            </p>
+                          </Col>
+                          <Col>
+                            <div className="relative">
+                              <select
+                                className="appearance-none bg-white cursor-pointer focus:outline-none h-full w-full leading-tight pr-8 py-2 text-gray-700"
+                                value={invoice.private.toString()}
+                                onChange={handlePrivateStatus(invoice)}
+                              >
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                              </select>
+                              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg
+                                  className="fill-current h-4 w-4"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 20 20"
                                 >
-                                  <option value="true">True</option>
-                                  <option value="false">False</option>
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                  <svg
-                                    className="fill-current h-4 w-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                  >
-                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                  </svg>
-                                </div>
+                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
                               </div>
-                            </Col>
-                            <Col>
-                              {invoice.paid ? (
-                                <Pill success>Paid</Pill>
-                              ) : (
-                                <Pill danger>Unpaid</Pill>
-                              )}
-                            </Col>
-                          </Row>
-                        )
-                      })
+                            </div>
+                          </Col>
+                          <Col>
+                            {invoice.paid ? (
+                              <Pill success>Paid</Pill>
+                            ) : (
+                              <Pill danger>Unpaid</Pill>
+                            )}
+                          </Col>
+                        </Row>
+                      )
+                    })
                   ) : (
                     <Row>
                       <Col colSpan={5}>
@@ -200,18 +249,17 @@ function InvoicesView({ invoices, getInvoices, updateInvoice }) {
                     </Row>
                   )}
                 </InvoicesTable>
-                {invoices.length > 0 && (
+                {recordsPerPage > 0 && (
                   <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-                    <div className="inline-flex mt-2 xs:mt-0">
-                      <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                        Prev
-                      </button>
-                      <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                        Next
-                      </button>
-                    </div>
+                    <Pagination
+                      totalRecords={totalInvoices}
+                      pageLimit={recordsPerPage}
+                      pageNeighbors={1}
+                      onPageChanged={onPageChanged}
+                    />
                   </div>
                 )}
+                <div className="bg-white flex justify-center py-5"></div>
               </div>
             </div>
           </div>
