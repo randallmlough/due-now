@@ -3,7 +3,7 @@ class Api::InvoicesController < Api::APIController
     before_action :has_access?, only: [:show, :update, :destroy]
 
     def index
-        @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id)
+        @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id).limit(params[:limit])
         render :index, status: 200
     end
     
