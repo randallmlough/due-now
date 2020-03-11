@@ -143,7 +143,7 @@ class Pagination extends Component {
   }
 
   render() {
-    if (!this.totalRecords) return null
+    if (!this.totalRecords || this.totalPages <= 1) return null
 
     const { currentPage } = this.state
     const pages = this.fetchPageNumbers()
