@@ -97,24 +97,26 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
     setSearch(e.target.value)
   }
 
-  const filteredSearch = invoices.filter(invoice => {
-    if (search.length > 0) {
-      return invoice.invoiceNumber.toLowerCase().includes(search.toLowerCase())
-    } else {
-      return invoice
-    }
-  })
-
-  const filteredInvoices = filteredSearch.filter(invoice => {
-    switch (filter) {
-      case filters.SHOW_PAID:
-        return invoice.paid
-      case filters.SHOW_UNPAID:
-        return !invoice.paid
-      default:
+  const filteredInvoices = invoices
+    .filter(invoice => {
+      switch (filter) {
+        case filters.SHOW_PAID:
+          return invoice.paid
+        case filters.SHOW_UNPAID:
+          return !invoice.paid
+        default:
+          return invoice
+      }
+    })
+    .filter(invoice => {
+      if (search.length > 0) {
+        return invoice.invoiceNumber
+          .toLowerCase()
+          .includes(search.toLowerCase())
+      } else {
         return invoice
-    }
-  })
+      }
+    })
   totalInvoices = filteredInvoices.length
 
   const currentInvoices = filteredInvoices.slice(
