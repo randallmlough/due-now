@@ -20,38 +20,57 @@ class Pagination extends Component {
   constructor(props) {
     super(props)
     const { totalRecords = null, pageLimit = 30, pageNeighbors = 0 } = props
-    console.log('pagination page limit', pageLimit)
-    this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 30
     this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0
-
+    this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 30
+    this.totalPages = this.calcTotalPages(this.totalRecords, this.pageLimit)
     // neighbors can either be 0, 1, or 2
     this.pageNeighbors =
       typeof pageNeighbors === 'number'
         ? Math.max(0, Math.min(pageNeighbors, 2))
         : 0
-
-    this.totalPages = Math.ceil(this.totalRecords / this.pageLimit)
-
-    this.state = { currentPage: 1 }
+    this.state = {
+      currentPage: 1,
+    }
   }
 
   componentDidMount() {
-    this.goToPage(1)
+    this.reset()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.pageLimit !== prevProps.pageLimit ||
+      this.props.totalRecords !== prevProps.totalRecords
+    ) {
+      const tr = this.props.totalRecords
+      const pl = this.props.pageLimit
+
+      this.totalRecords = tr
+      this.pageLimit = pl
+      this.totalPages = this.calcTotalPages(tr, pl)
+      this.reset()
+    }
+  }
+
+  calcTotalPages = (totalRecords, pageLimit) =>
+    Math.ceil(totalRecords / pageLimit)
+
+  reset = () => {
+    this.goToPage(1)
+  }
   goToPage = page => {
     const { onPageChanged = f => f } = this.props
-
     const currentPage = Math.max(0, Math.min(page, this.totalPages))
+    const offset = (currentPage - 1) * this.pageLimit
 
-    const paginationDate = {
+    const paginationData = {
       currentPage,
       totalPages: this.totalPages,
       pageLimit: this.pageLimit,
       totalRecords: this.totalRecords,
+      offset,
     }
-
-    this.setState({ currentPage }, () => onPageChanged(paginationDate))
+    this.setState({ currentPage }, () => onPageChanged(paginationData))
   }
 
   handleClick = (page, event) => {
