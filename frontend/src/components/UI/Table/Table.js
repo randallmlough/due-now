@@ -10,11 +10,13 @@ export default function InvoicesTable({ children }) {
   })
 
   return (
-    <table className="min-w-full leading-normal">
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <div>
+      <table className="min-w-full leading-normal">
+        <thead>
+          <tr>{headers}</tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    </div>
   )
 }
