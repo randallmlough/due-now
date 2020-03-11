@@ -3,7 +3,7 @@ import { Button } from '../../../components/UI'
 import InvoiceItem from './invoice_item'
 
 const initialState = {
-  description: 'Item description',
+  description: '',
   qty: 0,
   rate: 0,
   total: 0,

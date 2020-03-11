@@ -22,8 +22,8 @@ export const initialState = {
   invoiceItems: [
     {
       id: '',
-      description: 'Item description',
-      qty: 1,
+      description: '',
+      qty: 0,
       rate: 0,
       total: 0,
     },

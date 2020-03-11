@@ -29,6 +29,7 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
           className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
           value={item.description}
           name="description"
+          placeholder="Item description"
           onChange={handleChange('description')}
         />
       </td>
