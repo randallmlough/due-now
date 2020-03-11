@@ -2,7 +2,10 @@ import React, { useEffect } from 'react'
 
 const InvoiceItem = ({ item, setInvoice, idx }) => {
   useEffect(() => {
-    setItem('total', item.qty * item.rate)
+    setItem(
+      'total',
+      (isNaN(item.qty) ? 0 : item.qty) * (isNaN(item.rate) ? 0 : item.rate)
+    )
   }, [item.qty, item.rate])
 
   const handleChange = key => {
@@ -33,7 +36,7 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
         <input
           type="number"
           className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={item.qty}
+          value={isNaN(item.qty) ? '' : item.qty}
           name="qty"
           onChange={handleChange('qty')}
         />
@@ -42,7 +45,7 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
         <input
           type="number"
           className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={item.rate}
+          value={isNaN(item.rate) ? '' : item.rate}
           name="rate"
           onChange={handleChange('rate')}
         />

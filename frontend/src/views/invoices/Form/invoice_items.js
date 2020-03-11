@@ -15,20 +15,30 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
   }
 
   const calcSubTotal = () =>
-    invoice.invoiceItems.reduce((prev, cur) => prev + cur.total, 0)
+    invoice.invoiceItems.reduce(
+      (prev, cur) => (prev + isNaN(cur.total) ? 0 : cur.total),
+      0
+    )
+
   const calcTax = (subTotal, taxPercent) => subTotal * (taxPercent / 100)
+
   const calcTotal = (subTotal, taxPercent) =>
     subTotal + calcTax(subTotal, taxPercent)
 
   useEffect(() => {
     setInvoice(
       'total',
-      calcTotal(calcSubTotal(), invoice.tax > 0 ? invoice.tax : 0)
+      calcTotal(calcSubTotal(), isNaN(invoice.tax) ? 0 : invoice.tax)
     )
   }, [calcSubTotal(), invoice.tax])
 
   const handleTaxChange = e => {
-    setInvoice('tax', parseFloat(e.target.value))
+    if (e.target.value.slice(-1) === '.') {
+      // allow a decimal to be added
+      setInvoice('tax', e.target.value)
+    } else {
+      setInvoice('tax', parseFloat(e.target.value))
+    }
   }
   return (
     <>
@@ -83,9 +93,8 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
               <input
                 type="text"
                 className="appearance-none border-b-2 border-transparent hover:border-primary-200 w-full py-2 text-gray-700 leading-tight focus:outline-none focus:border-primary-300 text-right"
-                value={invoice.tax}
+                value={isNaN(invoice.tax) ? '' : invoice.tax}
                 name="tax"
-                pattern="[0-9.]+"
                 onChange={handleTaxChange}
               />
             </div>
