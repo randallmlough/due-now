@@ -39,8 +39,8 @@ export const createInvoiceAction = invoice => async dispatch => {
     .catch(error => Promise.reject(formatError(error)))
 }
 
-export const getInvoicesAction = () => async dispatch => {
-  return await getInvoices()
+export const getInvoicesAction = query => async dispatch => {
+  return await getInvoices(query)
     .then(resp => {
       dispatch(receiveInvoices(resp.data))
       return resp.data

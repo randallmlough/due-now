@@ -6,6 +6,7 @@ import { Link } from '../UI'
 import MenuBtn from './MenuBtn'
 import { DefaultMenu } from './Menu'
 import { useSession } from '../Session'
+import Search from './Search'
 import UserMenu from './UserMenu'
 
 export default function Navbar() {
@@ -70,14 +71,17 @@ export default function Navbar() {
                     to="/"
                     className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                   >
-                    Logged out
+                    Home
                   </NavLink>
                 </div>
               </DefaultMenu>
             )}
             <div className="ml-auto">
               {session ? (
-                <UserMenu />
+                <div className="flex items-center">
+                  <Search resource={'invoices'} />
+                  <UserMenu />
+                </div>
               ) : (
                 <div>
                   <Link

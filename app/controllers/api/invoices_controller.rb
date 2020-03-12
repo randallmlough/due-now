@@ -3,7 +3,12 @@ class Api::InvoicesController < Api::APIController
     before_action :has_access?, only: [:show, :update, :destroy]
 
     def index
-        @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id).limit(params[:limit])
+        if params[:search]
+            term = params[:search]
+            @invoices = Invoice.where("invoice_number ILIKE ? OR recipient->>'name' LIKE ? OR recipient->>'email_address' LIKE ?", "%#{term}%","%#{term}%","%#{term}%").limit(params[:limit])
+        else
+            @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id).limit(params[:limit])
+        end
         render :index, status: 200
     end
     
