@@ -24,9 +24,9 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
   return (
     <tr>
       <td className="border px-4 py-2 odd:bg-gray-200">
-        <input
+        <textarea
           type="text"
-          className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
+          className="w-full border border-transparent focus:border-blue-200 focus:outline-none px-2 resize-none"
           value={item.description}
           name="description"
           placeholder="Item description"
@@ -36,8 +36,8 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
       <td className="border px-4 py-2 odd:bg-gray-200">
         <input
           type="number"
-          className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={Number(isNaN(item.qty) ? '' : item.qty).toFixed(2)}
+          className="w-full border border-transparent focus:border-blue-200 focus:outline-none px-2"
+          value={isNaN(item.qty) ? '' : Number(item.qty).toFixed(0)}
           name="qty"
           onChange={handleChange('qty')}
         />
@@ -45,8 +45,8 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
       <td className="border px-4 py-2 odd:bg-gray-200">
         <input
           type="number"
-          className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={Number(isNaN(item.rate) ? '' : item.rate).toFixed(2)}
+          className="w-full border border-transparent focus:border-blue-200 focus:outline-none px-2"
+          value={isNaN(item.rate) ? '' : item.rate}
           name="rate"
           onChange={handleChange('rate')}
         />

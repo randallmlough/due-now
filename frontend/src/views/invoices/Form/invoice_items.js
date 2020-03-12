@@ -42,19 +42,19 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
   }
   return (
     <>
-      <table className="table-auto min-w-full leading-normal mb-4">
+      <table className="table-fixed leading-normal mb-4">
         <thead>
           <tr>
-            <th className="bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase rounded-tl">
+            <th className="w-5/12 bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase rounded-tl">
               Description
             </th>
-            <th className="bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase">
+            <th className="w-2/12 bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase">
               Quantity
             </th>
-            <th className="bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase">
+            <th className="w-2/12 bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase">
               Rate
             </th>
-            <th className="bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase rounded-tr ">
+            <th className="w-3/12 bg-blue-700 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase rounded-tr ">
               Total
             </th>
           </tr>
