@@ -2,7 +2,7 @@ import React from 'react'
 import { useSession } from '../Session'
 
 import { Dropdown } from '../UI/Dropdown'
-import { Button } from '../UI'
+import { Button, Icon } from '../UI'
 import { useFlash, logoutFlash } from '../Flash'
 export default function UserMenu() {
   const [session, , removeSession] = useSession()
@@ -11,6 +11,7 @@ export default function UserMenu() {
     flash.add(logoutFlash)
     removeSession()
   }
+
   return (
     <Dropdown
       buttonText={
@@ -27,6 +28,7 @@ export default function UserMenu() {
         full
         className="text-left"
       >
+        <Icon icon="sign-out-alt" className="mr-2" />
         Log out
       </Button>
       {/* <DropdownItem>Action</DropdownItem>
