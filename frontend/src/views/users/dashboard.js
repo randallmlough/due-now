@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from '../../components/UI'
+import { Link, Icon } from '../../components/UI'
 import { routes } from '../../routes'
 import { getInvoicesAction } from '../../actions'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format, isAfter, startOfMonth, endOfMonth } from 'date-fns'
 import Pagination from '../../components/Pagination'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Dashboard = ({ getCurrentInvoices }) => {
   const [loading, setLoading] = useState(false)
@@ -74,7 +73,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
     <div className="flex-grow container mx-auto sm:px-4 py-10 animated fadeIn">
       <div className="flex mb-12">
         <label className="flex items-center px-2 py-1 border-2 border-gray-400 rounded cursor-pointer focus-within:bg-white focus-within:shadow focus-within:border-white text-gray-600 w-32">
-          <FontAwesomeIcon icon="calendar" className="mr-2" />
+          <Icon icon="calendar" className="mr-2" />
 
           <DatePicker
             selected={new Date(startDate)}
@@ -86,7 +85,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
           to
         </span>
         <label className="flex items-center px-2 py-1 border-2 border-gray-400 rounded cursor-pointer focus-within:bg-white focus-within:shadow focus-within:border-white text-gray-600 w-32">
-          <FontAwesomeIcon icon="calendar" className="mr-2" />
+          <Icon icon="calendar" className="mr-2" />
 
           <DatePicker
             selected={new Date(endDate)}
@@ -106,7 +105,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
                   </h5>
                   <span className="font-semibold text-xl text-dark-800">
                     {loading ? (
-                      <FontAwesomeIcon
+                      <Icon
                         icon="circle-notch"
                         spin
                         className="text-primary-300 opacity-50"
@@ -138,7 +137,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
                   </h5>
                   <span className="font-semibold text-xl text-dark-800">
                     {loading ? (
-                      <FontAwesomeIcon
+                      <Icon
                         icon="circle-notch"
                         spin
                         className="text-primary-300 opacity-50"
@@ -170,7 +169,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
                   </h5>
                   <span className="font-semibold text-xl text-dark-800">
                     {loading ? (
-                      <FontAwesomeIcon
+                      <Icon
                         icon="circle-notch"
                         spin
                         className="text-primary-300 opacity-50"
@@ -234,7 +233,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
             <div style={{ height: 'calc(75px * 5)' }}>
               {loading ? (
                 <div className="flex h-full items-center justify-center text-6xl">
-                  <FontAwesomeIcon
+                  <Icon
                     icon="circle-notch"
                     spin
                     className="text-primary-300 opacity-50"
@@ -258,7 +257,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
                               <div>
                                 <div className="mb-px">
                                   <span className="mr-2 font-bold text-gray-700">
-                                    <FontAwesomeIcon
+                                    <Icon
                                       icon="calendar"
                                       className="mr-2 text-gray-600 text-xs opacity-25"
                                     />
@@ -277,14 +276,14 @@ const Dashboard = ({ getCurrentInvoices }) => {
                                 </div>
                                 <div className="flex items-center">
                                   <span className="flex items-center text-gray-600 mr-3">
-                                    <FontAwesomeIcon
+                                    <Icon
                                       icon="user"
                                       className="mr-2 text-xs opacity-25"
                                     />
                                     {invoice.recipient.name}
                                   </span>
                                   <span className="flex items-center text-gray-600">
-                                    <FontAwesomeIcon
+                                    <Icon
                                       icon="envelope"
                                       className="mr-1 text-xs opacity-25"
                                     />
