@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCalendar,
@@ -7,6 +8,8 @@ import {
   faFileInvoiceDollar,
   faEnvelope,
   faUser,
+  faSignOutAlt,
+  faHome,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -16,5 +19,9 @@ library.add(
   faHashtag,
   faFileInvoiceDollar,
   faEnvelope,
-  faUser
+  faUser,
+  faSignOutAlt,
+  faHome
 )
+
+export default FontAwesomeIcon
