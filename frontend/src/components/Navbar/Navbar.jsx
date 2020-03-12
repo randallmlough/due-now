@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useOffMenuClick } from './useNavbar'
 import { classList } from '../UI/helpers'
-import { Link } from '../UI'
+import { Link, Icon } from '../UI'
 import MenuBtn from './MenuBtn'
 import { DefaultMenu } from './Menu'
 import { useSession } from '../Session'
@@ -54,12 +54,21 @@ export default function Navbar() {
                     to="/"
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
+                    <span className="inline-block text-center w-10 mr-10">
+                      <Icon icon="home" className="text-primary-200" />
+                    </span>
                     Dashboard
                   </NavLink>
                   <NavLink
                     to="/invoices"
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
+                    <span className="inline-block text-center w-10 mr-10">
+                      <Icon
+                        icon="file-invoice-dollar"
+                        className="text-primary-200"
+                      />
+                    </span>
                     Invoices
                   </NavLink>
                 </div>
