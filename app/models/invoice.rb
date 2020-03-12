@@ -59,6 +59,6 @@ class Invoice < ApplicationRecord
     end
 
     def random_invoice_number
-        SecureRandom.hex(8)
+        SecureRandom.hex(4)
     end
 end

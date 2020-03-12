@@ -88,6 +88,8 @@ class Pagination extends Component {
     this.goToPage(this.state.currentPage + this.pageNeighbors * 2 + 1)
   }
 
+  fetchTotalPages = () => this.totalPages
+
   fetchPageNumbers = () => {
     const totalPages = this.totalPages
     const currentPage = this.state.currentPage
@@ -146,8 +148,37 @@ class Pagination extends Component {
     if (!this.totalRecords || this.totalPages <= 1) return null
 
     const { currentPage } = this.state
+    const { prevNextOnly } = this.props
+    if (prevNextOnly) {
+      return (
+        <nav aria-label="flex">
+          <button
+            aria-label="Previous"
+            className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4"
+            onClick={e =>
+              this.handleClick(currentPage > 2 ? currentPage - 1 : 1, e)
+            }
+          >
+            <span className="">Prev</span>
+          </button>
+          <button
+            aria-label="Next"
+            className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4"
+            onClick={e =>
+              this.handleClick(
+                currentPage < this.totalPages
+                  ? currentPage + 1
+                  : this.totalPages,
+                e
+              )
+            }
+          >
+            <span className="">Next</span>
+          </button>
+        </nav>
+      )
+    }
     const pages = this.fetchPageNumbers()
-
     return (
       <>
         <nav aria-label="Invoices Pagination">

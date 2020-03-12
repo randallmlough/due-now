@@ -6,8 +6,12 @@ class Api::InvoicesController < Api::APIController
         if params[:search]
             term = params[:search]
             @invoices = Invoice.where("invoice_number ILIKE ? OR recipient->>'name' LIKE ? OR recipient->>'email_address' LIKE ?", "%#{term}%","%#{term}%","%#{term}%").limit(params[:limit])
+        elsif params[:start_date] || params[:end_date]
+            start_date = params[:start_date] 
+            end_date = params[:end_date]
+            @invoices = Invoice.where("due_date between ? and ?", start_date, end_date).order(invoice_date: :asc)
         else
-            @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id).limit(params[:limit])
+            @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id).order(invoice_date: :asc).limit(params[:limit])
         end
         render :index, status: 200
     end
