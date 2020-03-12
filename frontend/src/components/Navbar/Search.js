@@ -44,7 +44,7 @@ const Search = props => {
       setResults([])
     }
   }, [query])
-  console.log('PRE', query.length && results.length)
+
   return (
     <div className="relative lg:mr-5" ref={searchContainer}>
       <div>
@@ -52,17 +52,17 @@ const Search = props => {
           className="appearance-none bg-dark-700 block border-transparent duration-100 ease-in-out focus:bg-white focus:border-primary-500 focus:outline-0 focus:outline-none focus:text-gray-600 leading-normal pl-10 placeholder placeholder-gray-600 pr-4 py-2 rounded-lg text-gray-600 text-sm transition-colors w-full"
           type="text"
           placeholder="Search for an invoice"
-          autocomplete="off"
-          spellcheck="false"
+          autoComplete="off"
+          spellCheck="false"
           aria-autocomplete="list"
           aria-expanded="false"
           aria-label="search input"
           value={query}
           onChange={handleOnChange}
         />
-        <div class="pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center">
+        <div className="pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center">
           <svg
-            class="fill-current pointer-events-none text-gray-600 w-4 h-4"
+            className="fill-current pointer-events-none text-gray-600 w-4 h-4"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
