@@ -214,16 +214,19 @@ const Dashboard = ({ getCurrentInvoices }) => {
                     {recentActivity.length ? (
                       <div>
                         <div></div>
-                        <ul>
+                        <ul
+                          className="flex flex-col"
+                          style={{ height: 'calc(75px * 5)' }}
+                        >
                           {currentActivity.map((invoice, idx) => (
                             <li
                               key={idx}
-                              className="border-b hover:bg-gray-100"
+                              className="border-b flex hover:bg-gray-100 items-center py-1"
                             >
                               <Link
                                 to={`/invoices/${invoice.id}`}
                                 dark
-                                className="px-6 py-3 block"
+                                className="px-6 py-3 block w-full"
                               >
                                 <div className="flex items-center">
                                   <div>
