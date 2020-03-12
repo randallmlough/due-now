@@ -1,3 +1,5 @@
+import './icons'
+
 export { default as Button } from './Button'
 
 export { classList } from './helpers'

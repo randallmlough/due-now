@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format, isAfter, startOfMonth, endOfMonth } from 'date-fns'
 import Pagination from '../../components/Pagination'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Dashboard = ({ getCurrentInvoices }) => {
   const [loading, setLoading] = useState(false)
@@ -71,47 +72,58 @@ const Dashboard = ({ getCurrentInvoices }) => {
   )
 
   return (
+    // <>
+    //   {loading ? (
+    //     <Loader />
+    //   ) : (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="flex-grow container mx-auto sm:px-4 py-10 animated fadeIn slower">
-            <div className="flex mb-5">
-              <div className="flex w-32">
-                <DatePicker
-                  selected={new Date(startDate)}
-                  onChange={handleStartDateChange}
-                  className="bg-transparent border-2 border-gray-400 cursor-pointer focus:bg-white focus:outline-none focus:shadow focus:text-gray-500 px-3 py-1 rounded text-base text-gray-600 w-full"
-                />
-              </div>
-              <span className="self-center text-xs font-semibold px-2 text-gray-800">
-                To
-              </span>
-              <div className="flex w-32">
-                <DatePicker
-                  selected={new Date(endDate)}
-                  onChange={handleEndDateChange}
-                  className="bg-transparent border-2 border-gray-400 cursor-pointer focus:bg-white focus:outline-none focus:shadow focus:text-gray-500 px-3 py-1 rounded text-base text-gray-600 w-full"
-                />
-              </div>
-            </div>
+      <div className="flex-grow container mx-auto sm:px-4 py-10 animated fadeIn">
+        <div className="flex mb-5">
+          <label className="flex items-center px-2 py-1 border-2 border-gray-400 rounded cursor-pointer focus-within:bg-white focus-within:shadow focus-within:border-white text-gray-600 w-32">
+            <FontAwesomeIcon icon="calendar" className="mr-2" />
 
-            <div className="flex flex-wrap -mx-4 mb-10">
-              <div className="w-full lg:w-3/12 px-4">
-                <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
-                  <div className="flex-auto p-4">
-                    <div className="flex flex-wrap">
-                      <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                        <h5 className="text-dark-500 uppercase font-bold text-xs">
-                          Invoices paid
-                        </h5>
-                        <span className="font-semibold text-xl text-dark-800">
-                          {invoicesPaid}
-                        </span>
-                      </div>
-                    </div>
-                    {/* <p className="text-sm text-dark-500 mt-4">
+            <DatePicker
+              selected={new Date(startDate)}
+              onChange={handleStartDateChange}
+              className="bg-transparent cursor-pointer focus:outline-none text-base w-full"
+            />
+          </label>
+          <span className="self-center text-xs font-semibold px-2 text-gray-500">
+            to
+          </span>
+          <label className="flex items-center px-2 py-1 border-2 border-gray-400 rounded cursor-pointer focus-within:bg-white focus-within:shadow focus-within:border-white text-gray-600 w-32">
+            <FontAwesomeIcon icon="calendar" className="mr-2" />
+
+            <DatePicker
+              selected={new Date(endDate)}
+              onChange={handleEndDateChange}
+              className="bg-transparent cursor-pointer focus:outline-none text-base w-full"
+            />
+          </label>
+        </div>
+        <div className="flex flex-wrap -mx-4 mb-10">
+          <div className="w-full lg:w-3/12 px-4">
+            <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
+              <div className="flex-auto p-4">
+                <div className="flex flex-wrap">
+                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 className="text-dark-500 uppercase font-bold text-xs">
+                      Invoices paid
+                    </h5>
+                    <span className="font-semibold text-xl text-dark-800">
+                      {loading ? (
+                        <FontAwesomeIcon
+                          icon="circle-notch"
+                          spin
+                          className="text-primary-300 opacity-50"
+                        />
+                      ) : (
+                        <>{invoicesPaid}</>
+                      )}
+                    </span>
+                  </div>
+                </div>
+                {/* <p className="text-sm text-dark-500 mt-4">
                       <span className="text-green-500 mr-2">
                         <i className="fas fa-arrow-up"></i> 3.48%
                       </span>
@@ -119,23 +131,31 @@ const Dashboard = ({ getCurrentInvoices }) => {
                         Since last month
                       </span>
                     </p> */}
+              </div>
+            </div>
+          </div>
+          <div className="w-full lg:w-3/12 px-4">
+            <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
+              <div className="flex-auto p-4">
+                <div className="flex flex-wrap">
+                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 className="text-dark-500 uppercase font-bold text-xs">
+                      Invoices past due
+                    </h5>
+                    <span className="font-semibold text-xl text-dark-800">
+                      {loading ? (
+                        <FontAwesomeIcon
+                          icon="circle-notch"
+                          spin
+                          className="text-primary-300 opacity-50"
+                        />
+                      ) : (
+                        <>{invoicesPastDue}</>
+                      )}
+                    </span>
                   </div>
                 </div>
-              </div>
-              <div className="w-full lg:w-3/12 px-4">
-                <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
-                  <div className="flex-auto p-4">
-                    <div className="flex flex-wrap">
-                      <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                        <h5 className="text-dark-500 uppercase font-bold text-xs">
-                          Invoices past due
-                        </h5>
-                        <span className="font-semibold text-xl text-dark-800">
-                          {invoicesPastDue}
-                        </span>
-                      </div>
-                    </div>
-                    {/* <p className="text-sm text-dark-500 mt-4">
+                {/* <p className="text-sm text-dark-500 mt-4">
                       <span className="text-red-500 mr-2">
                         <i className="fas fa-arrow-down"></i> 3.48%
                       </span>
@@ -143,23 +163,31 @@ const Dashboard = ({ getCurrentInvoices }) => {
                         Since last month
                       </span>
                     </p> */}
+              </div>
+            </div>
+          </div>
+          <div className="w-full lg:w-3/12 px-4">
+            <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
+              <div className="flex-auto p-4">
+                <div className="flex flex-wrap">
+                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 className="text-dark-500 uppercase font-bold text-xs">
+                      Revenue
+                    </h5>
+                    <span className="font-semibold text-xl text-dark-800">
+                      {loading ? (
+                        <FontAwesomeIcon
+                          icon="circle-notch"
+                          spin
+                          className="text-primary-300 opacity-50"
+                        />
+                      ) : (
+                        <>${Number(revenue).toFixed(2)}</>
+                      )}
+                    </span>
                   </div>
                 </div>
-              </div>
-              <div className="w-full lg:w-3/12 px-4">
-                <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
-                  <div className="flex-auto p-4">
-                    <div className="flex flex-wrap">
-                      <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                        <h5 className="text-dark-500 uppercase font-bold text-xs">
-                          Revenue
-                        </h5>
-                        <span className="font-semibold text-xl text-dark-800">
-                          ${Number(revenue).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                    {/* <p className="text-sm text-dark-500 mt-4">
+                {/* <p className="text-sm text-dark-500 mt-4">
                       <span className="text-green-500 mr-2">
                         <i className="fas fa-arrow-up"></i> 12%
                       </span>
@@ -167,23 +195,23 @@ const Dashboard = ({ getCurrentInvoices }) => {
                         Since last month
                       </span>
                     </p> */}
+              </div>
+            </div>
+          </div>
+          <div className="w-full lg:w-3/12 px-4">
+            <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
+              <div className="flex-auto p-4">
+                <div className="flex flex-wrap">
+                  <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 className="text-dark-500 uppercase font-bold text-xs mb-2">
+                      Create new invoice
+                    </h5>
+                    <Link to="/invoices/new" button primary small block>
+                      New Invoice
+                    </Link>
                   </div>
                 </div>
-              </div>
-              <div className="w-full lg:w-3/12 px-4">
-                <div className="relative flex flex-col min-w-0 break-words bg-white rounded xl:mb-0 shadow">
-                  <div className="flex-auto p-4">
-                    <div className="flex flex-wrap">
-                      <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                        <h5 className="text-dark-500 uppercase font-bold text-xs mb-2">
-                          Create new invoice
-                        </h5>
-                        <Link to="/invoices/new" button primary small block>
-                          New Invoice
-                        </Link>
-                      </div>
-                    </div>
-                    {/* <p className="text-sm text-dark-500 mt-4">
+                {/* <p className="text-sm text-dark-500 mt-4">
                       <span className="text-orange-500 mr-2">
                         <i className="fas fa-arrow-down"></i> 1.10%
                       </span>
@@ -191,98 +219,93 @@ const Dashboard = ({ getCurrentInvoices }) => {
                         Since last month
                       </span>
                     </p> */}
-                  </div>
-                </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="flex flex-wrap -mx-4">
-              <div className="w-full lg:w-1/2 px-4">
-                <div className="bg-white rounded shadow">
-                  <div className="border-b border-gray-400">
-                    <div className="flex justify-between items-center px-6 -mb-px">
-                      <h3 className="text-dark-300 py-4 font-normal text-lg">
-                        Recent Activity
-                      </h3>
-                      <Link to="/invoices">View all invoices</Link>
-                    </div>
+        <div className="flex flex-wrap -mx-4">
+          <div className="w-full lg:w-1/2 px-4">
+            <div className="bg-white rounded shadow">
+              {/* card header */}
+              <div className="border-b border-gray-400">
+                <div className="flex justify-between items-center px-6 -mb-px">
+                  <h3 className="text-dark-300 py-4 font-normal text-lg">
+                    Recent Activity
+                  </h3>
+                  <Link to="/invoices">View all invoices</Link>
+                </div>
+              </div>
+              {/* card body */}
+              <div style={{ height: 'calc(75px * 5)' }}>
+                {loading ? (
+                  <div className="flex h-full items-center justify-center text-6xl">
+                    <FontAwesomeIcon
+                      icon="circle-notch"
+                      spin
+                      className="text-primary-300 opacity-50"
+                    />
                   </div>
-                  <div className="">
+                ) : (
+                  <>
                     {recentActivity.length ? (
-                      <div>
-                        <div></div>
-                        <ul
-                          className="flex flex-col"
-                          style={{ height: 'calc(75px * 5)' }}
-                        >
-                          {currentActivity.map((invoice, idx) => (
-                            <li
-                              key={idx}
-                              className="border-b flex hover:bg-gray-100 items-center py-1"
+                      <ul className="flex flex-col">
+                        {currentActivity.map((invoice, idx) => (
+                          <li
+                            key={idx}
+                            className="border-b flex hover:bg-gray-100 items-center py-1"
+                          >
+                            <Link
+                              to={`/invoices/${invoice.id}`}
+                              dark
+                              className="px-6 py-3 block w-full"
                             >
-                              <Link
-                                to={`/invoices/${invoice.id}`}
-                                dark
-                                className="px-6 py-3 block w-full"
-                              >
-                                <div className="flex items-center">
+                              <div className="flex items-center">
+                                <div>
                                   <div>
-                                    <div>
-                                      <span className="mr-2">
-                                        {invoice.invoiceNumber}
-                                      </span>
-                                      <span className="mr-2">
-                                        {new Date(
-                                          invoice.dueDate
-                                        ).toDateString()}
-                                      </span>
-                                      <span>
-                                        {isAfter(
-                                          new Date(),
-                                          new Date(invoice.dueDate)
-                                        ) &&
-                                          !invoice.paid && (
-                                            <small className="text-orange-500">
-                                              overdue
-                                            </small>
-                                          )}
-                                      </span>
-                                    </div>
-                                    <div>
-                                      <span className="mr-2">
-                                        {invoice.recipient.name}
-                                      </span>
-                                      <span className="mr-2">
-                                        {invoice.recipient.emailAddress}
-                                      </span>
-                                    </div>
+                                    <span className="mr-2">
+                                      {invoice.invoiceNumber}
+                                    </span>
+                                    <span className="mr-2">
+                                      {new Date(invoice.dueDate).toDateString()}
+                                    </span>
+                                    <span>
+                                      {isAfter(
+                                        new Date(),
+                                        new Date(invoice.dueDate)
+                                      ) &&
+                                        !invoice.paid && (
+                                          <small className="text-orange-500">
+                                            overdue
+                                          </small>
+                                        )}
+                                    </span>
                                   </div>
-                                  <div className="ml-auto">
-                                    {invoice.paid ? (
-                                      <span className="text-success-400 ml-auto">
-                                        Paid
-                                      </span>
-                                    ) : (
-                                      <span className="text-danger-400 ml-auto">
-                                        Unpaid
-                                      </span>
-                                    )}
+                                  <div>
+                                    <span className="mr-2">
+                                      {invoice.recipient.name}
+                                    </span>
+                                    <span className="mr-2">
+                                      {invoice.recipient.emailAddress}
+                                    </span>
                                   </div>
                                 </div>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="flex justify-center py-3">
-                          <Pagination
-                            totalRecords={recentActivity.length}
-                            pageLimit={5}
-                            pageNeighbors={1}
-                            prevNextOnly
-                            onPageChanged={onPageChanged}
-                          />
-                        </div>
-                      </div>
+                                <div className="ml-auto">
+                                  {invoice.paid ? (
+                                    <span className="text-success-400 ml-auto">
+                                      Paid
+                                    </span>
+                                  ) : (
+                                    <span className="text-danger-400 ml-auto">
+                                      Unpaid
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     ) : (
                       <div className="text-center px-6 py-4">
                         <div className="py-8">
@@ -309,13 +332,25 @@ const Dashboard = ({ getCurrentInvoices }) => {
                         </div>
                       </div>
                     )}
-                  </div>
-                </div>
+                  </>
+                )}
+              </div>
+              {/* card footer */}
+              <div className="flex justify-center py-3">
+                <Pagination
+                  totalRecords={recentActivity.length}
+                  pageLimit={5}
+                  pageNeighbors={1}
+                  prevNextOnly
+                  onPageChanged={onPageChanged}
+                />
               </div>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
+      {/* </>
+      )} */}
     </>
   )
 }
