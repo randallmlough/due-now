@@ -49,7 +49,7 @@ const Search = props => {
     <div className="relative lg:mr-5" ref={searchContainer}>
       <div>
         <input
-          className="appearance-none bg-dark-700 block border-transparent duration-100 ease-in-out focus:bg-white focus:border-primary-500 focus:outline-0 focus:outline-none focus:text-gray-600 leading-normal pl-10 placeholder placeholder-gray-600 pr-4 py-2 rounded-lg text-gray-600 text-sm transition-colors w-full"
+          className="appearance-none bg-dark-700 block border-transparent duration-100 ease-in-out focus:bg-white focus:border-primary-500 focus:outline-0 focus:outline-none focus:text-gray-600 leading-normal pl-10 placeholder placeholder-gray-600 pr-4 py-2 rounded-full text-gray-600 text-sm transition-colors w-full"
           type="text"
           placeholder="Search for an invoice"
           autoComplete="off"
