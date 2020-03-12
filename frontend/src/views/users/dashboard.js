@@ -78,24 +78,21 @@ const Dashboard = ({ getCurrentInvoices }) => {
         <>
           <div className="flex-grow container mx-auto sm:px-4 py-10 animated fadeIn slower">
             <div className="flex mb-5">
-              <div>
-                <span className="self-center text-xs font-semibold mr-1 text-gray-800">
-                  From
-                </span>
+              <div className="flex w-32">
                 <DatePicker
                   selected={new Date(startDate)}
                   onChange={handleStartDateChange}
-                  className="bg-gray-500 rounded px-3 w-3/5 text-gray-900 py-1 text-base"
+                  className="bg-transparent border-2 border-gray-400 cursor-pointer focus:bg-white focus:outline-none focus:shadow focus:text-gray-500 px-3 py-1 rounded text-base text-gray-600 w-full"
                 />
               </div>
-              <div>
-                <span className="self-center text-xs font-semibold mr-1 text-gray-800">
-                  To
-                </span>
+              <span className="self-center text-xs font-semibold px-2 text-gray-800">
+                To
+              </span>
+              <div className="flex w-32">
                 <DatePicker
                   selected={new Date(endDate)}
                   onChange={handleEndDateChange}
-                  className="bg-gray-500 rounded px-3 w-3/5 text-gray-900 py-1 text-base"
+                  className="bg-transparent border-2 border-gray-400 cursor-pointer focus:bg-white focus:outline-none focus:shadow focus:text-gray-500 px-3 py-1 rounded text-base text-gray-600 w-full"
                 />
               </div>
             </div>
