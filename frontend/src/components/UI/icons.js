@@ -10,6 +10,7 @@ import {
   faUser,
   faSignOutAlt,
   faHome,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -21,7 +22,8 @@ library.add(
   faEnvelope,
   faUser,
   faSignOutAlt,
-  faHome
+  faHome,
+  faFilter
 )
 
 export default FontAwesomeIcon

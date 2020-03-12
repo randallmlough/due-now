@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { getInvoicesAction, updateInvoiceAction } from '../../actions'
 import { InvoicesTable, Row, Col, Header } from '../../components/UI/Table'
 import { Link as RouterLink } from 'react-router-dom'
-import { Pill, Link } from '../../components/UI'
+import { Pill, Link, Icon } from '../../components/UI'
 import { routes } from '../../routes'
 import { VisibilityFilters } from '../../actions/invoice_actions'
 import { formatRelative } from 'date-fns'
@@ -172,7 +172,10 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
                     <span className="text-sm text-gray-600">invoices</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-sm text-gray-600 mr-1">filter</span>
+                    <Icon
+                      icon="filter"
+                      className="text-sm text-gray-600 mr-2"
+                    />
                     <span className="text-sm text-gray-600 mr-1">status</span>
                     <div className="relative">
                       <select
