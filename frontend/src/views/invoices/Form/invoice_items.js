@@ -15,22 +15,22 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
   }
 
   const calcSubTotal = () =>
-    invoice.invoiceItems.reduce(
-      (prev, cur) => (prev + isNaN(cur.total) ? 0 : cur.total),
-      0
-    )
+    invoice.invoiceItems.reduce((prev, cur) => prev + cur.total, 0)
+
+  const [subTotal, setSubTotal] = useState(0)
+  useEffect(() => {
+    setSubTotal(calcSubTotal())
+  })
 
   const calcTax = (subTotal, taxPercent) => subTotal * (taxPercent / 100)
-
-  const calcTotal = (subTotal, taxPercent) =>
-    subTotal + calcTax(subTotal, taxPercent)
+  const [tax, setTax] = useState(0)
+  useEffect(() => {
+    setTax(calcTax(subTotal, invoice.tax))
+  }, [subTotal, invoice.tax])
 
   useEffect(() => {
-    setInvoice(
-      'total',
-      calcTotal(calcSubTotal(), isNaN(invoice.tax) ? 0 : invoice.tax)
-    )
-  }, [calcSubTotal(), invoice.tax])
+    setInvoice('total', subTotal + tax)
+  }, [subTotal, tax])
 
   const handleTaxChange = e => {
     if (e.target.value.slice(-1) === '.') {
@@ -80,7 +80,7 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
             </div>
             <div className="md:w-4/12 text-right">
               <span>$</span>
-              <span>{calcSubTotal()}</span>
+              <span>{Number(subTotal).toFixed(2)}</span>
             </div>
           </div>
           <div className="md:flex md:items-center">
@@ -93,7 +93,7 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
               <input
                 type="text"
                 className="appearance-none border-b-2 border-transparent hover:border-primary-200 w-full py-2 text-gray-700 leading-tight focus:outline-none focus:border-primary-300 text-right"
-                value={isNaN(invoice.tax) ? '' : invoice.tax}
+                value={Number(isNaN(invoice.tax) ? '' : invoice.tax).toFixed(2)}
                 name="tax"
                 onChange={handleTaxChange}
               />
@@ -107,7 +107,7 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
             </div>
             <div className="md:w-4/12 text-right">
               <span>$</span>
-              <span>{invoice.total}</span>
+              <span>{Number(invoice.total).toFixed(2)}</span>
             </div>
           </div>
         </div>

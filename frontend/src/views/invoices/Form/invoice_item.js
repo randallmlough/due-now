@@ -37,7 +37,7 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
         <input
           type="number"
           className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={isNaN(item.qty) ? '' : item.qty}
+          value={Number(isNaN(item.qty) ? '' : item.qty).toFixed(2)}
           name="qty"
           onChange={handleChange('qty')}
         />
@@ -46,13 +46,13 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
         <input
           type="number"
           className="border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={isNaN(item.rate) ? '' : item.rate}
+          value={Number(isNaN(item.rate) ? '' : item.rate).toFixed(2)}
           name="rate"
           onChange={handleChange('rate')}
         />
       </td>
       <td className="border px-4 py-2 odd:bg-gray-200">
-        <div className="px-2 text-right">$ {item.total}</div>
+        <div className="px-2 text-right">$ {Number(item.total).toFixed(2)}</div>
       </td>
     </tr>
   )

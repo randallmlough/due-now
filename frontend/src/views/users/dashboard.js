@@ -42,7 +42,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
           setRecentActivity(prevActivity => prevActivity.concat(invoice))
           if (invoice.paid) {
             setInvoicesPaid(prevCount => prevCount + 1)
-            setRevenue(prevTotal => Math.round(prevTotal + invoice.total))
+            setRevenue(prevTotal => prevTotal + invoice.total)
           } else if (isAfter(new Date(), new Date(invoice.dueDate))) {
             setInvoicesPastDue(prevCount => prevCount + 1)
           }
@@ -158,7 +158,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
                           Revenue
                         </h5>
                         <span className="font-semibold text-xl text-dark-800">
-                          ${revenue}
+                          ${Number(revenue).toFixed(2)}
                         </span>
                       </div>
                     </div>
