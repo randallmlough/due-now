@@ -72,7 +72,7 @@ const Dashboard = ({ getCurrentInvoices }) => {
 
   return (
     <div className="flex-grow container mx-auto sm:px-4 py-10 animated fadeIn">
-      <div className="flex mb-5">
+      <div className="flex mb-12">
         <label className="flex items-center px-2 py-1 border-2 border-gray-400 rounded cursor-pointer focus-within:bg-white focus-within:shadow focus-within:border-white text-gray-600 w-32">
           <FontAwesomeIcon icon="calendar" className="mr-2" />
 
@@ -256,30 +256,38 @@ const Dashboard = ({ getCurrentInvoices }) => {
                           >
                             <div className="flex items-center">
                               <div>
-                                <div>
-                                  <span className="mr-2">
-                                    {invoice.invoiceNumber}
-                                  </span>
-                                  <span className="mr-2">
+                                <div className="mb-px">
+                                  <span className="mr-2 font-bold text-gray-700">
+                                    <FontAwesomeIcon
+                                      icon="calendar"
+                                      className="mr-2 text-gray-600 text-xs opacity-25"
+                                    />
                                     {new Date(invoice.dueDate).toDateString()}
                                   </span>
-                                  <span>
-                                    {isAfter(
-                                      new Date(),
-                                      new Date(invoice.dueDate)
-                                    ) &&
-                                      !invoice.paid && (
-                                        <small className="text-orange-500">
-                                          overdue
-                                        </small>
-                                      )}
-                                  </span>
+
+                                  {isAfter(
+                                    new Date(),
+                                    new Date(invoice.dueDate)
+                                  ) &&
+                                    !invoice.paid && (
+                                      <small className="text-orange-500">
+                                        overdue
+                                      </small>
+                                    )}
                                 </div>
-                                <div>
-                                  <span className="mr-2">
+                                <div className="flex items-center">
+                                  <span className="flex items-center text-gray-600 mr-3">
+                                    <FontAwesomeIcon
+                                      icon="user"
+                                      className="mr-2 text-xs opacity-25"
+                                    />
                                     {invoice.recipient.name}
                                   </span>
-                                  <span className="mr-2">
+                                  <span className="flex items-center text-gray-600">
+                                    <FontAwesomeIcon
+                                      icon="envelope"
+                                      className="mr-1 text-xs opacity-25"
+                                    />
                                     {invoice.recipient.emailAddress}
                                   </span>
                                 </div>
