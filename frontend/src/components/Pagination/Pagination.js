@@ -154,7 +154,7 @@ class Pagination extends Component {
         <nav aria-label="flex">
           <button
             aria-label="Previous"
-            className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4"
+            className="bg-gray-300 focus:outline-none font-semibold hover:bg-gray-400 px-4 py-2 rounded-l-md text-gray-800 text-sm"
             onClick={e =>
               this.handleClick(currentPage > 2 ? currentPage - 1 : 1, e)
             }
@@ -163,7 +163,7 @@ class Pagination extends Component {
           </button>
           <button
             aria-label="Next"
-            className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4"
+            className="bg-gray-300 focus:outline-none font-semibold hover:bg-gray-400 px-4 py-2 rounded-r-md text-gray-800 text-sm"
             onClick={e =>
               this.handleClick(
                 currentPage < this.totalPages
