@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index]
     resources :invoices, only: [:create, :index, :show, :update, :destroy]
+    get '/invoice/:uuid', to: 'invoices#preview'
   end
 
   get '*path', to: "application#react_index", constraints: ->(request) do

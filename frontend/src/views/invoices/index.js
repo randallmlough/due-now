@@ -2,6 +2,7 @@ export { default as InvoicesView } from './list'
 
 export { default as NewInvoiceView } from './new'
 export { default as EditInvoiceView } from './edit'
+export { default as PreviewInvoiceView } from './preview'
 
 export const initialState = {
   id: undefined,

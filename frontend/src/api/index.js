@@ -13,4 +13,5 @@ export {
   getInvoice,
   updateInvoice,
   deleteInvoice,
+  getPublicInvoice,
 } from './invoice_api'

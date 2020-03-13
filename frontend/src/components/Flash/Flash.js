@@ -126,3 +126,8 @@ export const invoiceUpdatedFlash = {
   type: 'success',
   body: 'Invoice updated',
 }
+
+export const invoiceDeletedFlash = invoiceId => ({
+  type: 'success',
+  body: `Invoice ${invoiceId} has been deleted`,
+})

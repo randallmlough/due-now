@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '../../components/UI'
+import { Button, Icon, Link } from '../../components/UI'
 import Select from 'react-select'
 import {
   useFlash,
   invoiceCreatedFlash,
   invoiceUpdatedFlash,
+  invoiceDeletedFlash,
 } from '../../components/Flash'
 import { useHistory } from 'react-router-dom'
 import { routes } from '../../routes'
@@ -27,7 +28,7 @@ const validateForm = invoice => {
   }
   return errors
 }
-const Sidebar = ({ editing, invoice, setInvoice, submit }) => {
+const Sidebar = ({ editing, invoice, setInvoice, submit, deleteInvoice }) => {
   const [isDisabled, setIsDisabled] = useState(false)
 
   const handleChange = selectedOption => {
@@ -42,6 +43,7 @@ const Sidebar = ({ editing, invoice, setInvoice, submit }) => {
   const [showErrors, setShowErrors] = useState(false)
   const history = useHistory()
   const flash = useFlash()
+
   const handleSubmit = e => {
     e.preventDefault()
     if (isDisabled) {
@@ -65,6 +67,17 @@ const Sidebar = ({ editing, invoice, setInvoice, submit }) => {
         })
       })
   }
+
+  const handleDeleteInvoice = e => {
+    e.preventDefault()
+    deleteInvoice(invoice.id)
+      .then(() => {
+        flash.add(invoiceDeletedFlash(invoice.id))
+        history.push('/invoices')
+      })
+      .catch(e => console.error(e))
+  }
+
   return (
     <>
       {/* <h2>Invoice settings</h2>
@@ -92,9 +105,39 @@ const Sidebar = ({ editing, invoice, setInvoice, submit }) => {
           />
         </div>
       </div> */}
-      <Button primary full type="submit" onClick={handleSubmit}>
-        {editing ? 'Save Invoice' : 'Create Invoice'}
-      </Button>
+      <div className="mb-8">
+        <Link
+          to={`/invoice/${invoice.uuid}`}
+          button
+          gray
+          dShade={800}
+          hShade={700}
+          className="mb-3 block w-full text-center"
+        >
+          <Icon icon="eye" className="mr-3" />
+          Preview
+        </Link>
+        <Button primary full type="submit" onClick={handleSubmit}>
+          {editing ? (
+            <>
+              <Icon icon="save" className="mr-3" />
+              Save Invoice
+            </>
+          ) : (
+            <>
+              <Icon icon="file" className="mr-3" />
+              Create Invoice
+            </>
+          )}
+        </Button>
+      </div>
+      <hr className="bg-gray-500 h-px mb-4 opacity-25 w-full" />
+      {editing && (
+        <Button danger full outline onClick={handleDeleteInvoice}>
+          <Icon icon="trash" className="mr-3" />
+          Delete invoice
+        </Button>
+      )}
       {showErrors && (
         <ul className="mt-5">
           {errors &&

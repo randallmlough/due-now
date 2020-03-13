@@ -14,6 +14,12 @@ import {
   faPhone,
   faPercentage,
   faDollarSign,
+  faTrash,
+  faSave,
+  faEye,
+  faKey,
+  faFile,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -29,7 +35,13 @@ library.add(
   faFilter,
   faPhone,
   faPercentage,
-  faDollarSign
+  faDollarSign,
+  faTrash,
+  faSave,
+  faEye,
+  faKey,
+  faFile,
+  faPaperPlane
 )
 
 export default FontAwesomeIcon

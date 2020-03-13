@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react'
 import { set } from 'object-path-immutable'
-import { getInvoice } from '../../api'
+import { formatError } from '../../api'
 
 const invoiceFetchReducer = (state, action) => {
   switch (action.type) {
@@ -8,26 +8,26 @@ const invoiceFetchReducer = (state, action) => {
       return {
         ...state,
         loading: true,
-        isError: false,
+        error: null,
       }
     case 'FETCH_SUCCESS':
       return {
         ...state,
         loading: false,
-        isError: false,
+        error: null,
         data: action.payload,
       }
     case 'FETCH_FAILURE':
       return {
         ...state,
         loading: false,
-        isError: true,
+        error: action.payload,
       }
     case 'UPDATE_STATE':
       return {
         ...state,
         loading: false,
-        isError: false,
+        error: null,
         data: set(state.data, action.payload.key, action.payload.value),
       }
     default:
@@ -35,10 +35,10 @@ const invoiceFetchReducer = (state, action) => {
   }
 }
 
-export const useInvoice = (invoiceId, initialData) => {
+export const useInvoice = (invoiceId, initialData, getterMethod) => {
   const [state, dispatch] = useReducer(invoiceFetchReducer, {
     loading: false,
-    isError: false,
+    error: null,
     data: initialData,
   })
   useEffect(() => {
@@ -47,13 +47,13 @@ export const useInvoice = (invoiceId, initialData) => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_INIT' })
       try {
-        const result = await getInvoice(invoiceId)
+        const result = await getterMethod(invoiceId)
         if (!didCancel) {
           dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
         }
       } catch (error) {
         if (!didCancel) {
-          dispatch({ type: 'FETCH_FAILURE' })
+          dispatch({ type: 'FETCH_FAILURE', payload: formatError(error) })
         }
       }
     }

@@ -25,7 +25,7 @@ const NewInvoiceView = ({ submit }) => {
               <div className="col md:w-3/4 shadow rounded-lg bg-white">
                 <InvoiceForm invoice={invoice} setInvoice={setInvoice} />
               </div>
-              <div className="col md:w-1/4 pl-8 py-8">
+              <div className="col md:w-1/4 pl-8">
                 <Sidebar
                   invoice={invoice}
                   setInvoice={setInvoice}

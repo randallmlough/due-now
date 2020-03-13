@@ -1,15 +1,15 @@
 
 class Api::InvoicesController < Api::APIController
     before_action :has_access?, only: [:show, :update, :destroy]
-
+    skip_before_action :require_session!, only: [:preview]
     def index
         if params[:search]
             term = params[:search]
-            @invoices = Invoice.where("invoice_number ILIKE ? OR recipient->>'name' LIKE ? OR recipient->>'email_address' LIKE ?", "%#{term}%","%#{term}%","%#{term}%").limit(params[:limit])
+            @invoices = Invoice.where("invoice_number ILIKE ? OR recipient->>'name' LIKE ? OR recipient->>'email_address' LIKE ?", "%#{term}%","%#{term}%","%#{term}%").where("invoices.invoiceable_type = ? AND invoices.invoiceable_id = ?",'User', user_session.id).limit(params[:limit])
         elsif params[:start_date] || params[:end_date]
             start_date = params[:start_date] 
             end_date = params[:end_date]
-            @invoices = Invoice.where("due_date between ? and ?", start_date, end_date).order(invoice_date: :asc)
+            @invoices = Invoice.where("due_date between ? and ?", start_date, end_date).where("invoices.invoiceable_type = ? AND invoices.invoiceable_id = ?",'User', user_session.id).order(invoice_date: :asc)
         else
             @invoices ||= Invoice.where("invoices.created_by = ? OR invoices.invoiceable_type = 'User' AND invoices.invoiceable_id = ?", user_session.id,  user_session.id).order(invoice_date: :asc).limit(params[:limit])
         end
@@ -44,6 +44,15 @@ class Api::InvoicesController < Api::APIController
     def show
         @invoice ||= find_invoice(params[:id], invoiceable_type)
         render :show, status: 200
+    end
+
+    def preview
+        @invoice ||= Invoice.find_by(uuid: params[:uuid])
+        if @invoice.nil? || (@invoice.private? && !authenticated?)
+            head 404, content_type: "application/json"
+        else
+            render :show, status: 200
+        end
     end
 
     def update

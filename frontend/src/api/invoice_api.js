@@ -12,7 +12,7 @@ export const getInvoices = async query => {
 }
 
 export const getInvoice = async invoiceID => {
-  return await invoiceAPI.get(path.resolve(invoiceID))
+  return await invoiceAPI.get(path.resolve(invoiceID.toString()))
 }
 
 export const updateInvoice = async invoice => {
@@ -20,5 +20,10 @@ export const updateInvoice = async invoice => {
 }
 
 export const deleteInvoice = async invoiceID => {
-  return await invoiceAPI.delete(path.resolve(invoiceID))
+  return await invoiceAPI.delete(path.resolve(invoiceID.toString()))
+}
+
+export const getPublicInvoice = async invoiceUUID => {
+  invoiceAPI.baseResource = '/invoice'
+  return await invoiceAPI.get(path.resolve(invoiceUUID.toString()))
 }

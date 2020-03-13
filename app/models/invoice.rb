@@ -48,10 +48,13 @@ class Invoice < ApplicationRecord
 
     after_initialize :new_uuid, :ensure_invoice_number
 
+    def private?
+        self.private
+    end
     
     private
     def new_uuid
-        self.uuid = SecureRandom.uuid
+        self.uuid ||= SecureRandom.uuid
     end
 
     def ensure_invoice_number
