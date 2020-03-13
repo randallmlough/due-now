@@ -201,8 +201,8 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
                 </div>
                 <InvoicesTable>
                   <Header>Invoice #</Header>
-                  <Header>Created At</Header>
-                  <Header>Due At</Header>
+                  <Header>Invoice Date</Header>
+                  <Header>Due Date</Header>
                   <Header>Private</Header>
                   <Header>Status</Header>
                   {invoices.length ? (
@@ -219,7 +219,7 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
                             <Col>
                               <p className="text-gray-900 whitespace-no-wrap">
                                 {formatRelative(
-                                  new Date(invoice.createdAt),
+                                  new Date(invoice.invoiceDate),
                                   new Date()
                                 )}
                               </p>
