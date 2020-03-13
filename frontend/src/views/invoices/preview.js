@@ -1,34 +1,34 @@
 import React, { useState, useEffect, useReducer } from 'react'
-import { Loader } from '../../components/UI/loaders'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getInvoiceAction } from '../../actions'
 import { InvoiceForm } from './Form'
-import { useHistory } from 'react-router-dom'
 import { useInvoice } from './useInvoice'
 import { initialState } from '.'
 import { getPublicInvoice } from '../../api'
-
+import NotFound from '../404'
 const EditInvoiceView = props => {
   const [{ data: invoice, loading, error }, setInvoice] = useInvoice(
     props.match.params.uuid,
     initialState,
     getPublicInvoice
   )
-  const history = useHistory()
 
+  const [notFound, setNotFound] = useState(false)
   useEffect(() => {
     if (error) {
       if (error.status === 404) {
-        history.push('/404')
+        setNotFound(true)
         return
       }
     }
-  }, [invoice.id])
+  }, [error])
+
+  if (loading) return null
   return (
     <>
-      {loading ? (
-        <Loader />
+      {notFound ? (
+        <NotFound />
       ) : (
         <div className="container mx-auto sm:px-4 py-8">
           <div className="py-8">
