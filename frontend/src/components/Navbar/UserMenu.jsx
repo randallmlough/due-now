@@ -19,7 +19,7 @@ export default function UserMenu() {
           ? `${session.first_name} ${session.last_name}`
           : 'Account'
       }
-      menuClass={'mt-6'}
+      menuClass={'mt-5'}
     >
       <Button
         onClick={handleRemoveSession}
