@@ -48,7 +48,7 @@ class Api::InvoicesController < Api::APIController
 
     def preview
         @invoice ||= Invoice.find_by(uuid: params[:uuid])
-        if @invoice.nil? || (@invoice.private? && !(@invoice.created_by = user_session.id ))
+        if @invoice.nil? || (@invoice.private? && !(authenticated? && @invoice.created_by = user_session.id ))
             head 404, content_type: "application/json"
         else
             render :show, status: 200
