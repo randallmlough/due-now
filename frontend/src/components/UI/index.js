@@ -10,4 +10,6 @@ export { default as Pill } from './Pill'
 
 export { default as Icon } from './Icon'
 
+export { default as Counter, StackedCounter } from './Counter'
+
 export { Toggle } from './Toggle'
