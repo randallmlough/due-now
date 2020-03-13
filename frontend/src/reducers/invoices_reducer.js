@@ -13,6 +13,8 @@ export default (state = {}, action) => {
       const newState = state
       delete newState[action.invoiceId]
       return newState
+    case actions.REMOVE_USER_SESSION:
+      return {}
     default:
       return state
   }
