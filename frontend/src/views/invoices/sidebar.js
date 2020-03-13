@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Icon, Link } from '../../components/UI'
+import { Button, Icon, Link, Toggle } from '../../components/UI'
 import Select from 'react-select'
 import {
   useFlash,
@@ -35,6 +35,10 @@ const Sidebar = ({ editing, invoice, setInvoice, submit, deleteInvoice }) => {
     setInvoice('lvl.status', selectedOption.value)
   }
 
+  const togglePrivateStatus = ({ enabled }) => {
+    setInvoice('private', enabled)
+  }
+
   const errors = validateForm(invoice)
   useEffect(() => {
     setIsDisabled(Boolean(errors))
@@ -67,7 +71,6 @@ const Sidebar = ({ editing, invoice, setInvoice, submit, deleteInvoice }) => {
         })
       })
   }
-
   const handleDeleteInvoice = e => {
     e.preventDefault()
     deleteInvoice(invoice.id)
@@ -106,6 +109,14 @@ const Sidebar = ({ editing, invoice, setInvoice, submit, deleteInvoice }) => {
         </div>
       </div> */}
       <div className="mb-8">
+        <div className="mb-5">
+          <Toggle
+            enabled={invoice.private}
+            onStateChanged={togglePrivateStatus}
+          >
+            Private
+          </Toggle>
+        </div>
         <Link
           to={`/invoice/${invoice.uuid}`}
           button

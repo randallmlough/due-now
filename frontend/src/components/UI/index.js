@@ -8,4 +8,6 @@ export { default as Link } from './Link'
 
 export { default as Pill } from './Pill'
 
-export { default as Icon } from './icons'
+export { default as Icon } from './Icon'
+
+export { Toggle } from './Toggle'
