@@ -92,15 +92,17 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
             <div className="md:w-4/12 text-right">
               <label className="border-b-2 border-transparent flex focus-within:border-primary-300 hover:border-primary-200 items-center leading-tight ml-auto py-2 text-gray-700 w-16">
                 <Icon icon="percentage" className="mr-2 text-gray-500" />
-                <input
-                  type="text"
-                  className="appearance-none w-full focus:outline-none text-right font-bold"
-                  value={Number(isNaN(invoice.tax) ? '' : invoice.tax).toFixed(
-                    2
-                  )}
-                  name="tax"
-                  onChange={handleTaxChange}
-                />
+                <div>
+                  <input
+                    type="text"
+                    className="appearance-none w-full focus:outline-none text-right font-bold"
+                    value={Number(
+                      isNaN(invoice.tax) ? '' : invoice.tax
+                    ).toFixed(2)}
+                    name="tax"
+                    onChange={handleTaxChange}
+                  />
+                </div>
               </label>
             </div>
           </div>

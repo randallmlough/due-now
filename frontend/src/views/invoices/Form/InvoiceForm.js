@@ -43,13 +43,15 @@ export default function InvoiceForm({ invoice, setInvoice }) {
               <div className="md:w-2/5">
                 <label className="flex items-center px-2 py-1 border-b-2 border-transparent hover:border-primary-200 cursor-pointer focus-within:bg-white focus-within:shadow focus-within:border-primary-300 text-gray-600 w-32">
                   <Icon icon="hashtag" className="mr-2" />
-                  <input
-                    className="appearance-none w-full text-gray-700 leading-tight focus:outline-none text-right cursor-pointer"
-                    type="text"
-                    placeholder="####"
-                    value={invoice.invoiceNumber}
-                    onChange={handleChange('invoiceNumber')}
-                  />
+                  <div>
+                    <input
+                      className="appearance-none w-full text-gray-700 leading-tight focus:outline-none text-right cursor-pointer"
+                      type="text"
+                      placeholder="####"
+                      value={invoice.invoiceNumber}
+                      onChange={handleChange('invoiceNumber')}
+                    />
+                  </div>
                 </label>
               </div>
             </div>
