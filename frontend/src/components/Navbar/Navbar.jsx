@@ -54,7 +54,7 @@ export default function Navbar() {
                     to="/"
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
-                    <span className="inline-block text-center w-10 mr-10">
+                    <span className="inline-block text-center w-10 mr-2">
                       <Icon icon="home" className="text-primary-200" />
                     </span>
                     Dashboard
@@ -63,7 +63,7 @@ export default function Navbar() {
                     to="/invoices"
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
                   >
-                    <span className="inline-block text-center w-10 mr-10">
+                    <span className="inline-block text-center w-10 mr-2">
                       <Icon
                         icon="file-invoice-dollar"
                         className="text-primary-200"
