@@ -15308,6 +15308,17 @@ h4 {
   transition-duration: 1000ms;
 }
 
+input[type=number].appearance-none::-webkit-inner-spin-button, 
+input[type=number].appearance-none::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
+  margin: 0;
+}
+
+input[type=number].appearance-none {
+  -moz-appearance:textfield;
+}
+
 @charset "UTF-8";
 
 /*!
