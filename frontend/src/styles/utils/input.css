@@ -3,3 +3,6 @@ input[type=number].appearance-none::-webkit-outer-spin-button {
     @apply appearance-none;
     margin: 0; 
 } 
+input[type=number].appearance-none {
+    -moz-appearance:textfield;
+}
