@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { StackedCounter, Icon } from '../../../components/UI'
 
 const InvoiceItem = ({ item, setInvoice, idx }) => {
   useEffect(() => {
@@ -18,6 +19,10 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
     }
   }
 
+  const handleCounterChange = key => count => {
+    setItem(key, count)
+  }
+
   const setItem = (key, value) =>
     setInvoice('invoiceItems.' + idx + '.' + key, value)
 
@@ -26,7 +31,7 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
       <td className="border px-4 py-2 odd:bg-gray-200">
         <textarea
           type="text"
-          className="w-full border border-transparent focus:border-blue-200 focus:outline-none px-2 resize-none"
+          className="w-full border border-transparent focus:border-primary-200 focus:outline-none px-2 resize-none"
           value={item.description}
           name="description"
           placeholder="Item description"
@@ -34,22 +39,31 @@ const InvoiceItem = ({ item, setInvoice, idx }) => {
         />
       </td>
       <td className="border px-4 py-2 odd:bg-gray-200">
-        <input
+        <StackedCounter
+          startValue={isNaN(item.qty) ? '' : Number(item.qty)}
+          onStateChanged={handleCounterChange('qty')}
+        />
+        {/* <input
           type="number"
           className="w-full border border-transparent focus:border-blue-200 focus:outline-none px-2"
           value={isNaN(item.qty) ? '' : Number(item.qty).toFixed(0)}
           name="qty"
           onChange={handleChange('qty')}
-        />
+        /> */}
       </td>
       <td className="border px-4 py-2 odd:bg-gray-200">
-        <input
-          type="number"
-          className="w-full border border-transparent focus:border-blue-200 focus:outline-none px-2"
-          value={isNaN(item.rate) ? '' : item.rate}
-          name="rate"
-          onChange={handleChange('rate')}
-        />
+        <label className="flex items-center w-full">
+          <Icon icon="dollar-sign" className="mr-2" />
+          <div>
+            <input
+              type="number"
+              className="appearance-none w-full border border-transparent focus:border-primary-200 focus:outline-none px-2"
+              value={isNaN(item.rate) ? '' : item.rate}
+              name="rate"
+              onChange={handleChange('rate')}
+            />
+          </div>
+        </label>
       </td>
       <td className="border px-4 py-2 odd:bg-gray-200">
         <div className="px-2 text-right">$ {Number(item.total).toFixed(2)}</div>

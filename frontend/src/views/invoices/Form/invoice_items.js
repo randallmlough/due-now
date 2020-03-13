@@ -54,7 +54,7 @@ const InvoiceItems = ({ invoice, setInvoice }) => {
             <th className="w-2/12 bg-blue-900 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase">
               Rate
             </th>
-            <th className="w-3/12 bg-blue-900 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase rounded-tr text-right">
+            <th className="w-2/12 bg-blue-900 font-semibold px-4 py-2 text-left text-white text-xs tracking-wider uppercase rounded-tr text-right">
               Total
             </th>
           </tr>
