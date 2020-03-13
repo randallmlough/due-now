@@ -326,8 +326,8 @@ const Dashboard = ({ getCurrentInvoices }) => {
                           Lets create your first invoice!
                         </p>
                         <div>
-                          <Link to={routes.INVOICES} button primary>
-                            View Invoices
+                          <Link to={routes.INVOICES_NEW} button primary>
+                            Create Invoice
                           </Link>
                         </div>
                       </div>
