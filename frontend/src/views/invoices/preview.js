@@ -24,7 +24,7 @@ const EditInvoiceView = props => {
         return
       }
     }
-  })
+  }, [invoice.id])
   return (
     <>
       {loading ? (
@@ -49,7 +49,7 @@ EditInvoiceView.propTypes = {
 }
 
 const mapStateToProps = (state = {}, ownProps) => ({
-  invoice: state.entities.invoices[parseInt(ownProps.match.params.uuid)],
+  invoice: state.entities.invoices[ownProps.match.params.uuid],
 })
 
 const mapDispatchToProps = dispatch => ({
