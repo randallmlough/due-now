@@ -20,6 +20,9 @@ import {
   faKey,
   faFile,
   faPaperPlane,
+  faLock,
+  faColumns,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -41,7 +44,10 @@ library.add(
   faEye,
   faKey,
   faFile,
-  faPaperPlane
+  faPaperPlane,
+  faLock,
+  faColumns,
+  faSearch
 )
 
 export default FontAwesomeIcon

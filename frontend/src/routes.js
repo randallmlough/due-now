@@ -2,8 +2,7 @@ import React from 'react'
 import { Switch } from 'react-router-dom'
 import { RegisterUserView, AuthenticateUserView } from './views/auth'
 import { DashboardView } from './views/users'
-import NotFound from './views/404'
-import { StaticView, AppView } from './views'
+import { StaticView, AppView, NotFound, HomePage } from './views'
 import {
   InvoicesView,
   NewInvoiceView,
@@ -16,6 +15,7 @@ export default () => {
     <Switch>
       <StaticView exact path={routes.REGISTER} component={RegisterUserView} />
       <StaticView exact path={routes.LOGIN} component={AuthenticateUserView} />
+      <StaticView exact path={routes.LANDING_PAGE} component={HomePage} />
       <AppView exact path={routes.DASHBOARD} component={DashboardView} />
       <AppView exact path={routes.INVOICES} component={InvoicesView} />
       <AppView exact path={routes.INVOICES_NEW} component={NewInvoiceView} />
@@ -34,9 +34,10 @@ export const routes = {
   // static routes
   REGISTER: '/register',
   LOGIN: '/login',
+  LANDING_PAGE: '/',
 
   // app routes
-  DASHBOARD: '/',
+  DASHBOARD: '/dashboard',
 
   // invoices
   INVOICES: '/invoices',

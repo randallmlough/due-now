@@ -42,7 +42,7 @@ export default function RegisterView({ submit, demo }) {
   const slideIn = lastLocation && lastLocation.pathname === routes.LOGIN
 
   if (session) {
-    return <Redirect to="/" />
+    return <Redirect to={routes.DASHBOARD} />
   }
 
   return (

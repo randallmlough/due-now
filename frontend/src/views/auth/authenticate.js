@@ -53,7 +53,7 @@ export default function AuthenticateView({ submit }) {
     if (lastLocation) {
       return <Redirect to={lastLocation.pathname} />
     } else {
-      return <Redirect to="/" />
+      return <Redirect to={routes.DASHBOARD} />
     }
   }
   return (
