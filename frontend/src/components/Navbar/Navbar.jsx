@@ -9,6 +9,7 @@ import { useSession } from '../Session'
 import Search from './Search'
 import UserMenu from './UserMenu'
 import { CSSTransition } from 'react-transition-group'
+import { Link as ReactLink } from 'react-router-dom'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -140,11 +141,15 @@ export const StaticNavbar = props => {
         <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start">
           <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
             <div className="flex items-center justify-between w-full md:w-auto">
-              <a href="#">
-                <span className="bg-primary-500 flex font-serif h-8 items-center justify-center rounded sm:h-10 text-3xl text-white w-10">
+              <ReactLink
+                to="/"
+                className="flex font-black items-center text-gray-700 text-xl"
+              >
+                <span className="bg-primary-500 flex font-serif h-8 items-center justify-center mr-2 rounded sm:h-10 text-3xl text-white w-10">
                   I
                 </span>
-              </a>
+                invoiced
+              </ReactLink>
               <div className="-mr-2 flex items-center md:hidden">
                 <button
                   type="button"
