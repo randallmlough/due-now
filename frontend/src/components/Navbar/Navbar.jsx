@@ -10,6 +10,7 @@ import Search from './Search'
 import UserMenu from './UserMenu'
 import { CSSTransition } from 'react-transition-group'
 import { Link as ReactLink } from 'react-router-dom'
+import { routes } from '../../routes'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -53,8 +54,9 @@ export default function Navbar() {
               <DefaultMenu open={open} setOpen={setOpen} mobile={mobile}>
                 <div className="text-2xl w-full lg:flex-grow">
                   <NavLink
-                    to="/"
+                    to={routes.DASHBOARD}
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
+                    onClick={() => setOpen(false)}
                   >
                     <span className="inline-block text-center w-10 mr-2">
                       <Icon icon="home" className="text-primary-200" />
@@ -62,8 +64,9 @@ export default function Navbar() {
                     Dashboard
                   </NavLink>
                   <NavLink
-                    to="/invoices"
+                    to={routes.INVOICES}
                     className="block mt-4 mr-4 text-white hover:text-primary-200"
+                    onClick={() => setOpen(false)}
                   >
                     <span className="inline-block text-center w-10 mr-2">
                       <Icon
@@ -79,7 +82,7 @@ export default function Navbar() {
               <DefaultMenu open={open} setOpen={setOpen} mobile={mobile}>
                 <div className="text-2xl lg:text-sm w-full lg:flex-grow">
                   <NavLink
-                    to="/"
+                    to={routes.LANDING_PAGE}
                     className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                   >
                     Home
