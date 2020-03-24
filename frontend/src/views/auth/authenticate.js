@@ -50,7 +50,7 @@ export default function AuthenticateView({ submit }) {
   const slideIn = lastLocation && lastLocation.pathname === routes.REGISTER
 
   if (session) {
-    if (lastLocation) {
+    if (lastLocation && lastLocation.pathname !== routes.LANDING_PAGE) {
       return <Redirect to={lastLocation.pathname} />
     } else {
       return <Redirect to={routes.DASHBOARD} />
