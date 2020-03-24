@@ -100,9 +100,16 @@ const Dashboard = ({ getCurrentInvoices }) => {
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h5 className="text-dark-500 uppercase font-bold text-xs">
-                    Invoices paid
-                  </h5>
+                  <div className="flex justify-between">
+                    <h5 className="text-dark-500 uppercase font-bold text-xs">
+                      Invoices paid
+                    </h5>
+                    <div>
+                      <Link to="/invoices?status=PAID" small>
+                        View invoices
+                      </Link>
+                    </div>
+                  </div>
                   <span className="font-semibold text-xl text-dark-800">
                     {loading ? (
                       <Icon
@@ -132,9 +139,16 @@ const Dashboard = ({ getCurrentInvoices }) => {
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h5 className="text-dark-500 uppercase font-bold text-xs">
-                    Invoices past due
-                  </h5>
+                  <div className="flex justify-between">
+                    <h5 className="text-dark-500 uppercase font-bold text-xs">
+                      Invoices past due
+                    </h5>
+                    <div>
+                      <Link to="/invoices?status=UNPAID" small>
+                        View invoices
+                      </Link>
+                    </div>
+                  </div>
                   <span className="font-semibold text-xl text-dark-800">
                     {loading ? (
                       <Icon

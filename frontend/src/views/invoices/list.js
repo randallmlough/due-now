@@ -11,6 +11,7 @@ import { VisibilityFilters } from '../../actions/invoice_actions'
 import { formatRelative } from 'date-fns'
 import { useFlash } from '../../components/Flash'
 import Pagination from '../../components/Pagination'
+import queryString from 'query-string'
 
 const filters = {
   SHOW_ALL: 'SHOW_ALL',
@@ -18,7 +19,8 @@ const filters = {
   SHOW_UNPAID: 'SHOW_UNPAID',
 }
 
-function InvoicesView({ invoices, updateInvoice, getInvoices }) {
+function InvoicesView(props) {
+  const { invoices, updateInvoice, getInvoices } = props
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     if (!invoices.length) {
@@ -28,9 +30,18 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
   }, [])
 
   const [filter, setFilter] = useState(null)
+  useEffect(() => {
+    const query = queryString.parse(props.location.search)
+    if (query.status) {
+      setFilterHandler(query.status)
+    }
+  }, [])
   const handleFilterOption = e => {
     e.preventDefault()
-    switch (e.target.value) {
+    setFilterHandler(e.target.value)
+  }
+  const setFilterHandler = filer => {
+    switch (filer) {
       case 'ALL':
         return setFilter(null)
       case 'PAID':
@@ -39,7 +50,6 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
         return setFilter(filters.SHOW_UNPAID)
     }
   }
-
   const [recordsPerPage, setRecordsPerPage] = useState(10)
   const handleRecordsPerPageOption = e => {
     e.preventDefault()
@@ -180,7 +190,15 @@ function InvoicesView({ invoices, updateInvoice, getInvoices }) {
                     <div className="relative">
                       <select
                         className="appearance-none h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-1 px-2 pr-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        defaultValue="ALL"
+                        defaultValue={
+                          filter
+                            ? filter === 'SHOW_PAID'
+                              ? 'PAID'
+                              : filter === 'SHOW_UNPAID'
+                              ? 'UNPAID'
+                              : 'ALL'
+                            : 'ALL'
+                        }
                         onChange={handleFilterOption}
                       >
                         <option value="ALL">All</option>
