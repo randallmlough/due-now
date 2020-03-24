@@ -5,7 +5,7 @@ class Api::InvoicesController < Api::APIController
     def index
         if params[:search]
             term = params[:search]
-            @invoices = Invoice.where("invoice_number ILIKE ? OR recipient->>'name' LIKE ? OR recipient->>'email_address' LIKE ?", "%#{term}%","%#{term}%","%#{term}%").where("invoices.invoiceable_type = ? AND invoices.invoiceable_id = ?",'User', user_session.id).limit(params[:limit])
+            @invoices = Invoice.where("invoice_number ILIKE ? OR LOWER(recipient->>'name') LIKE LOWER(?) OR LOWER(recipient->>'email_address') LIKE LOWER(?)", "%#{term}%","%#{term}%","%#{term}%").where("invoices.invoiceable_type = ? AND invoices.invoiceable_id = ?",'User', user_session.id).limit(params[:limit])
         elsif params[:start_date] || params[:end_date]
             start_date = params[:start_date] 
             end_date = params[:end_date]
